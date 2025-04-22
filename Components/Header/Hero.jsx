@@ -12,9 +12,7 @@ export default function Header() {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="absolute  top-0 left-0 w-full">
-        <Navbar />
-      </div>
+      <Navbar />
     </div>
   );
 }
