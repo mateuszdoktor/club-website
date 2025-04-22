@@ -1,6 +1,11 @@
-export default function CarouselItem({ item }) {
+import { forwardRef } from "react";
+
+const CarouselItem = forwardRef(({ item }, ref) => {
   return (
-    <div className="relative flex-shrink-0 w-[85vw] sm:w-[60vw] md:w-[40vw] lg:w-[30vw] aspect-[16/9] rounded-2xl overflow-hidden shadow-xl group transition-transform duration-300 hover:scale-[1.02]">
+    <div
+      ref={ref}
+      className="relative flex-shrink-0 w-[85vw] sm:w-[60vw] md:w-[40vw] lg:w-[30vw] aspect-[16/9] rounded-2xl overflow-hidden shadow-xl group transition-transform duration-300 hover:scale-[1.02]"
+    >
       <img
         src={item.img}
         alt={item.title}
@@ -14,4 +19,6 @@ export default function CarouselItem({ item }) {
       </div>
     </div>
   );
-}
+});
+
+export default CarouselItem;
