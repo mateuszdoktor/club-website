@@ -1,6 +1,6 @@
-// 📄 app/page.tsx
 import HeadlinesCarousel from "../components/Headlines/HeadlinesCarousel";
 import Hero from "../components/Header/Hero";
+import Matches from "../components/Matches/Matches";
 
 async function getHeadlines() {
   const res = await fetch("http://localhost:3000/api/headlines", {
@@ -16,6 +16,7 @@ export default async function Home() {
     <div>
       <Hero />
       <HeadlinesCarousel content={headlines} />
+      <Matches />
     </div>
   );
 }
