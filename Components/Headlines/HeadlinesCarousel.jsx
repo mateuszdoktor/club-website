@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useEffect, useState } from "react";
+import { useRef } from "react";
 import CarouselItem from "./CarouselItem";
 import CarouselNav from "./CarouselNav";
 import CarouselHeader from "./CarouselHeader";
@@ -7,30 +7,23 @@ import CarouselHeader from "./CarouselHeader";
 export default function HeadlinesCarousel({ content }) {
   const scrollRef = useRef(null);
   const itemRef = useRef(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => setIsLoaded(true), 100);
-    return () => clearTimeout(timeout);
-  }, []);
 
   const scroll = (dir) => {
     const container = scrollRef.current;
     const itemWidth = itemRef.current?.offsetWidth || 300;
+    const scrollLeft = container.scrollLeft;
     const maxScroll = container.scrollWidth - container.clientWidth;
 
-    if (dir === "left") {
-      container.scrollLeft === 0
-        ? container.scrollTo({
-            left: container.scrollWidth,
-            behavior: "smooth",
-          })
-        : container.scrollBy({ left: -itemWidth, behavior: "smooth" });
-    } else {
-      Math.ceil(container.scrollLeft) >= maxScroll
-        ? container.scrollTo({ left: 0, behavior: "smooth" })
-        : container.scrollBy({ left: itemWidth, behavior: "smooth" });
-    }
+    const targetScroll =
+      dir === "left"
+        ? scrollLeft === 0
+          ? maxScroll
+          : scrollLeft - itemWidth
+        : Math.ceil(scrollLeft) >= maxScroll
+        ? 0
+        : scrollLeft + itemWidth;
+
+    container.scrollTo({ left: targetScroll, behavior: "smooth" });
   };
 
   return (
@@ -41,9 +34,7 @@ export default function HeadlinesCarousel({ content }) {
       <div className="relative w-full max-w-[1680px]">
         <div
           ref={scrollRef}
-          className={`flex overflow-x-auto scroll-smooth gap-6 no-scrollbar px-4 transition-opacity duration-300 ${
-            isLoaded ? "opacity-100" : "opacity-0"
-          }`}
+          className="flex overflow-x-auto overflow-y-hidden scroll-smooth gap-6 no-scrollbar px-4"
         >
           {content.map((item, index) => (
             <CarouselItem
@@ -53,7 +44,6 @@ export default function HeadlinesCarousel({ content }) {
             />
           ))}
         </div>
-
         <CarouselNav direction="left" onClick={() => scroll("left")} />
         <CarouselNav direction="right" onClick={() => scroll("right")} />
       </div>
