@@ -1,5 +1,5 @@
 import HeadlinesCarousel from "../components/Headlines/HeadlinesCarousel";
-import Hero from "../components/Header/Hero";
+import Header from "../components/Header/Header";
 import Matches from "../components/Matches/Matches";
 
 async function getHeadlines() {
@@ -14,7 +14,7 @@ export default async function Home() {
   const headlines = await getHeadlines();
   return (
     <div>
-      <Hero />
+      <Header />
       <HeadlinesCarousel content={headlines} />
       <Matches />
     </div>

@@ -1,4 +1,3 @@
-import { CalendarDays } from "lucide-react";
 import NextMatchHeader from "./NextMatchHeader";
 import MatchTeams from "./MatchTeams";
 import MatchDate from "./MatchDate";

@@ -1,14 +1,13 @@
-"use client";
-
 import Link from "next/link";
 
 export default function NavLink({ href, children }) {
   return (
     <Link
       href={href}
-      className="relative text-white text-3xl font-bold transition duration-300 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[3px] after:bg-gray-400 after:transition-all after:duration-300 hover:after:w-full"
+      className="group relative text-white text-2xl font-medium transition-all duration-300 hover:text-white/90"
     >
-      {children}
+      <span>{children}</span>
+      <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-white transition-all duration-300 group-hover:w-full"></span>
     </Link>
   );
 }

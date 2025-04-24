@@ -1,73 +1,91 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import clsx from "clsx";
 import logo from "@/public/logo-white-no-bg.png";
 import NavLink from "./NavLink";
-import { Menu, X } from "lucide-react";
+
+const navLinks = [
+  { href: "/", label: "News" },
+  { href: "/", label: "Season" },
+  { href: "/", label: "Team" },
+  { href: "/", label: "Club" },
+];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Scroll behavior
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 30);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <nav
-      className={`w-full fixed top-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-black/90 backdrop-blur" : "bg-black/40"
-      } text-white`}
+      className={clsx(
+        "fixed top-0 w-full z-50 transition-all duration-300",
+        scrolled ? "bg-black/70 backdrop-blur-md shadow-lg" : "bg-transparent"
+      )}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
-          {/* Left links */}
-          <div className="hidden md:flex gap-8">
-            <NavLink href="/">News</NavLink>
-            <NavLink href="/">Season</NavLink>
-          </div>
-
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <Image
-              src={logo}
-              alt="Real Madrid logo"
-              width={60}
-              height={60}
-              className="object-contain"
-            />
-          </div>
-
-          {/* Right links */}
-          <div className="hidden md:flex gap-8">
-            <NavLink href="/">Team</NavLink>
-            <NavLink href="/">Club</NavLink>
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button onClick={() => setIsOpen(!isOpen)}>
-              {isOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
-          </div>
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="hidden md:flex items-center gap-8">
+          {navLinks.slice(0, 2).map((link) => (
+            <NavLink key={link.label} href={link.href}>
+              {link.label}
+            </NavLink>
+          ))}
         </div>
 
-        {/* Mobile menu */}
-        {isOpen && (
-          <div className="md:hidden flex flex-col items-center gap-4 pb-4">
-            <NavLink href="/">News</NavLink>
-            <NavLink href="/">Season</NavLink>
-            <NavLink href="/">Team</NavLink>
-            <NavLink href="/">Club</NavLink>
-          </div>
-        )}
+        <Link href="/" className="flex-shrink-0">
+          <Image
+            src={logo}
+            alt="Logo"
+            width={50}
+            height={50}
+            className="object-contain"
+            priority
+          />
+        </Link>
+
+        <div className="hidden md:flex items-center gap-8">
+          {navLinks.slice(2).map((link) => (
+            <NavLink key={link.label} href={link.href}>
+              {link.label}
+            </NavLink>
+          ))}
+        </div>
+
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden text-white"
+        >
+          {isOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
       </div>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="md:hidden flex flex-col items-center gap-4 overflow-hidden bg-black/80 backdrop-blur-sm py-4"
+          >
+            {navLinks.map((link) => (
+              <NavLink key={link.label} href={link.href}>
+                {link.label}
+              </NavLink>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

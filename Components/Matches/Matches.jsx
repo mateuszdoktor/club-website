@@ -19,7 +19,6 @@ async function getMatches() {
   }
 
   const data = await res.json();
-  console.log("RESPONSE:", JSON.stringify(data, null, 2));
   return data.response;
 }
 
