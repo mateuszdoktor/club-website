@@ -30,10 +30,20 @@ export default async function Matches() {
       return <p>No upcoming matches available.</p>;
     }
 
+    // Although the data comes from an external API and is expected to be in chronological order,
+    // there was an issue where some fixtures appeared out of order.
+    // This issue may be related to the fact that the data is from a past season,
+    // and the API might not guarantee consistent ordering for archived fixtures.
+    const sortedMatches = matches.sort((a, b) => {
+      const dateA = new Date(a.fixture.date).getTime();
+      const dateB = new Date(b.fixture.date).getTime();
+      return dateA - dateB;
+    });
+
     return (
       <div className="space-y-6">
-        <NextMatch match={matches[0]} />
-        <UpcomingMatches matches={matches.slice(1)} />
+        <NextMatch match={sortedMatches[0]} />
+        <UpcomingMatches matches={sortedMatches.slice(1)} />
       </div>
     );
   } catch (error) {
