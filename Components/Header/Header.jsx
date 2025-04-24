@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Navbar from "./Navbar";
+import Navbar from "./Navbar/Navbar";
 
 export default function Header() {
   return (
@@ -9,10 +9,13 @@ export default function Header() {
       className="relative h-screen w-full bg-cover bg-center"
       style={{ backgroundImage: "url(/IMG_2739.JPG)" }}
     >
+      {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/20 z-10" />
 
+      {/* Navbar */}
       <Navbar />
 
+      {/* Hero content */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
