@@ -3,7 +3,7 @@ import { forwardRef } from "react";
 const CarouselItem = forwardRef(({ item }, ref) => (
   <div
     ref={ref}
-    className="relative flex-shrink-0 w-[85vw] sm:w-[60vw] md:w-[40vw] lg:w-[30vw] aspect-[16/9] rounded-2xl overflow-hidden shadow-xl group transition-transform duration-300 hover:scale-[1.02]"
+    className="relative flex-shrink-0 w-[85vw] sm:w-[45vw] md:w-[30vw] lg:w-[25vw] aspect-[4/3] rounded-2xl overflow-hidden shadow-xl group transition-transform duration-300 hover:scale-[1.02]"
   >
     <img
       src={item.img}

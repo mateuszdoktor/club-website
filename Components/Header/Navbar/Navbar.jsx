@@ -47,9 +47,9 @@ export default function Navbar() {
       animate={{ y: showNavbar ? 0 : -80, opacity: showNavbar ? 1 : 0 }}
       transition={{ duration: 0.25, ease: "easeInOut" }}
       className={clsx(
-        "fixed top-0 w-full z-50 transition-[background-color] duration-500 ease-in-out backdrop-blur-md",
+        "fixed top-0 w-full z-50 transition-[background-color] duration-500 ease-in-out backdrop-blur-xs",
         isSolid
-          ? "bg-white/90 text-gray-900 shadow-sm"
+          ? "bg-white/100 text-gray-900 shadow-sm"
           : "bg-transparent text-white"
       )}
     >

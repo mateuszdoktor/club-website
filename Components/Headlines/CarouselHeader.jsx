@@ -1,7 +1,15 @@
+import { Newspaper } from "lucide-react";
+import { Megaphone } from "lucide-react";
+import { Bullhorn } from "lucide-react";
+import { Clock } from "lucide-react";
+
 export default function CarouselHeader() {
   return (
-    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 relative inline-block after:block after:mt-2 after:h-[2px] after:bg-gray-200 after:w-full after:rounded-full">
-      LATEST HEADLINES
-    </h2>
+    <div className="mb-10">
+      <h2 className="text-[2.5rem] sm:text-[3rem] font-bold text-neutral-900 tracking-tight flex items-center gap-3">
+        <Clock className="w-8 h-8 text-indigo-600" />
+        Latest Headlines
+      </h2>
+    </div>
   );
 }

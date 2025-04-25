@@ -1,6 +1,8 @@
 import HeadlinesCarousel from "../components/Headlines/HeadlinesCarousel";
 import Header from "../components/Header/Header";
 import Matches from "../components/Matches/Matches";
+import News from "../components/News/News";
+import Footer from "../components/Footer/Footer";
 
 async function getHeadlines() {
   const res = await fetch("http://localhost:3000/api/headlines", {
@@ -17,6 +19,8 @@ export default async function Home() {
       <Header />
       <HeadlinesCarousel content={headlines} />
       <Matches />
+      <News />
+      <Footer />
     </div>
   );
 }

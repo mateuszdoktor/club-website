@@ -9,7 +9,7 @@ async function getMatches() {
         "x-rapidapi-key": process.env.API_FOOTBALL_KEY,
         "x-rapidapi-host": "v3.football.api-sports.io",
       },
-      next: { revalidate: 6000 }, // ISR every 6000s
+      next: { revalidate: 6000 }, // ISR every 6000s to not use too many api requests
     }
   );
 

@@ -3,14 +3,16 @@ import MatchDateInfo from "./MatchDateInfo";
 
 export default function MatchCard({ match }) {
   return (
-    <li className="flex-shrink-0 w-[360px] bg-gray-50 rounded-xl p-6 border shadow-md snap-center space-y-5">
+    <li className="flex-shrink-0 w-[380px] bg-gray-50 rounded-xl p-7 border shadow-md snap-center space-y-6">
       <div className="flex items-center gap-3 text-sm text-gray-600">
         <img
           src={match.league.logo}
           alt={match.league.name}
-          className="h-6 w-6"
+          className="h-7 w-7" // było 6x6
         />
-        <span>
+        <span className="text-[0.95rem]">
+          {" "}
+          {/* trochę większy font */}
           {match.league.name} – {match.league.round}
         </span>
       </div>
