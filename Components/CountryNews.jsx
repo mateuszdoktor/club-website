@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { NewsList } from "./NewsList"; 
 
 const countries = [
   { code: "pl", name: "Poland" },
@@ -27,7 +28,7 @@ export function CountryNews() {
             (c) => c.code === userCountry
           );
           if (supportedCountry) {
-            setCountry(userCountry); 
+            setCountry(userCountry);
           }
         }
       } catch (error) {
@@ -38,7 +39,7 @@ export function CountryNews() {
   }, []);
 
   useEffect(() => {
-    const fetchNews = async () => {
+    async function fetchNews() {
       setLoading(true);
       try {
         const res = await fetch(`/api/newsdata?country=${country}`);
@@ -49,8 +50,7 @@ export function CountryNews() {
       } finally {
         setLoading(false);
       }
-    };
-
+    }
     fetchNews();
   }, [country]);
 
@@ -81,38 +81,16 @@ export function CountryNews() {
       {loading ? (
         <p className="text-center text-gray-500">Loading...</p>
       ) : (
-        <div className="grid gap-8 sm:grid-cols-2">
-          {articles.map((article, index) => (
-            <a
-              key={index}
-              href={article.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group border rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all flex flex-col"
-            >
-              {article.image_url && (
-                <img
-                  src={article.image_url}
-                  alt={article.title}
-                  className="h-56 w-full object-cover group-hover:scale-105 transition-transform"
-                />
-              )}
-              <div className="p-4 flex-1 flex flex-col">
-                <h3 className="text-lg font-bold mb-2 group-hover:text-primary-500">
-                  {article.title}
-                </h3>
-                <p className="text-gray-600 text-sm flex-1 line-clamp-3">
-                  {article.description}
-                </p>
-
-                <span className="text-gray-400 text-xs mt-2">
-                  {new Date(article.pubDate).toLocaleDateString()} •{" "}
-                  {article.source_id}
-                </span>
-              </div>
-            </a>
-          ))}
-        </div>
+        <NewsList
+          articles={articles}
+          imageKey="image_url"
+          titleKey="title"
+          descriptionKey="description"
+          linkKey="link"
+          sourceKey="source_id"
+          dateKey="pubDate"
+          layout="list" 
+        />
       )}
     </div>
   );
