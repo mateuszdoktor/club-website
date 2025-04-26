@@ -1,39 +1,16 @@
 import NextMatch from "./NextMatch/NextMatch";
 import UpcomingMatches from "./UpcomingMatches/UpcomingMatches";
 
-async function getMatches() {
-  const res = await fetch(
-    `https://v3.football.api-sports.io/fixtures?team=541&season=2023`,
-    {
-      headers: {
-        "x-rapidapi-key": process.env.API_FOOTBALL_KEY,
-        "x-rapidapi-host": "v3.football.api-sports.io",
-      },
-      next: { revalidate: 6000 }, // ISR every 6000s to not use too many api requests
-    }
-  );
-
-  if (!res.ok) {
-    console.error("HTTP error:", res.status);
-    throw new Error("Failed to fetch matches");
-  }
-
-  const data = await res.json();
-  return data.response;
-}
-
-export default async function Matches() {
+export default function Matches({ matches }) {
   try {
-    const matches = await getMatches();
-
-    if (!matches.length) {
-      return <p>No upcoming matches available.</p>;
+    if (!matches || matches.length === 0) {
+      return (
+        <div className="p-4 bg-yellow-100 text-yellow-800 border border-yellow-300 rounded">
+          <p>No upcoming matches available.</p>
+        </div>
+      );
     }
 
-    // Although the data comes from an external API and is expected to be in chronological order,
-    // there was an issue where some fixtures appeared out of order.
-    // This issue may be related to the fact that the data is from a past season,
-    // and the API might not guarantee consistent ordering for archived fixtures.
     const sortedMatches = matches.sort((a, b) => {
       const dateA = new Date(a.fixture.date).getTime();
       const dateB = new Date(b.fixture.date).getTime();
@@ -49,7 +26,7 @@ export default async function Matches() {
   } catch (error) {
     return (
       <div className="p-4 bg-red-100 text-red-800 border border-red-300 rounded">
-        <p>Error: {error.message}</p>
+        <p>Error displaying matches: {error.message}</p>
       </div>
     );
   }

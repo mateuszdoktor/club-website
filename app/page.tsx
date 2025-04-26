@@ -1,21 +1,28 @@
-import HeadlinesCarousel from "../components/Headlines/HeadlinesCarousel";
-import Header from "../components/Header/Header";
-import Matches from "../components/Matches/Matches";
-import News from "../components/News/News";
-import Footer from "../components/Footer/Footer";
+import { getMatches } from "@/lib/services/matchService";
+import { getGNews } from "@/lib/services/newsService";
 import { HeadlineService } from "@/lib/services/headlineService";
+
+import HeadlinesCarousel from "@/components/Headlines/HeadlinesCarousel";
+import Matches from "@/components/Matches/Matches";
+import News from "@/components/News/News";
+import Header from "@/components/Header/Header";
+import Footer from "@/components/Footer/Footer";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const headlines = await HeadlineService.getAllHeadlines();
+  const [headlines, matches, newsArticles] = await Promise.all([
+    HeadlineService.getAllHeadlines(),
+    getMatches(),
+    getGNews(),
+  ]);
 
   return (
     <div>
       <Header />
       <HeadlinesCarousel content={headlines} />
-      <Matches />
-      <News />
+      <Matches matches={matches} />
+      <News articles={newsArticles} />
       <Footer />
     </div>
   );

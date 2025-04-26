@@ -3,27 +3,15 @@ import FeaturedArticle from "@/components/News/FeaturedArticle";
 import ArticleGrid from "@/components/News/ArticleGrid";
 import ArticleBar from "@/components/News/ArticleBar";
 
-async function getGNews() {
-  const res = await fetch(
-    `https://gnews.io/api/v4/search?q="real madrid"&in=title&lang=en&max=10&apikey=${process.env.GNEWS_API_KEY}`,
-    {
-      next: { revalidate: 6000 }, // ISR every 6000s to not use too many api requests
-    }
-  );
-
-  if (!res.ok) {
-    console.error("GNews API error:", res.status);
-    throw new Error("Failed to fetch news from GNews");
-  }
-
-  const data = await res.json();
-  return data.articles;
-}
-
-export default async function News() {
+export default function News({ articles }) {
   try {
-    const articles = await getGNews();
-    if (!articles.length) return <p>No news available.</p>;
+    if (!articles || articles.length === 0) {
+      return (
+        <div className="p-4 bg-yellow-100 text-yellow-800 border border-yellow-300 rounded max-w-4xl mx-auto my-8">
+          <p>No news available.</p>
+        </div>
+      );
+    }
 
     return (
       <section className="w-full py-20 bg-white">
@@ -38,7 +26,7 @@ export default async function News() {
   } catch (error) {
     return (
       <div className="p-4 bg-red-100 text-red-800 border border-red-300 rounded max-w-4xl mx-auto my-8">
-        <p>Error loading Real Madrid news: {error.message}</p>
+        <p>Error displaying news: {error.message}</p>
       </div>
     );
   }
