@@ -4,7 +4,7 @@ export default function Footer() {
     <footer className="bg-white text-gray-800 px-6 md:px-20 py-16 border-t border-gray-200 text-base">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
         <div>
-          <img src="/logo-navy-no-bg.png" alt="Logo" className="w-16 mb-6" />
+          {/* <img src="/logo-navy-no-bg.png" alt="Logo" className="w-16 mb-6" /> */}
           <p className="text-gray-500 leading-relaxed">
             © 2025 Real Madrid. All rights reserved.
           </p>

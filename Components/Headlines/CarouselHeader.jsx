@@ -1,6 +1,3 @@
-import { Newspaper } from "lucide-react";
-import { Megaphone } from "lucide-react";
-import { Bullhorn } from "lucide-react";
 import { Clock } from "lucide-react";
 
 export default function CarouselHeader() {

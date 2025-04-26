@@ -3,17 +3,13 @@ import Header from "../components/Header/Header";
 import Matches from "../components/Matches/Matches";
 import News from "../components/News/News";
 import Footer from "../components/Footer/Footer";
+import { HeadlineService } from "@/lib/services/headlineService";
 
-async function getHeadlines() {
-  const res = await fetch("http://localhost:3000/api/headlines", {
-    cache: "no-store", // SSR — fetch za każdym razem
-  });
-  if (!res.ok) throw new Error("Failed to fetch headlines");
-  return res.json();
-}
+export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const headlines = await getHeadlines();
+  const headlines = await HeadlineService.getAllHeadlines();
+
   return (
     <div>
       <Header />
