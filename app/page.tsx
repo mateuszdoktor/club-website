@@ -6,7 +6,6 @@ import HeadlinesCarousel from "@/components/Headlines/HeadlinesCarousel";
 import Matches from "@/components/Matches/Matches";
 import News from "@/components/News/News";
 import Header from "@/components/Header/Header";
-import Footer from "@/components/Footer/Footer";
 
 export const dynamic = "force-dynamic";
 
@@ -23,7 +22,6 @@ export default async function Home() {
       <HeadlinesCarousel content={headlines} />
       <Matches matches={matches} />
       <News articles={newsArticles} />
-      <Footer />
     </div>
   );
 }

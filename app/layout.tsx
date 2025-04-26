@@ -4,6 +4,8 @@ import "./globals.css";
 
 import FlyonuiScript from "../components/FlyonuiScript";
 
+import Footer from "@/components/Footer/Footer";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +35,7 @@ export default function RootLayout({
         {children}
         <FlyonuiScript />
       </body>
+      <Footer />
     </html>
   );
 }

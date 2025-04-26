@@ -9,7 +9,7 @@ import NavbarLinks from "./NavbarLinks";
 import MobileMenu from "./MobileMenu";
 
 const navLinks = [
-  { href: "/", label: "News" },
+  { href: "/news", label: "News" },
   { href: "/", label: "Season" },
   { href: "/", label: "Team" },
   { href: "/", label: "Club" },
