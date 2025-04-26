@@ -34,12 +34,11 @@ export function NewsList({
               : "flex-col sm:flex-row h-full"
           }`}
         >
-          {/* Obrazek w kontenerze flex-grow-0 */}
           {article[imageKey] && (
             <div
               className={`relative w-full ${
                 layout === "grid"
-                  ? "h-60" // stała wysokość zdjęcia w grid
+                  ? "h-60" 
                   : "h-48 sm:h-auto sm:w-64"
               } overflow-hidden`}
             >
@@ -51,7 +50,6 @@ export function NewsList({
             </div>
           )}
 
-          {/* Treść zawsze flex-1, rozciąga kartę bez rozpychania obrazu */}
           <div className="flex flex-col flex-1 justify-between p-6">
             <div className="flex-1 flex flex-col">
               <h3 className="text-2xl font-semibold mb-3 text-gray-900 leading-snug group-hover:text-primary-600 transition-colors duration-300">

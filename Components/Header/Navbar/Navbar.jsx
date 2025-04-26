@@ -45,7 +45,10 @@ export default function Navbar() {
     <motion.nav
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: showNavbar ? 0 : -80, opacity: showNavbar ? 1 : 0 }}
-      transition={{ duration: 0.25, ease: "easeInOut" }}
+      transition={{
+        y: { duration: 0.5, ease: [0.4, 0, 0.2, 1] },
+        opacity: { duration: 0.4, ease: "easeInOut" },
+      }}
       className={clsx(
         "fixed top-0 w-full z-50 transition-[background-color] duration-500 ease-in-out backdrop-blur-xs",
         isSolid
@@ -53,25 +56,60 @@ export default function Navbar() {
           : "bg-transparent text-white"
       )}
     >
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <NavbarLinks links={navLinks.slice(0, 2)} solid={isSolid} />
-        <NavbarLogo isSolid={isSolid} />
-        <NavbarLinks links={navLinks.slice(2)} solid={isSolid} />
+      <div className="max-w-7xl mx-auto px-6 py-8 flex items-center justify-between relative">
+        {/* LEFT LINKS */}
+        <div className="flex items-center space-x-8">
+          <NavbarLinks links={navLinks.slice(0, 2)} solid={isSolid} />
+        </div>
 
-        <button onClick={() => setIsOpen(!isOpen)} className="md:hidden">
-          {isOpen ? (
-            <X size={28} className={isSolid ? "text-gray-900" : "text-white"} />
-          ) : (
-            <Menu
-              size={28}
-              className={isSolid ? "text-gray-900" : "text-white"}
-            />
-          )}
-        </button>
+        {/* LOGO CENTER */}
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{
+            duration: 0.6,
+            ease: [0.4, 0, 0.2, 1],
+          }}
+          className="absolute left-1/2 transform -translate-x-1/2"
+        >
+          <NavbarLogo isSolid={isSolid} />
+        </motion.div>
+
+        {/* RIGHT LINKS / MOBILE MENU */}
+        <div className="flex items-center space-x-8">
+          <div className="hidden md:flex space-x-8">
+            <NavbarLinks links={navLinks.slice(2)} solid={isSolid} />
+          </div>
+
+          {/* MOBILE MENU BUTTON */}
+          <button onClick={() => setIsOpen(!isOpen)} className="md:hidden">
+            {isOpen ? (
+              <X
+                size={28}
+                className={isSolid ? "text-gray-900" : "text-white"}
+              />
+            ) : (
+              <Menu
+                size={28}
+                className={isSolid ? "text-gray-900" : "text-white"}
+              />
+            )}
+          </button>
+        </div>
       </div>
 
+      {/* MOBILE MENU */}
       <AnimatePresence>
-        {isOpen && <MobileMenu links={navLinks} isSolid={isSolid} />}
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            <MobileMenu links={navLinks} isSolid={isSolid} />
+          </motion.div>
+        )}
       </AnimatePresence>
     </motion.nav>
   );
