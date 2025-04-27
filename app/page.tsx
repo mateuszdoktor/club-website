@@ -17,11 +17,11 @@ export default async function Home() {
   ]);
 
   return (
-    <div>
+    <>
       <Header />
       <HeadlinesCarousel content={headlines} />
       <Matches matches={matches} />
       <News articles={newsArticles} />
-    </div>
+    </>
   );
 }

@@ -3,10 +3,6 @@ export function FeaturedHeadlines({ headlines }) {
 
   return (
     <section className="mb-24">
-      <h2 className="text-3xl font-bold mb-10 text-gray-800 text-center">
-        Featured Headlines
-      </h2>
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         <a
           href={headlines[0].url}

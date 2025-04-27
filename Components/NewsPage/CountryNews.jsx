@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { NewsList } from "./NewsList"; 
+import { NewsList } from "./NewsList";
 
 const countries = [
   { code: "pl", name: "Poland" },
@@ -89,7 +89,7 @@ export function CountryNews() {
           linkKey="link"
           sourceKey="source_id"
           dateKey="pubDate"
-          layout="list" 
+          layout="list"
         />
       )}
     </div>
