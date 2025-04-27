@@ -3,7 +3,6 @@ import { HeadlineService } from "@/lib/services/headlineService";
 import { FeaturedHeadlines } from "@/components/NewsPage/FeaturedHeadlines";
 import { CountryNews } from "@/components//NewsPage/CountryNews";
 import { NewsList } from "@/components/NewsPage/NewsList";
-import SolidNavbar from "@/components/Header/Navbar/SolidNavbar";
 
 export default async function NewsPage() {
   const [headlines, gnewsArticles] = await Promise.all([
@@ -13,7 +12,6 @@ export default async function NewsPage() {
 
   return (
     <>
-      <SolidNavbar />
       <div className="min-h-screen bg-white px-4 pt-24 pb-48 sm:px-8">
         <div className="max-w-6xl mx-auto">
           <FeaturedHeadlines headlines={headlines} />

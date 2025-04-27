@@ -1,13 +1,13 @@
+import Link from "next/link";
+
 export function FeaturedHeadlines({ headlines }) {
   if (headlines.length === 0) return null;
 
   return (
     <section className="mb-24">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-        <a
-          href={headlines[0].url}
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          href={`/news/${headlines[0].id}`}
           className="group relative lg:col-span-1 rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-end min-h-[600px] bg-black"
         >
           {headlines[0].img && (
@@ -25,15 +25,13 @@ export function FeaturedHeadlines({ headlines }) {
               {headlines[0].description}
             </p>
           </div>
-        </a>
+        </Link>
 
         <div className="lg:col-span-2 grid sm:grid-cols-2 gap-8">
           {headlines.slice(1).map((headline) => (
-            <a
+            <Link
               key={headline.id}
-              href={headline.url}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={`/news/${headline.id}`}
               className="group relative rounded-3xl overflow-hidden shadow-md flex flex-col justify-end min-h-[280px] bg-gray-100"
             >
               {headline.img && (
@@ -51,7 +49,7 @@ export function FeaturedHeadlines({ headlines }) {
                   {headline.description}
                 </p>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
