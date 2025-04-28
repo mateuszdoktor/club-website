@@ -2,6 +2,7 @@ import { HeadlineService } from "@/lib/services/headlineService";
 import { notFound } from "next/navigation";
 import { HeadlineDetail } from "@/components/NewsPage/SingleNews/HeadlineDetail";
 import { MoreHeadlines } from "@/components/NewsPage/SingleNews/MoreHeadlines";
+import { CommentsSection } from "@/components/NewsPage/SingleNews/CommentsSection"; // DODANE
 
 export default async function HeadlinePage({
   params,
@@ -22,6 +23,7 @@ export default async function HeadlinePage({
   return (
     <div className="max-w-4xl mx-auto py-20 px-6">
       <HeadlineDetail headline={headline} />
+      <CommentsSection headlineId={Number(id)} />
       <MoreHeadlines headlines={otherHeadlines} />
     </div>
   );
