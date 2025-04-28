@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import clsx from "clsx";
 import { Menu, X } from "lucide-react";
@@ -16,6 +17,7 @@ const navLinks = [
 ];
 
 export default function Navbar() {
+  const { data: session } = useSession(); // <-- sesja użytkownika
   const [isOpen, setIsOpen] = useState(false);
   const [scrolledPastHero, setScrolledPastHero] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
@@ -75,11 +77,31 @@ export default function Navbar() {
           <NavbarLogo isSolid={isSolid} />
         </motion.div>
 
-        {/* RIGHT LINKS / MOBILE MENU */}
+        {/* RIGHT LINKS + AUTH BUTTONS */}
         <div className="flex items-center space-x-8">
           <div className="hidden md:flex space-x-8">
             <NavbarLinks links={navLinks.slice(2)} solid={isSolid} />
           </div>
+
+          {/* LOGIN/LOGOUT BUTTONS */}
+          {session ? (
+            <div className="flex items-center space-x-4">
+              <span className="text-sm font-medium">{session.user?.email}</span>
+              <button
+                onClick={() => signOut()}
+                className="px-4 py-2 rounded-md text-sm bg-gray-800 text-white hover:bg-gray-700 transition"
+              >
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => signIn()}
+              className="px-4 py-2 rounded-md text-sm bg-blue-600 text-white hover:bg-blue-500 transition"
+            >
+              Sign In
+            </button>
+          )}
 
           {/* MOBILE MENU BUTTON */}
           <button onClick={() => setIsOpen(!isOpen)} className="md:hidden">

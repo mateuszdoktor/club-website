@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
+import { SessionProviderWrapper } from "@/components/SessionProviderWrapper";
 import FlyonuiScript from "../components/FlyonuiScript";
-
 import Footer from "@/components/Footer/Footer";
 
 
@@ -32,7 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <SessionProviderWrapper>{children}</SessionProviderWrapper>
         <FlyonuiScript />
       </body>
       <Footer />
