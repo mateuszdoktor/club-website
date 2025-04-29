@@ -1,47 +1,45 @@
-"use client"
+"use client";
+
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 
 export function CommentsSection({ headlineId }) {
   const { data: session } = useSession();
+  const isAuthenticated = !!session?.user;
+
   const [comments, setComments] = useState([]);
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false);
-
-  const isAuthenticated = !!session?.user;
+  const [status, setStatus] = useState("idle");
 
   useEffect(() => {
-    async function fetchComments() {
+    const fetchComments = async () => {
       try {
         const res = await fetch(`/api/comments?headlineId=${headlineId}`);
         const data = await res.json();
         setComments(data);
-      } catch (err) {
-        console.error(err);
+      } catch (error) {
+        console.error(error);
       }
-    }
+    };
 
     fetchComments();
   }, [headlineId]);
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
-    setSuccess(false);
-
     if (!text.trim() || text.trim().length < 5) {
-      setError("Comment must be at least 5 characters long.");
+      setStatus("error");
       return;
     }
 
-    if (!session?.user) {
-      setError("You must be logged in to comment.");
+    if (!isAuthenticated) {
+      setStatus("error");
       return;
     }
 
     setLoading(true);
+    setStatus("idle");
 
     try {
       const res = await fetch("/api/comments", {
@@ -55,66 +53,79 @@ export function CommentsSection({ headlineId }) {
         }),
       });
 
-      if (!res.ok) {
-        throw new Error("Failed to add comment");
-      }
+      if (!res.ok) throw new Error("Failed to add comment");
 
       const newComment = await res.json();
       setComments((prev) => [...prev, newComment]);
       setText("");
-      setSuccess(true);
-    } catch (err) {
-      setError("Something went wrong. Please try again.");
+      setStatus("success");
+    } catch (error) {
+      setStatus("error");
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
-    <div className="mt-10">
-      <h2 className="text-2xl font-bold mb-6">Comments</h2>
+    <section className="w-full max-w-6xl mx-auto py-20 px-6">
+      <h2 className="text-3xl font-extrabold text-gray-900 mb-8 text-center">
+        Comments
+      </h2>
 
       {isAuthenticated ? (
-        <form onSubmit={handleSubmit} className="mb-8">
+        <form onSubmit={handleSubmit} className="space-y-6 mb-10">
           <textarea
-            className="w-full p-4 border rounded-lg mb-2"
-            placeholder="Write your comment..."
+            className="w-full p-5 bg-gray-100 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none text-gray-900"
+            placeholder="Share your thoughts..."
             value={text}
             onChange={(e) => setText(e.target.value)}
             rows={4}
             disabled={loading}
           />
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center justify-between">
             <button
               type="submit"
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50"
+              className="px-10 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full transition duration-300 disabled:opacity-50"
               disabled={loading}
             >
-              {loading ? "Adding..." : "Add Comment"}
+              {loading ? "Posting..." : "Post Comment"}
             </button>
-            {error && <div className="text-red-500">{error}</div>}
-            {success && <div className="text-green-500">Comment added!</div>}
+            {status === "error" && (
+              <div className="text-red-500 text-sm mt-2">
+                Something went wrong. Try again.
+              </div>
+            )}
+            {status === "success" && (
+              <div className="text-green-600 text-sm mt-2">Comment added!</div>
+            )}
           </div>
         </form>
       ) : (
-        <p className="text-gray-500 mb-6">You must be logged in to comment.</p>
+        <p className="text-gray-400 text-center mb-10">
+          Please log in to post a comment.
+        </p>
       )}
 
       {comments.length === 0 ? (
-        <div className="text-gray-500">No comments yet. Be the first!</div>
+        <div className="text-gray-400 text-center">
+          No comments yet. Be the first to comment!
+        </div>
       ) : (
-        <ul className="space-y-4">
+        <ul className="space-y-6">
           {comments.map((comment) => (
-            <li key={comment.id} className="border p-4 rounded-lg shadow">
-              <div className="font-semibold">{comment.author}</div>
-              <div className="text-gray-600 text-sm mb-2">
+            <li
+              key={comment.id}
+              className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 transition hover:shadow-md"
+            >
+              <div className="font-bold text-gray-900 text-lg">{comment.author}</div>
+              <div className="text-gray-500 mb-3">
                 {new Date(comment.createdAt).toLocaleString()}
               </div>
-              <div>{comment.text}</div>
+              <div className="text-gray-800 text-xl">{comment.text}</div>
             </li>
           ))}
         </ul>
       )}
-    </div>
+    </section>
   );
 }

@@ -4,7 +4,7 @@ export function FeaturedHeadlines({ headlines }) {
   if (headlines.length === 0) return null;
 
   return (
-    <section className="mb-24">
+    <section className="mb-24 py-8">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         <Link
           href={`/news/${headlines[0].id}`}

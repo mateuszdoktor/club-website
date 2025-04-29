@@ -1,7 +1,11 @@
 import Link from "next/link";
 import clsx from "clsx";
 
-export default function NavLink({ href, children, solid = false }) {
+export default function NavLink({
+  href,
+  children,
+  solid = false,
+}) {
   return (
     <Link
       href={href}

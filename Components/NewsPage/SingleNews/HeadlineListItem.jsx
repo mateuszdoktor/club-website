@@ -1,25 +1,27 @@
+"use client";
+
 import Link from "next/link";
 
-export function HeadlineListItem({
-  id,
-  img,
-  title,
-  description,
-}) {
+export function HeadlineListItem({ id, img, title, description }) {
   return (
-    <Link href={`/news/${id}`} className="flex items-start space-x-6 group">
-      <div className="flex-shrink-0 w-40 h-28 overflow-hidden rounded-2xl">
+    <Link
+      href={`/news/${id}`}
+      className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group flex flex-col"
+    >
+      <div className="w-full h-48 overflow-hidden">
         <img
           src={img}
           alt={title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
       </div>
-      <div className="flex-1">
-        <h3 className="text-2xl font-semibold mb-2 group-hover:text-primary-500 transition-colors">
+      <div className="p-4 flex-1 flex flex-col justify-between">
+        <h3 className="text-xl font-semibold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">
           {title}
         </h3>
-        <p className="text-gray-500 text-sm">{description.slice(0, 100)}...</p>
+        <p className="text-gray-500 leading-relaxed">
+          {description.slice(0, 100)}...
+        </p>
       </div>
     </Link>
   );

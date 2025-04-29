@@ -12,14 +12,14 @@ export default function NavbarLogo({ isSolid }) {
       <motion.div
         key={isSolid ? "navy" : "white"}
         initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: isSolid ? 1.6 : 1 }}
+        animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
       >
         <Image
           src={isSolid ? logoNavy : logoWhite}
           alt="Logo"
-          width={50}
-          height={50}
+          width={isSolid ? 80 : 60}
+          height={isSolid ? 80 : 60}
           className="object-contain transition-transform duration-300"
           priority
         />

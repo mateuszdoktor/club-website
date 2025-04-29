@@ -14,7 +14,7 @@ export function LoginForm() {
       email,
       password,
       redirect: true,
-      callbackUrl: "/", // po zalogowaniu
+      callbackUrl: "/", 
     });
 
     if (result?.error) {

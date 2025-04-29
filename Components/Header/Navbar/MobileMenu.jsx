@@ -4,24 +4,23 @@ import { motion } from "framer-motion";
 import NavLink from "./NavLink";
 import clsx from "clsx";
 
-export default function MobileMenu({
-  links,
-  isSolid,
-}) {
+export default function MobileMenu({ links, isSolid }) {
   return (
     <motion.div
-      initial={{ height: 0, opacity: 0 }}
-      animate={{ height: "auto", opacity: 1 }}
-      exit={{ height: 0, opacity: 0 }}
-      transition={{ duration: 0.4 }}
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: -20, opacity: 0 }}
+      transition={{ duration: 0.35, ease: "easeInOut" }}
       className={clsx(
-        "md:hidden flex flex-col items-center gap-4 overflow-hidden py-4",
+        "fixed inset-0 z-40 flex flex-col justify-center items-center gap-8 px-6 py-12 md:hidden transition-colors duration-300",
         isSolid ? "bg-white text-gray-900" : "bg-black text-white"
       )}
     >
       {links.map((link) => (
-        <NavLink key={link.label} href={link.href} solid={isSolid}>
-          {link.label}
+        <NavLink key={link.label} href={link.href} solid={true}>
+          <span className="text-2xl font-semibold tracking-tight">
+            {link.label}
+          </span>
         </NavLink>
       ))}
     </motion.div>

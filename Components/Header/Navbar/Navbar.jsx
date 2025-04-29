@@ -17,121 +17,132 @@ const navLinks = [
 ];
 
 export default function Navbar() {
-  const { data: session } = useSession(); // <-- sesja użytkownika
+  const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolledPastHero, setScrolledPastHero] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   useEffect(() => {
-    let lastScrollY = window.scrollY;
-
-    const updateNavbar = () => {
-      const currentScrollY = window.scrollY;
-      const scrollingDown = currentScrollY > lastScrollY;
-
-      setScrolledPastHero(currentScrollY > window.innerHeight * 0.6);
-      setShowNavbar(!scrollingDown || currentScrollY < 100);
-
-      lastScrollY = currentScrollY;
+    let lastY = window.scrollY;
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      setScrolled(currentY > 50);
+      setShowNavbar(currentY < 100 || currentY < lastY);
+      lastY = currentY;
     };
-
-    const handleScroll = () => requestAnimationFrame(updateNavbar);
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const isSolid = scrolledPastHero;
-
-  return (
-    <motion.nav
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: showNavbar ? 0 : -80, opacity: showNavbar ? 1 : 0 }}
-      transition={{
-        y: { duration: 0.5, ease: [0.4, 0, 0.2, 1] },
-        opacity: { duration: 0.4, ease: "easeInOut" },
-      }}
-      className={clsx(
-        "fixed top-0 w-full z-50 transition-[background-color] duration-500 ease-in-out backdrop-blur-xs",
-        isSolid
-          ? "bg-white/100 text-gray-900 shadow-sm"
-          : "bg-transparent text-white"
-      )}
-    >
-      <div className="max-w-7xl mx-auto px-6 py-8 flex items-center justify-between relative">
-        {/* LEFT LINKS */}
-        <div className="flex items-center space-x-8">
-          <NavbarLinks links={navLinks.slice(0, 2)} solid={isSolid} />
-        </div>
-
-        {/* LOGO CENTER */}
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{
-            duration: 0.6,
-            ease: [0.4, 0, 0.2, 1],
-          }}
-          className="absolute left-1/2 transform -translate-x-1/2"
+  const AuthButton = () =>
+    session ? (
+      <div
+        className="relative hidden md:block"
+        onMouseEnter={() => setShowUserMenu(true)}
+        onMouseLeave={() => setShowUserMenu(false)}
+      >
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          className="flex items-center gap-2 rounded-full p-1.5 transition hover:bg-white/10"
         >
-          <NavbarLogo isSolid={isSolid} />
-        </motion.div>
+          <img
+            src={session.user?.image || "/default-avatar.png"}
+            alt="avatar"
+            className="w-9 h-9 rounded-full object-cover"
+          />
+        </motion.button>
 
-        {/* RIGHT LINKS + AUTH BUTTONS */}
-        <div className="flex items-center space-x-8">
-          <div className="hidden md:flex space-x-8">
-            <NavbarLinks links={navLinks.slice(2)} solid={isSolid} />
-          </div>
-
-          {/* LOGIN/LOGOUT BUTTONS */}
-          {session ? (
-            <div className="flex items-center space-x-4">
-              <span className="text-sm font-medium">{session.user?.email}</span>
+        <AnimatePresence>
+          {showUserMenu && (
+            <motion.div
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -5 }}
+              transition={{ duration: 0.2 }}
+              className="absolute right-0 mt-3 w-48 rounded-lg shadow-xl bg-white text-gray-900 overflow-hidden z-50"
+            >
+              <div className="px-4 py-3 border-b">
+                <p className="text-sm font-medium">{session.user?.name}</p>
+                <p className="text-xs text-gray-500 truncate">
+                  {session.user?.email}
+                </p>
+              </div>
               <button
                 onClick={() => signOut()}
-                className="px-4 py-2 rounded-md text-sm bg-gray-800 text-white hover:bg-gray-700 transition"
+                className="w-full text-left px-4 py-3 hover:bg-gray-100 text-sm"
               >
                 Sign Out
               </button>
-            </div>
-          ) : (
-            <button
-              onClick={() => signIn()}
-              className="px-4 py-2 rounded-md text-sm bg-blue-600 text-white hover:bg-blue-500 transition"
-            >
-              Sign In
-            </button>
+            </motion.div>
           )}
+        </AnimatePresence>
+      </div>
+    ) : (
+      <button
+        onClick={() => signIn()}
+        className={clsx(
+          "hidden md:inline-flex px-5 py-2 rounded-full text-sm font-medium transition",
+          scrolled
+            ? "bg-gray-900 text-white hover:bg-gray-700"
+            : "bg-white/20 text-white hover:bg-white/30"
+        )}
+      >
+        Sign In
+      </button>
+    );
 
-          {/* MOBILE MENU BUTTON */}
-          <button onClick={() => setIsOpen(!isOpen)} className="md:hidden">
+  return (
+    <motion.nav
+      initial={{ y: -80 }}
+      animate={{ y: showNavbar ? 0 : -80 }}
+      transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+      className={clsx(
+        "fixed top-0 left-0 right-0 z-50 transition-colors duration-300 border-b",
+        scrolled
+          ? "bg-white backdrop-blur-md text-gray-900 border-gray-200"
+          : "bg-transparent text-white border-transparent"
+      )}
+    >
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-4 md:px-8">
+        {/* LEFT LINKS */}
+        <div className="hidden md:flex flex-1 justify-start gap-6">
+          <NavbarLinks links={navLinks.slice(0, 2)} solid={scrolled} />
+        </div>
+
+        {/* CENTER LOGO */}
+        <div className="flex-shrink-0">
+          <NavbarLogo isSolid={scrolled} />
+        </div>
+
+        {/* RIGHT LINKS + AUTH */}
+        <div className="flex flex-1 justify-end items-center gap-4">
+          <div className="hidden md:flex gap-6">
+            <NavbarLinks links={navLinks.slice(2)} solid={scrolled} />
+          </div>
+          <AuthButton />
+          <button
+            className="md:hidden"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle Menu"
+          >
             {isOpen ? (
               <X
                 size={28}
-                className={isSolid ? "text-gray-900" : "text-white"}
+                className={scrolled ? "text-gray-900" : "text-white"}
               />
             ) : (
               <Menu
                 size={28}
-                className={isSolid ? "text-gray-900" : "text-white"}
+                className={scrolled ? "text-gray-900" : "text-white"}
               />
             )}
           </button>
         </div>
       </div>
 
-      {/* MOBILE MENU */}
       <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-          >
-            <MobileMenu links={navLinks} isSolid={isSolid} />
-          </motion.div>
-        )}
+        {isOpen && <MobileMenu links={navLinks} isSolid={scrolled} />}
       </AnimatePresence>
     </motion.nav>
   );

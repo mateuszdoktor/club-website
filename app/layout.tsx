@@ -5,7 +5,6 @@ import { SessionProviderWrapper } from "@/components/SessionProviderWrapper";
 import FlyonuiScript from "../components/FlyonuiScript";
 import Footer from "@/components/Footer/Footer";
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],

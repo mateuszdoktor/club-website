@@ -11,7 +11,6 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        // UWAGA: tu na razie robimy mock! w realnym projekcie sprawdzalibyśmy bazę danych
 
         const user = db.users.find(
           (user) =>
@@ -26,7 +25,7 @@ export const authOptions = {
       },
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET, // pamiętaj o .env
+  secret: process.env.NEXTAUTH_SECRET, 
   session: {
     strategy: "jwt",
   },
