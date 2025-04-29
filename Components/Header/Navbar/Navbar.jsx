@@ -26,6 +26,7 @@ export default function Navbar() {
   useEffect(() => {
     let lastY = window.scrollY;
     const handleScroll = () => {
+      if (isOpen) return;
       const currentY = window.scrollY;
       setScrolled(currentY > 50);
       setShowNavbar(currentY < 100 || currentY < lastY);
@@ -33,7 +34,12 @@ export default function Navbar() {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isOpen]);
+
+  useEffect(() => {
+    document.body.classList.toggle("overflow-hidden", isOpen);
+    return () => document.body.classList.remove("overflow-hidden");
+  }, [isOpen]);
 
   const AuthButton = () =>
     session ? (
@@ -52,7 +58,6 @@ export default function Navbar() {
             className="w-9 h-9 rounded-full object-cover"
           />
         </motion.button>
-
         <AnimatePresence>
           {showUserMenu && (
             <motion.div
@@ -93,57 +98,59 @@ export default function Navbar() {
     );
 
   return (
-    <motion.nav
-      initial={{ y: -80 }}
-      animate={{ y: showNavbar ? 0 : -80 }}
-      transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-      className={clsx(
-        "fixed top-0 left-0 right-0 z-50 transition-colors duration-300 border-b",
-        scrolled
-          ? "bg-white backdrop-blur-md text-gray-900 border-gray-200"
-          : "bg-transparent text-white border-transparent"
-      )}
-    >
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-4 md:px-8">
-        {/* LEFT LINKS */}
-        <div className="hidden md:flex flex-1 justify-start gap-6">
-          <NavbarLinks links={navLinks.slice(0, 2)} solid={scrolled} />
-        </div>
-
-        {/* CENTER LOGO */}
-        <div className="flex-shrink-0">
-          <NavbarLogo isSolid={scrolled} />
-        </div>
-
-        {/* RIGHT LINKS + AUTH */}
-        <div className="flex flex-1 justify-end items-center gap-4">
-          <div className="hidden md:flex gap-6">
-            <NavbarLinks links={navLinks.slice(2)} solid={scrolled} />
+    <>
+      <motion.nav
+        initial={{ y: -80 }}
+        animate={{ y: showNavbar ? 0 : -80 }}
+        transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+        className={clsx(
+          "fixed top-0 left-0 right-0 z-50 transition-colors duration-300 border-b",
+          scrolled
+            ? "bg-white backdrop-blur-md text-gray-900 border-gray-200"
+            : "bg-transparent text-white border-transparent"
+        )}
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-4 md:px-8">
+          <div className="hidden md:flex flex-1 justify-start gap-6">
+            <NavbarLinks links={navLinks.slice(0, 2)} solid={scrolled} />
           </div>
-          <AuthButton />
-          <button
-            className="md:hidden"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle Menu"
-          >
-            {isOpen ? (
-              <X
-                size={28}
-                className={scrolled ? "text-gray-900" : "text-white"}
-              />
-            ) : (
-              <Menu
-                size={28}
-                className={scrolled ? "text-gray-900" : "text-white"}
-              />
-            )}
-          </button>
+          <div className="flex-shrink-0">
+            <NavbarLogo isSolid={scrolled} />
+          </div>
+          <div className="flex flex-1 justify-end items-center gap-4">
+            <div className="hidden md:flex gap-6">
+              <NavbarLinks links={navLinks.slice(2)} solid={scrolled} />
+            </div>
+            <AuthButton />
+            <button
+              className="md:hidden"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle Menu"
+            >
+              {isOpen ? (
+                <X
+                  size={28}
+                  className={scrolled ? "text-gray-900" : "text-white"}
+                />
+              ) : (
+                <Menu
+                  size={28}
+                  className={scrolled ? "text-gray-900" : "text-white"}
+                />
+              )}
+            </button>
+          </div>
         </div>
-      </div>
+      </motion.nav>
 
       <AnimatePresence>
-        {isOpen && <MobileMenu links={navLinks} isSolid={scrolled} />}
+        {isOpen && (
+          <MobileMenu
+            links={navLinks}
+            onClose={() => setIsOpen(false)}
+          />
+        )}
       </AnimatePresence>
-    </motion.nav>
+    </>
   );
 }
