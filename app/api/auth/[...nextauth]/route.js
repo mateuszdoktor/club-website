@@ -11,21 +11,16 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-
         const user = db.users.find(
           (user) =>
             user.email === credentials?.email &&
             user.password === credentials?.password
         );
-
-        if (user) {
-          return user;
-        }
-        return null;
+        return user || null;
       },
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET, 
+  secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
   },
@@ -44,8 +39,10 @@ export const authOptions = {
       return session;
     },
   },
+  pages: {
+    signIn: "/login",
+  },
 };
 
 const handler = NextAuth(authOptions);
-
 export { handler as GET, handler as POST };
