@@ -6,20 +6,18 @@ export function HeadlineListItem({ id, img, title, description }) {
   return (
     <Link
       href={`/news/${id}`}
-      className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group flex flex-col"
+      className="group rounded-xl bg-gray-50 hover:bg-white shadow-sm hover:shadow-lg transition flex flex-col overflow-hidden border border-gray-200"
     >
-      <div className="w-full h-48 overflow-hidden">
-        <img
-          src={img}
-          alt={title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        />
-      </div>
-      <div className="p-4 flex-1 flex flex-col justify-between">
-        <h3 className="text-xl font-semibold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">
+      <img
+        src={img}
+        alt={title}
+        className="w-full h-44 object-cover transition-transform duration-300 group-hover:scale-105"
+      />
+      <div className="p-5 flex flex-col gap-2">
+        <h3 className="text-lg font-bold text-gray-900 group-hover:text-gray-700">
           {title}
         </h3>
-        <p className="text-gray-500 leading-relaxed">
+        <p className="text-sm text-gray-500 leading-relaxed">
           {description.slice(0, 100)}...
         </p>
       </div>

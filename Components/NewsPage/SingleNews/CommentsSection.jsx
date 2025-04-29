@@ -12,28 +12,34 @@ export function CommentsSection({ headlineId }) {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("idle");
 
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const res = await fetch(`/api/comments?headlineId=${headlineId}`);
-        const data = await res.json();
-        setComments(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  const [hasMore, setHasMore] = useState(true);
+  const [offset, setOffset] = useState(0);
+  const limit = 5;
 
-    fetchComments();
+  useEffect(() => {
+    loadComments(0, false);
   }, [headlineId]);
+
+  const loadComments = async (newOffset = offset, append = true) => {
+    const res = await fetch(
+      `/api/comments?headlineId=${headlineId}&limit=${limit}&offset=${newOffset}`
+    );
+    const data = await res.json();
+
+    if (data.length < limit) setHasMore(false);
+
+    setComments((prev) =>
+      append
+        ? [...prev, ...data.filter((c) => !prev.some((p) => p.id === c.id))]
+        : data
+    );
+
+    setOffset(newOffset + limit);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!text.trim() || text.trim().length < 5) {
-      setStatus("error");
-      return;
-    }
-
-    if (!isAuthenticated) {
+    if (!text.trim() || text.length < 5 || !isAuthenticated) {
       setStatus("error");
       return;
     }
@@ -49,17 +55,17 @@ export function CommentsSection({ headlineId }) {
           headlineId,
           userId: session.user.id,
           author: session.user.name,
+          image: session.user.image,
           text,
         }),
       });
 
-      if (!res.ok) throw new Error("Failed to add comment");
-
+      if (!res.ok) throw new Error();
       const newComment = await res.json();
-      setComments((prev) => [...prev, newComment]);
+      setComments((prev) => [newComment, ...prev]);
       setText("");
       setStatus("success");
-    } catch (error) {
+    } catch {
       setStatus("error");
     } finally {
       setLoading(false);
@@ -67,65 +73,83 @@ export function CommentsSection({ headlineId }) {
   };
 
   return (
-    <section className="w-full max-w-6xl mx-auto py-20 px-6">
-      <h2 className="text-3xl font-extrabold text-gray-900 mb-8 text-center">
-        Comments
-      </h2>
+    <section className="bg-white py-20 px-4 border-t border-gray-100">
+      <div className="max-w-4xl mx-auto">
+        <h2 className="text-3xl font-bold text-gray-900 mb-10">
+          Join the conversation
+        </h2>
 
-      {isAuthenticated ? (
-        <form onSubmit={handleSubmit} className="space-y-6 mb-10">
-          <textarea
-            className="w-full p-5 bg-gray-100 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none text-gray-900"
-            placeholder="Share your thoughts..."
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            rows={4}
-            disabled={loading}
-          />
-          <div className="flex items-center justify-between">
-            <button
-              type="submit"
-              className="px-10 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full transition duration-300 disabled:opacity-50"
+        {isAuthenticated ? (
+          <form onSubmit={handleSubmit} className="space-y-4 mb-12">
+            <textarea
+              className="w-full p-5 bg-gray-100 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-500 text-gray-900 resize-none"
+              placeholder="Write a comment..."
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              rows={4}
               disabled={loading}
-            >
-              {loading ? "Posting..." : "Post Comment"}
-            </button>
-            {status === "error" && (
-              <div className="text-red-500 text-sm mt-2">
-                Something went wrong. Try again.
-              </div>
-            )}
-            {status === "success" && (
-              <div className="text-green-600 text-sm mt-2">Comment added!</div>
-            )}
-          </div>
-        </form>
-      ) : (
-        <p className="text-gray-400 text-center mb-10">
-          Please log in to post a comment.
-        </p>
-      )}
+            />
+            <div className="flex items-center justify-between">
+              <button
+                type="submit"
+                disabled={loading}
+                className="px-6 py-3 bg-gray-800 text-white font-medium rounded-full hover:bg-gray-700 transition disabled:opacity-50"
+              >
+                {loading ? "Posting..." : "Post"}
+              </button>
+              {status === "error" && (
+                <span className="text-sm text-red-500">
+                  Please write more or log in
+                </span>
+              )}
+              {status === "success" && (
+                <span className="text-sm text-green-600">Comment added!</span>
+              )}
+            </div>
+          </form>
+        ) : (
+          <p className="text-gray-400 text-center mb-12">
+            Please log in to comment.
+          </p>
+        )}
 
-      {comments.length === 0 ? (
-        <div className="text-gray-400 text-center">
-          No comments yet. Be the first to comment!
-        </div>
-      ) : (
-        <ul className="space-y-6">
+        <ul className="space-y-6 mb-8">
           {comments.map((comment) => (
             <li
               key={comment.id}
-              className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 transition hover:shadow-md"
+              className="bg-gray-50 border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition"
             >
-              <div className="font-bold text-gray-900 text-lg">{comment.author}</div>
-              <div className="text-gray-500 mb-3">
-                {new Date(comment.createdAt).toLocaleString()}
+              <div className="flex items-center gap-4 mb-3">
+                <img
+                  src={comment.image || "/default-avatar.png"}
+                  alt="User avatar"
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+                <div>
+                  <p className="text-sm font-semibold text-gray-800">
+                    {comment.author}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    {new Date(comment.createdAt).toLocaleString()}
+                  </p>
+                </div>
               </div>
-              <div className="text-gray-800 text-xl">{comment.text}</div>
+              <p className="text-gray-700 text-sm">{comment.text}</p>
             </li>
           ))}
         </ul>
-      )}
+
+        {hasMore && (
+          <div className="flex justify-center">
+            <button
+              onClick={() => loadComments(offset)}
+              className="px-6 py-3 text-sm bg-gray-200 hover:bg-gray-300 rounded-full transition"
+            >
+              Load more
+            </button>
+          </div>
+        )}
+      </div>
     </section>
   );
 }

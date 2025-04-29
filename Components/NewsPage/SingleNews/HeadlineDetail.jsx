@@ -2,25 +2,24 @@
 
 export function HeadlineDetail({ headline }) {
   return (
-    <section className="text-center py-20">
-      <div className="max-w-5xl mx-auto px-4">
+    <section className="pt-32 pb-20 px-4 md:px-6 bg-white text-gray-900">
+      <div className="max-w-5xl mx-auto">
         <img
           src={headline.img}
           alt={headline.title}
-          className="w-full h-[500px] object-cover rounded-3xl shadow-2xl mb-10 transition-transform hover:scale-105 duration-500"
+          className="w-full h-[450px] object-cover rounded-3xl shadow-xl mb-12 transition-transform duration-500 hover:scale-[1.02]"
         />
-        <h1 className="text-5xl font-extrabold leading-tight mb-6 text-gray-900">
+        <h1 className="text-4xl sm:text-5xl font-bold mb-4 tracking-tight leading-tight">
           {headline.title}
         </h1>
-        <p className="text-gray-400 text-sm mb-8">
-          By{" "}
-          <span className="font-semibold text-gray-600">{headline.author}</span>{" "}
-          · {new Date(headline.createdAt).toLocaleDateString()}
+        <p className="text-sm text-gray-500 mb-6">
+          By <span className="font-semibold">{headline.author}</span> ·{" "}
+          {new Date(headline.createdAt).toLocaleDateString()}
         </p>
-        <p className="text-2xl font-bold text-gray-700 mb-6 leading-relaxed">
+        <p className="text-xl text-gray-700 font-medium mb-8">
           {headline.description}
         </p>
-        <div className="text-gray-800 text-xl font-normal leading-8 text-left">
+        <div className="text-lg leading-8 text-gray-800 whitespace-pre-wrap">
           {headline.fullText}
         </div>
       </div>
