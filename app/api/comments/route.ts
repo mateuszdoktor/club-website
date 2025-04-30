@@ -2,11 +2,11 @@ import { db } from "@/lib/db/db";
 import { NextResponse } from "next/server";
 import { v4 as uuid } from "uuid";
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
   const headlineId = searchParams.get("headlineId");
-  const limit = parseInt(searchParams.get("limit") || "5", 10);
-  const offset = parseInt(searchParams.get("offset") || "0", 10);
+  const limit = Number(searchParams.get("limit") ?? 5);
+  const offset = Number(searchParams.get("offset") ?? 0);
 
   if (!headlineId) {
     return NextResponse.json(
@@ -15,40 +15,40 @@ export async function GET(request: Request) {
     );
   }
 
-  const filtered = db.comments
-    .filter((comment) => comment.headlineId === Number(headlineId))
+  const comments = db.comments
+    .filter((c) => c.headlineId === headlineId)
     .sort(
       (a, b) =>
         new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-    );
+    )
+    .slice(offset, offset + limit);
 
-  const paginated = filtered.slice(offset, offset + limit);
-
-  return NextResponse.json(paginated);
+  return NextResponse.json(comments);
 }
 
-export async function POST(request: Request) {
+export async function POST(req: Request) {
   try {
-    const { headlineId, userId, author, text, image } = await request.json();
+    const body = await req.json();
+
+    const { headlineId, userId, author, text, image } = body;
 
     if (!headlineId || !userId || !author || !text) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
 
     const newComment = {
-      id: uuid(), 
-      headlineId: Number(headlineId),
+      id: uuid(),
+      headlineId,
       userId,
       author,
       text,
-      image: image || "/default-avatar.png",
+      image: image ?? "/default-avatar.png",
       createdAt: new Date().toISOString(),
     };
 
     db.comments.push(newComment);
-
     return NextResponse.json(newComment, { status: 201 });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Failed to add comment" },
       { status: 500 }

@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/translate/route.js", "app/news/[id]/page.tsx", "app/api/auth/[...nextauth]/route.js", "components/NewsPage/SingleNews/CommentsSection.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/translate/route.js", "app/news/[id]/page.tsx", "app/api/auth/[...nextauth]/route.ts", "components/NewsPage/SingleNews/CommentsSection.jsx"],
   "exclude": ["node_modules"]
 }

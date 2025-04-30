@@ -1,20 +1,20 @@
 "use client";
 
-import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export function LoginForm() {
   const router = useRouter();
   const params = useSearchParams();
-  const callbackUrl = params.get("callbackUrl") || "/";
+  const callbackUrl = params.get("callbackUrl") ?? "/";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function handleLogin(e) {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setErrorMsg("");
@@ -32,7 +32,7 @@ export function LoginForm() {
     } else if (result?.ok && result.url) {
       router.push(result.url);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f8fafc] to-[#e2e8f0] px-4 py-12">
@@ -56,7 +56,6 @@ export function LoginForm() {
             Sign in to continue your journey
           </p>
         </div>
-
 
         {errorMsg && (
           <p className="text-sm text-red-600 text-center font-medium -mt-2">
@@ -115,7 +114,6 @@ export function LoginForm() {
             "Sign In"
           )}
         </button>
-
       </form>
     </div>
   );

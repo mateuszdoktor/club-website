@@ -23,7 +23,6 @@ export default function TeamDisplay({ team, align }) {
           className="h-20 w-20 md:h-24 md:w-24 object-contain"
         />
       )}
-      {/* Mobile view name */}
       <span className="text-lg font-semibold text-center md:hidden">
         {team.name}
       </span>

@@ -1,4 +1,5 @@
 "use client";
+
 import { useRef } from "react";
 import CarouselItem from "./CarouselItem";
 import CarouselNav from "./CarouselNav";
@@ -7,26 +8,26 @@ import CarouselHeader from "./CarouselHeader";
 export default function HeadlinesCarousel({ content }) {
   const scrollRef = useRef(null);
   const firstItemRef = useRef(null);
-  const fallbackItemWidth = 300;
+  const fallbackWidth = 300;
 
-  const scroll = (direction) => {
+  const scroll = (dir) => {
     const container = scrollRef.current;
     if (!container) return;
 
-    const itemWidth = firstItemRef.current?.offsetWidth || fallbackItemWidth;
-    const scrollLeft = container.scrollLeft;
-    const maxScroll = container.scrollWidth - container.clientWidth;
+    const itemWidth = firstItemRef.current?.offsetWidth || fallbackWidth;
+    const max = container.scrollWidth - container.clientWidth;
+    const current = container.scrollLeft;
 
-    let targetScroll = scrollLeft;
+    const next =
+      dir === "left"
+        ? current === 0
+          ? max
+          : current - itemWidth
+        : Math.ceil(current) >= max
+        ? 0
+        : current + itemWidth;
 
-    if (direction === "left") {
-      targetScroll = scrollLeft === 0 ? maxScroll : scrollLeft - itemWidth;
-    } else if (direction === "right") {
-      targetScroll =
-        Math.ceil(scrollLeft) >= maxScroll ? 0 : scrollLeft + itemWidth;
-    }
-
-    container.scrollTo({ left: targetScroll, behavior: "smooth" });
+    container.scrollTo({ left: next, behavior: "smooth" });
   };
 
   return (
@@ -40,11 +41,11 @@ export default function HeadlinesCarousel({ content }) {
           ref={scrollRef}
           className="flex overflow-x-auto overflow-y-hidden scroll-smooth gap-6 no-scrollbar px-4"
         >
-          {content.map((item, index) => (
+          {content.map((item, i) => (
             <CarouselItem
               key={item.id}
               item={item}
-              ref={index === 0 ? firstItemRef : undefined}
+              ref={i === 0 ? firstItemRef : undefined}
             />
           ))}
         </div>

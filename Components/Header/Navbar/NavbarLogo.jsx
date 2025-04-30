@@ -6,7 +6,7 @@ import Link from "next/link";
 import logoWhite from "@/public/logo-white-no-bg.png";
 import logoNavy from "@/public/logo-navy-no-bg.png";
 
-export default function NavbarLogo({ isSolid }) {
+export default function NavbarLogo({ isSolid = false }) {
   return (
     <Link href="/" className="flex-shrink-0">
       <motion.div
@@ -17,7 +17,7 @@ export default function NavbarLogo({ isSolid }) {
       >
         <Image
           src={isSolid ? logoNavy : logoWhite}
-          alt="Logo"
+          alt="Real Madrid Logo"
           width={isSolid ? 80 : 60}
           height={isSolid ? 80 : 60}
           className="object-contain transition-transform duration-300"

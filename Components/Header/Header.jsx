@@ -10,7 +10,6 @@ export default function Header() {
       style={{ backgroundImage: "url(/IMG_2739.JPG)" }}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/20 z-10" />
-
       <Navbar />
 
       <motion.div

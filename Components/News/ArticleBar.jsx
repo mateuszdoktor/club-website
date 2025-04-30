@@ -3,9 +3,9 @@ import { CalendarDays, ExternalLink } from "lucide-react";
 export default function ArticleBar({ articles }) {
   return (
     <div className="overflow-x-auto whitespace-nowrap flex gap-6 snap-x snap-mandatory px-1 pb-2">
-      {articles.map((item, index) => (
+      {articles.map((item) => (
         <a
-          key={index}
+          key={item.url}
           href={item.url}
           target="_blank"
           rel="noopener noreferrer"

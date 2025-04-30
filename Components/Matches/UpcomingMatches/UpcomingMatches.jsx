@@ -1,20 +1,19 @@
 "use client";
 
 import { useRef } from "react";
+import { CalendarDays } from "lucide-react";
 import MatchCard from "./MatchCard";
 import MatchesNav from "./MatchesNav";
-import { CalendarDays } from "lucide-react";
-
 
 export default function UpcomingMatches({ matches }) {
   const scrollRef = useRef(null);
 
-  const handleScroll = (direction) => {
+  const handleScroll = (dir) => {
     const container = scrollRef.current;
     if (!container) return;
 
-    const scrollAmount = 380 * (direction === "left" ? -1 : 1);
-    container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    const offset = 380 * (dir === "left" ? -1 : 1);
+    container.scrollBy({ left: offset, behavior: "smooth" });
   };
 
   return (
@@ -26,6 +25,7 @@ export default function UpcomingMatches({ matches }) {
         </h2>
         <p className="text-neutral-500 mt-2">See what’s coming up next</p>
       </div>
+
       <div className="relative">
         <MatchesNav direction="left" onClick={() => handleScroll("left")} />
         <MatchesNav direction="right" onClick={() => handleScroll("right")} />

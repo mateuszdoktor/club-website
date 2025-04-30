@@ -5,7 +5,7 @@ import ArticleBar from "@/components/News/ArticleBar";
 
 export default function News({ articles }) {
   try {
-    if (!articles || articles.length === 0) {
+    if (!articles?.length) {
       return (
         <div className="p-4 bg-yellow-100 text-yellow-800 border border-yellow-300 rounded max-w-4xl mx-auto my-8">
           <p>No news available.</p>

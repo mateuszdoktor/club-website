@@ -52,15 +52,16 @@ export function CommentsSection({ headlineId }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          headlineId,
+          headlineId: Number(headlineId),
           userId: session.user.id,
           author: session.user.name,
-          image: session.user.image,
+          image: session.user.image ?? "/default-avatar.png",
           text,
         }),
       });
 
       if (!res.ok) throw new Error();
+
       const newComment = await res.json();
       setComments((prev) => [newComment, ...prev]);
       setText("");

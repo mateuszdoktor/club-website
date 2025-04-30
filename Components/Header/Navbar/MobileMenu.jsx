@@ -1,11 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import NavLink from "./NavLink";
-import { X } from "lucide-react";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { X } from "lucide-react";
+import NavLink from "./NavLink";
 
-export default function MobileMenu({ links, onClose}) {
+export default function MobileMenu({ links, onClose }) {
   const { data: session } = useSession();
 
   return (
@@ -16,7 +16,6 @@ export default function MobileMenu({ links, onClose}) {
       transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
       className="fixed inset-0 z-[999] flex flex-col md:hidden bg-white text-gray-900"
     >
-      {/* Close Icon */}
       <div className="flex justify-end px-4 py-4 border-b border-gray-200">
         <button
           onClick={onClose}
@@ -27,21 +26,19 @@ export default function MobileMenu({ links, onClose}) {
         </button>
       </div>
 
-      {/* Nav Links */}
       <nav className="flex flex-col items-center justify-center flex-1 gap-6 px-4 text-center">
-        {links.map((link) => (
-          <NavLink key={link.label} href={link.href} solid={true}>
+        {links.map(({ label, href }) => (
+          <NavLink key={label} href={href} solid>
             <span
               onClick={onClose}
               className="text-2xl font-semibold tracking-tight hover:opacity-80 transition"
             >
-              {link.label}
+              {label}
             </span>
           </NavLink>
         ))}
       </nav>
 
-      {/* Auth Section */}
       <div className="border-t border-gray-200 px-6 py-6 text-center">
         {session ? (
           <>

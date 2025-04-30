@@ -8,17 +8,14 @@ export default function MatchCard({ match }) {
         <img
           src={match.league.logo}
           alt={match.league.name}
-          className="h-7 w-7" // było 6x6
+          className="h-7 w-7"
         />
         <span className="text-[0.95rem]">
-          {" "}
-          {/* trochę większy font */}
           {match.league.name} – {match.league.round}
         </span>
       </div>
 
       <MatchTeamsRow home={match.teams.home} away={match.teams.away} />
-
       <MatchDateInfo date={match.fixture.date} />
     </li>
   );

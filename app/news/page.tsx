@@ -1,7 +1,7 @@
 import { getGNews } from "@/lib/services/newsService";
 import { HeadlineService } from "@/lib/services/headlineService";
 import { FeaturedHeadlines } from "@/components/NewsPage/FeaturedHeadlines";
-import { CountryNews } from "@/components//NewsPage/CountryNews";
+import { CountryNews } from "@/components/NewsPage/CountryNews";
 import { NewsList } from "@/components/NewsPage/NewsList";
 
 export default async function NewsPage() {
@@ -32,5 +32,3 @@ export default async function NewsPage() {
     </div>
   );
 }
-
-

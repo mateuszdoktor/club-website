@@ -8,7 +8,7 @@ export default function NewsLayout({
   return (
     <div>
       <SolidNavbar />
-      <>{children}</>
+      {children}
     </div>
   );
 }

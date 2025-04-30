@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useEffect, useState, useCallback } from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import clsx from "clsx";
 import { Menu, X } from "lucide-react";
+
 import NavbarLogo from "./NavbarLogo";
 import NavbarLinks from "./NavbarLinks";
 import MobileMenu from "./MobileMenu";
@@ -41,8 +42,24 @@ export default function Navbar() {
     return () => document.body.classList.remove("overflow-hidden");
   }, [isOpen]);
 
-  const AuthButton = () =>
-    session ? (
+  const AuthButton = useCallback(() => {
+    if (!session) {
+      return (
+        <button
+          onClick={() => signIn()}
+          className={clsx(
+            "hidden md:inline-flex px-5 py-2 rounded-full text-sm font-medium transition",
+            scrolled
+              ? "bg-gray-900 text-white hover:bg-gray-700"
+              : "bg-white/20 text-white hover:bg-white/30"
+          )}
+        >
+          Sign In
+        </button>
+      );
+    }
+
+    return (
       <div
         className="relative hidden md:block"
         onMouseEnter={() => setShowUserMenu(true)}
@@ -83,19 +100,8 @@ export default function Navbar() {
           )}
         </AnimatePresence>
       </div>
-    ) : (
-      <button
-        onClick={() => signIn()}
-        className={clsx(
-          "hidden md:inline-flex px-5 py-2 rounded-full text-sm font-medium transition",
-          scrolled
-            ? "bg-gray-900 text-white hover:bg-gray-700"
-            : "bg-white/20 text-white hover:bg-white/30"
-        )}
-      >
-        Sign In
-      </button>
     );
+  }, [session, scrolled, showUserMenu]);
 
   return (
     <>
@@ -114,9 +120,7 @@ export default function Navbar() {
           <div className="hidden md:flex flex-1 justify-start gap-6">
             <NavbarLinks links={navLinks.slice(0, 2)} solid={scrolled} />
           </div>
-          <div className="flex-shrink-0">
-            <NavbarLogo isSolid={scrolled} />
-          </div>
+          <NavbarLogo isSolid={scrolled} />
           <div className="flex flex-1 justify-end items-center gap-4">
             <div className="hidden md:flex gap-6">
               <NavbarLinks links={navLinks.slice(2)} solid={scrolled} />
@@ -145,10 +149,7 @@ export default function Navbar() {
 
       <AnimatePresence>
         {isOpen && (
-          <MobileMenu
-            links={navLinks}
-            onClose={() => setIsOpen(false)}
-          />
+          <MobileMenu links={navLinks} onClose={() => setIsOpen(false)} />
         )}
       </AnimatePresence>
     </>

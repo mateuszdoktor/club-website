@@ -1,8 +1,8 @@
-import NextAuth from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { db } from "@/lib/db/db";
 
-export const authOptions = {
+export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -12,33 +12,42 @@ export const authOptions = {
       },
       async authorize(credentials) {
         const user = db.users.find(
-          (user) =>
-            user.email === credentials?.email &&
-            user.password === credentials?.password
+          (u) =>
+            u.email === credentials?.email &&
+            u.password === credentials?.password
         );
-        return user || null;
+
+        if (!user) return null;
+
+        return {
+          id: user.id, 
+          name: user.name,
+          email: user.email,
+          image: user.image,
+        };
       },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
-  session: {
-    strategy: "jwt",
-  },
+  session: { strategy: "jwt" },
   callbacks: {
     async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
+      if (user && typeof user.id === "string") {
+        token.id = user.id; 
         token.name = user.name;
+        token.email = user.email;
+        token.image = user.image;
       }
       return token;
     },
     async session({ session, token }) {
-      if (token) {
+      if (session.user && typeof token.id === "string") {
         session.user.id = token.id;
       }
       return session;
     },
   },
+
   pages: {
     signIn: "/login",
   },

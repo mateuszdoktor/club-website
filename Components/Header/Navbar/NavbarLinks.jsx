@@ -1,11 +1,14 @@
 import NavLink from "./NavLink";
 
-export default function NavbarLinks({ links, solid }) {
+export default function NavbarLinks({
+  links,
+  solid = false,
+}) {
   return (
     <div className="flex items-center gap-6">
-      {links.map((link) => (
-        <NavLink key={link.label} href={link.href} solid={solid}>
-          {link.label}
+      {links.map(({ href, label }) => (
+        <NavLink key={label} href={href} solid={solid}>
+          {label}
         </NavLink>
       ))}
     </div>

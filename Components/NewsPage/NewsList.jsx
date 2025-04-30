@@ -22,10 +22,10 @@ export function NewsList({
           : "flex flex-col gap-8"
       }
     >
-      {articles.map((article, index) => (
+      {articles.map((a) => (
         <a
-          key={index}
-          href={article[linkKey]}
+          key={a[linkKey]}
+          href={a[linkKey]}
           target="_blank"
           rel="noopener noreferrer"
           className={`group overflow-hidden rounded-3xl border border-gray-200 bg-white hover:bg-gray-50 transition-all shadow-sm hover:shadow-md flex ${
@@ -34,17 +34,15 @@ export function NewsList({
               : "flex-col sm:flex-row h-full"
           }`}
         >
-          {article[imageKey] && (
+          {a[imageKey] && (
             <div
               className={`relative w-full ${
-                layout === "grid"
-                  ? "h-60" 
-                  : "h-48 sm:h-auto sm:w-64"
+                layout === "grid" ? "h-60" : "h-48 sm:h-auto sm:w-64"
               } overflow-hidden`}
             >
               <img
-                src={article[imageKey]}
-                alt={article[titleKey]}
+                src={a[imageKey]}
+                alt={a[titleKey]}
                 className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 ease-out"
               />
             </div>
@@ -52,23 +50,23 @@ export function NewsList({
 
           <div className="flex flex-col flex-1 justify-between p-6">
             <div className="flex-1 flex flex-col">
-              <h3 className="text-2xl font-semibold mb-3 text-gray-900 leading-snug group-hover:text-primary-600 transition-colors duration-300">
-                {article[titleKey]}
+              <h3 className="text-2xl font-semibold mb-3 text-gray-900 leading-snug group-hover:text-primary-600 transition-colors">
+                {a[titleKey]}
               </h3>
-              <p className="text-gray-600 text-base line-clamp-3 leading-relaxed">
-                {article[descriptionKey]}
+              <p className="text-base text-gray-600 leading-relaxed line-clamp-3">
+                {a[descriptionKey]}
               </p>
             </div>
 
-            {(article[sourceKey] || article[dateKey]) && (
-              <div className="text-gray-400 text-sm mt-6 flex items-center gap-2">
-                {article[dateKey] && (
-                  <span>{new Date(article[dateKey]).toLocaleDateString()}</span>
+            {(a[sourceKey] || a[dateKey]) && (
+              <div className="text-sm text-gray-400 mt-6 flex items-center gap-2">
+                {a[dateKey] && (
+                  <span>{new Date(a[dateKey]).toLocaleDateString()}</span>
                 )}
-                {article[sourceKey] && (
+                {a[sourceKey] && (
                   <>
                     <span>•</span>
-                    <span>{article[sourceKey]}</span>
+                    <span>{a[sourceKey]}</span>
                   </>
                 )}
               </div>

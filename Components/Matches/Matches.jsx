@@ -3,7 +3,7 @@ import UpcomingMatches from "./UpcomingMatches/UpcomingMatches";
 
 export default function Matches({ matches }) {
   try {
-    if (!matches || matches.length === 0) {
+    if (!matches?.length) {
       return (
         <div className="p-4 bg-yellow-100 text-yellow-800 border border-yellow-300 rounded">
           <p>No upcoming matches available.</p>
@@ -11,22 +11,20 @@ export default function Matches({ matches }) {
       );
     }
 
-    const sortedMatches = matches.sort((a, b) => {
-      const dateA = new Date(a.fixture.date).getTime();
-      const dateB = new Date(b.fixture.date).getTime();
-      return dateA - dateB;
-    });
+    const sorted = matches.sort(
+      (a, b) => new Date(a.fixture.date) - new Date(b.fixture.date)
+    );
 
     return (
       <div className="space-y-6">
-        <NextMatch match={sortedMatches[0]} />
-        <UpcomingMatches matches={sortedMatches.slice(1)} />
+        <NextMatch match={sorted[0]} />
+        <UpcomingMatches matches={sorted.slice(1)} />
       </div>
     );
-  } catch (error) {
+  } catch (err) {
     return (
       <div className="p-4 bg-red-100 text-red-800 border border-red-300 rounded">
-        <p>Error displaying matches: {error.message}</p>
+        <p>Error displaying matches: {err.message}</p>
       </div>
     );
   }

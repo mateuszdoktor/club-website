@@ -18,51 +18,43 @@ export function CountryNews() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    async function detectUserCountry() {
+    const detectUserCountry = async () => {
       try {
         const res = await fetch("https://ipapi.co/json/");
         const data = await res.json();
-        if (data && data.country_code) {
-          const userCountry = data.country_code.toLowerCase();
-          const supportedCountry = countries.find(
-            (c) => c.code === userCountry
-          );
-          if (supportedCountry) {
-            setCountry(userCountry);
-          }
-        }
-      } catch (error) {
-        console.error("Could not detect country", error);
+        const code = data?.country_code?.toLowerCase();
+        if (countries.some((c) => c.code === code)) setCountry(code);
+      } catch (err) {
+        console.error("Country detection failed", err);
       }
-    }
+    };
     detectUserCountry();
   }, []);
 
   useEffect(() => {
-    async function fetchNews() {
+    const fetchNews = async () => {
       setLoading(true);
       try {
         const res = await fetch(`/api/newsdata?country=${country}`);
         const data = await res.json();
         setArticles(data);
-      } catch (error) {
-        console.error("Failed to load news", error);
+      } catch (err) {
+        console.error("Failed to fetch news", err);
       } finally {
         setLoading(false);
       }
-    }
+    };
     fetchNews();
   }, [country]);
 
   return (
     <div>
-      <div className="flex flex-wrap gap-4 mb-8 justify-center">
+      <div className="flex flex-wrap justify-center gap-4 mb-8">
         {countries.map((c) => (
           <button
             key={c.code}
             onClick={() => setCountry(c.code)}
-            className={`flex items-center gap-2 border rounded-full px-4 py-2 text-lg transition-all
-            ${
+            className={`flex items-center gap-2 border rounded-full px-4 py-2 text-lg transition-all ${
               country === c.code
                 ? "bg-primary-100 border-primary-500 text-primary-700"
                 : "bg-gray-100 hover:bg-gray-200"

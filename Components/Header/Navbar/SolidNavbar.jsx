@@ -24,16 +24,16 @@ export default function SolidNavbar() {
   useEffect(() => {
     let lastScrollY = window.scrollY;
 
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const scrollingDown = currentScrollY > lastScrollY;
+    const onScroll = () => {
+      const currentY = window.scrollY;
+      const scrollingDown = currentY > lastScrollY;
 
-      setShowNavbar(!scrollingDown || currentScrollY < 100);
-      lastScrollY = currentScrollY;
+      setShowNavbar(!scrollingDown || currentY < 100);
+      lastScrollY = currentY;
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
@@ -44,23 +44,17 @@ export default function SolidNavbar() {
       className="fixed top-0 z-50 w-full bg-white/90 backdrop-blur-md text-gray-900 border-b border-gray-200"
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-4 md:px-8">
-        {/* Left links */}
         <div className="hidden md:flex flex-1 justify-start gap-6">
           <NavbarLinks links={navLinks.slice(0, 2)} solid />
         </div>
 
-        {/* Center logo */}
-        <div className="flex-shrink-0">
-          <NavbarLogo isSolid />
-        </div>
+        <NavbarLogo isSolid />
 
-        {/* Right: links + auth */}
         <div className="flex flex-1 justify-end items-center gap-4">
           <div className="hidden md:flex gap-6">
             <NavbarLinks links={navLinks.slice(2)} solid />
           </div>
 
-          {/* Auth */}
           {session ? (
             <div
               className="relative hidden md:block"
@@ -111,7 +105,6 @@ export default function SolidNavbar() {
             </button>
           )}
 
-          {/* Mobile menu toggle */}
           <div className="md:hidden ml-2">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -124,7 +117,9 @@ export default function SolidNavbar() {
       </div>
 
       <AnimatePresence>
-        {isOpen && <MobileMenu links={navLinks} isSolid />}
+        {isOpen && (
+          <MobileMenu links={navLinks} onClose={() => setIsOpen(false)} />
+        )}
       </AnimatePresence>
     </motion.nav>
   );
