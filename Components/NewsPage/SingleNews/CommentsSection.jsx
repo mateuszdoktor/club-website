@@ -55,7 +55,6 @@ export function CommentsSection({ headlineId }) {
           headlineId: Number(headlineId),
           userId: session.user.id,
           author: session.user.name,
-          image: session.user.image ?? "/default-avatar.png",
           text,
         }),
       });

@@ -21,16 +21,22 @@ export async function GET(req: Request) {
       (a, b) =>
         new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
     )
-    .slice(offset, offset + limit);
+    .slice(offset, offset + limit)
+    .map((comment) => {
+      const user = db.users.find((u) => u.id === comment.userId);
+      return {
+        ...comment,
+        image: user?.image ?? "/default-avatar.png",
+      };
+    });
 
   return NextResponse.json(comments);
 }
 
+
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-
-    const { headlineId, userId, author, text, image } = body;
+    const { headlineId, userId, author, text } = await req.json();
 
     if (!headlineId || !userId || !author || !text) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
@@ -42,7 +48,6 @@ export async function POST(req: Request) {
       userId,
       author,
       text,
-      image: image ?? "/default-avatar.png",
       createdAt: new Date().toISOString(),
     };
 
