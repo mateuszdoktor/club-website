@@ -72,7 +72,7 @@ export default function Navbar() {
           <img
             src={session.user?.image || "/default-avatar.png"}
             alt="avatar"
-            className="w-9 h-9 rounded-full object-cover"
+            className="w-11 h-11 rounded-full object-cover"
           />
         </motion.button>
         <AnimatePresence>

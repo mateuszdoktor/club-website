@@ -8,13 +8,13 @@ export function FeaturedHeadlines({ headlines }) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         <Link
           href={`/news/${headlines[0].id}`}
-          className="group relative rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-end min-h-[600px] bg-black"
+          className="group relative rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-end min-h-[600px] bg-gray-900"
         >
           {headlines[0].img && (
             <img
               src={headlines[0].img}
               alt={headlines[0].title}
-              className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition duration-300"
+              className="absolute inset-0 w-full h-full object-cover brightness-90 contrast-110 opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-transform duration-500 ease-in-out"
             />
           )}
           <div className="relative p-8 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end h-full">
@@ -32,13 +32,13 @@ export function FeaturedHeadlines({ headlines }) {
             <Link
               key={h.id}
               href={`/news/${h.id}`}
-              className="group relative rounded-3xl overflow-hidden shadow-md flex flex-col justify-end min-h-[280px] bg-gray-100"
+              className="group relative rounded-3xl overflow-hidden shadow-md flex flex-col justify-end min-h-[280px] bg-gray-900"
             >
               {h.img && (
                 <img
                   src={h.img}
                   alt={h.title}
-                  className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition duration-300"
+                  className="absolute inset-0 w-full h-full object-cover brightness-90 contrast-110 opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-transform duration-500 ease-in-out"
                 />
               )}
               <div className="relative p-6 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end h-full">
