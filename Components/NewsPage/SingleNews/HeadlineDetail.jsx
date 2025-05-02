@@ -13,7 +13,7 @@ export function HeadlineDetail({ headline }) {
           {headline.title}
         </h1>
         <p className="text-sm text-gray-500 mb-6">
-          By <span className="font-semibold">{headline.author}</span> ·{" "}
+          By <span className="font-semibold">{headline.author.name}</span> ·{" "}
           {new Date(headline.createdAt).toLocaleDateString()}
         </p>
         <p className="text-xl text-gray-700 font-medium mb-8">
