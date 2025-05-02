@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String    @id @default(cuid())
+  name     String
+  email    String    @unique
+  password String    // Powinno być hashowane
+  image    String?   // Nullable, opcjonalne
+  comments Comment[]
+  headlines Headline[] @relation("AuthorHeadlines")
+}
+
+model Headline {
+  id          String     @id @default(cuid())
+  img         String
+  title       String   @unique
+  description String
+  fullText    String
+  authorId    String
+  author      User       @relation("AuthorHeadlines", fields: [authorId], references: [id])
+  comments    Comment[]
+  createdAt   DateTime   @default(now())
+}
+
+model Comment {
+  id         String   @id @default(cuid())
+  headlineId String
+  userId     String
+  text       String
+  createdAt  DateTime @default(now())
+  
+  headline   Headline @relation(fields: [headlineId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
+}
