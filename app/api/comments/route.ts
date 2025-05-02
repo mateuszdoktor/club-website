@@ -38,10 +38,11 @@ export async function POST(req: NextRequest) {
     const { headlineId, userId, text } = await req.json();
 
     if (!headlineId || !userId || !text) {
+      console.error("Missing fields", { headlineId, userId, text });
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
 
-    const newComment: CommentWithUser = await commentService.addComment({
+    const newComment = await commentService.addComment({
       headlineId,
       userId,
       text,
@@ -58,7 +59,7 @@ export async function POST(req: NextRequest) {
       { status: 201 }
     );
   } catch (err) {
-    console.error(err);
+    console.error("Server error", err);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

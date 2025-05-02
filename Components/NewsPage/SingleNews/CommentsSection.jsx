@@ -37,40 +37,47 @@ export function CommentsSection({ headlineId }) {
     setOffset(newOffset + limit);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!text.trim() || text.length < 5 || !isAuthenticated) {
-      setStatus("error");
-      return;
-    }
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!text.trim() || text.length < 5 || !isAuthenticated) {
+    setStatus("error");
+    return;
+  }
 
-    setLoading(true);
-    setStatus("idle");
+  if (!session?.user?.id) {
+    console.error("Missing session.user.id");
+    setStatus("error");
+    return;
+  }
 
-    try {
-      const res = await fetch("/api/comments", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          headlineId: Number(headlineId),
-          userId: session.user.id,
-          author: session.user.name,
-          text,
-        }),
-      });
+  setLoading(true);
+  setStatus("idle");
 
-      if (!res.ok) throw new Error();
+  try {
+    const res = await fetch("/api/comments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        headlineId,
+        userId: session.user.id,
+        text,
+      }),
+    });
 
-      const newComment = await res.json();
-      setComments((prev) => [newComment, ...prev]);
-      setText("");
-      setStatus("success");
-    } catch {
-      setStatus("error");
-    } finally {
-      setLoading(false);
-    }
-  };
+    if (!res.ok) throw new Error("Failed to post comment");
+
+    const newComment = await res.json();
+    setComments((prev) => [newComment, ...prev]);
+    setText("");
+    setStatus("success");
+  } catch (err) {
+    console.error(err);
+    setStatus("error");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <section className="bg-white py-20 px-4 border-t border-gray-100">
