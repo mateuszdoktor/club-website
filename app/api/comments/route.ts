@@ -1,62 +1,64 @@
-import { db } from "@/lib/db/db";
-import { NextResponse } from "next/server";
-import { v4 as uuid } from "uuid";
+import { commentService } from "@/lib/services/commentService";
+import { NextRequest, NextResponse } from "next/server";
+import { Comment, User } from "@prisma/client";
 
-export async function GET(req: Request) {
+type CommentWithUser = Comment & {
+  user: Pick<User, "name" | "image">;
+};
+
+export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const headlineId = searchParams.get("headlineId");
   const limit = Number(searchParams.get("limit") ?? 5);
   const offset = Number(searchParams.get("offset") ?? 0);
 
   if (!headlineId) {
-    return NextResponse.json(
-      { error: "headlineId is required" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Missing headlineId" }, { status: 400 });
   }
 
-  const comments = db.comments
-    .filter((c) => c.headlineId === headlineId)
-    .sort(
-      (a, b) =>
-        new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-    )
-    .slice(offset, offset + limit)
-    .map((comment) => {
-      const user = db.users.find((u) => u.id === comment.userId);
-      return {
-        ...comment,
-        image: user?.image ?? "/default-avatar.png",
-      };
-    });
+  const comments: CommentWithUser[] = await commentService.getPaginatedComments(
+    headlineId,
+    limit,
+    offset
+  );
 
-  return NextResponse.json(comments);
+  return NextResponse.json(
+    comments.map((c) => ({
+      id: c.id,
+      text: c.text,
+      createdAt: c.createdAt,
+      author: c.user.name,
+      image: c.user.image ?? "/default-avatar.png",
+    }))
+  );
 }
 
-
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
-    const { headlineId, userId, author, text } = await req.json();
+    const { headlineId, userId, text } = await req.json();
 
-    if (!headlineId || !userId || !author || !text) {
+    if (!headlineId || !userId || !text) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
 
-    const newComment = {
-      id: uuid(),
+    const newComment: CommentWithUser = await commentService.addComment({
       headlineId,
       userId,
-      author,
       text,
-      createdAt: new Date().toISOString(),
-    };
+    });
 
-    db.comments.push(newComment);
-    return NextResponse.json(newComment, { status: 201 });
-  } catch {
     return NextResponse.json(
-      { error: "Failed to add comment" },
-      { status: 500 }
+      {
+        id: newComment.id,
+        text: newComment.text,
+        createdAt: newComment.createdAt,
+        author: newComment.user.name,
+        image: newComment.user.image ?? "/default-avatar.png",
+      },
+      { status: 201 }
     );
+  } catch (err) {
+    console.error(err);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

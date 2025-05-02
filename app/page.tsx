@@ -1,4 +1,3 @@
-// app/page.tsx
 import { getMatches } from "@/lib/services/matchService";
 import { getGNews } from "@/lib/services/newsService";
 import { HeadlineService } from "@/lib/services/headlineService";
