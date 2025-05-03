@@ -2,7 +2,7 @@ import { HeadlineService } from "@/lib/services/headlineService";
 import { notFound } from "next/navigation";
 import { HeadlineDetail } from "@/components/NewsPage/SingleNews/HeadlineDetail";
 import { MoreHeadlines } from "@/components/NewsPage/SingleNews/MoreHeadlines";
-import { CommentsSection } from "@/components/NewsPage/SingleNews/CommentsSection";
+import { CommentsSection } from "@/components/NewsPage/SingleNews/Comments/CommentsSection";
 
 export default async function HeadlinePage(
   props: Promise<{ params: { id: string } }>

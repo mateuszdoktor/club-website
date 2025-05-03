@@ -31,7 +31,8 @@
     "app/api/translate/route.js",
     "app/news/[id]/page.tsx",
     "app/api/auth/[...nextauth]/route.ts",
-    "components/NewsPage/SingleNews/CommentsSection.jsx"
+    "components/NewsPage/SingleNews/Comments/CommentsSection.jsx",
+    "components/NewsPage/SingleNews/Comments/CommentsForm.jsx"
   ],
   "exclude": ["node_modules"]
 }
