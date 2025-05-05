@@ -12,7 +12,7 @@ import MobileMenu from "./MobileMenu";
 
 const navLinks = [
   { href: "/news", label: "News" },
-  { href: "/", label: "Season" },
+  { href: "/season", label: "Season" },
   { href: "/team", label: "Team" },
   { href: "/club", label: "Club" },
 ];

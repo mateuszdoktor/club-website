@@ -5,7 +5,7 @@ import Link from "next/link";
 import PlayerProfileClient from "./PlayerProfileClient";
 
 export default async function PlayerPage({ params }) {
-  const { id } = params;
+  const { id } = await params;
   const playerData = await getPlayer({ id: Number(id) });
 
   if (!playerData) {

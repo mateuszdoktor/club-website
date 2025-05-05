@@ -3,7 +3,7 @@ import { commentService } from "@/lib/services/commentService";
 export async function CommentsServer({ headlineId }) {
   const comments = await commentService.getPaginatedComments(
     headlineId,
-    100,
+    5,
     0
   );
 

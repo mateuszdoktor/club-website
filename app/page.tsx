@@ -1,4 +1,4 @@
-import { getMatches } from "@/lib/services/matchService";
+import { getUpcomingMatches } from "@/lib/services/matchService";
 import { getGNews } from "@/lib/services/newsService";
 import { HeadlineService } from "@/lib/services/headlineService";
 
@@ -12,7 +12,7 @@ export const dynamic = "force-dynamic";
 export default async function Home() {
   const [headlines, matches, newsArticles] = await Promise.all([
     HeadlineService.getAllHeadlines(),
-    getMatches(),
+    getUpcomingMatches(),
     getGNews(),
   ]);
 
