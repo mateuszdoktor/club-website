@@ -1,44 +1,57 @@
 "use client";
 
 import { useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-export function LoginForm() {
+export function RegisterForm() {
   const router = useRouter();
-  const params = useSearchParams();
-  const callbackUrl = params.get("callbackUrl") ?? "/";
-
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [image, setImage] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setErrorMsg("");
+  const isValidImageUrl = (url) => {
+    try {
+      const parsed = new URL(url);
+      return /\.(jpg|jpeg|png|gif|webp|svg)$/.test(parsed.pathname);
+    } catch {
+      return false;
+    }
+  };
 
-    const result = await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-      callbackUrl,
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setErrorMsg("");
+    setLoading(true);
+
+    if (image && !isValidImageUrl(image)) {
+      setErrorMsg("Please provide a valid image URL (jpg, png, etc.)");
+      setLoading(false);
+      return;
+    }
+
+    const res = await fetch("/api/register", {
+      method: "POST",
+      body: JSON.stringify({ name, email, password, image }),
+      headers: { "Content-Type": "application/json" },
     });
 
-    if (result?.error) {
-      setErrorMsg("Invalid email or password.");
+    const data = await res.json();
+    if (!res.ok) {
+      setErrorMsg(data.message || "Something went wrong");
       setLoading(false);
-    } else if (result?.ok && result.url) {
-      router.push(result.url);
+    } else {
+      router.push("/login");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f8fafc] to-[#e2e8f0] px-4 py-12">
+    <div className="min-h-screen flex items-center justify-center px-4 py-12">
       <form
-        onSubmit={handleLogin}
+        onSubmit={handleRegister}
         className="w-full max-w-md space-y-6 bg-white p-10 rounded-3xl border border-gray-200 shadow-2xl"
       >
         <div className="flex justify-center mb-4">
@@ -51,10 +64,10 @@ export function LoginForm() {
 
         <div className="text-center">
           <h1 className="text-3xl font-black text-[#0a1e41] tracking-tight uppercase">
-            Welcome, Madridista
+            Join the club
           </h1>
           <p className="mt-2 text-sm text-gray-500">
-            Sign in to continue your journey
+            Create an account to get started
           </p>
         </div>
 
@@ -66,9 +79,16 @@ export function LoginForm() {
 
         <div className="space-y-4">
           <input
+            type="text"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            className="w-full px-4 py-3 rounded-xl text-sm bg-gray-100 border border-transparent focus:outline-none focus:ring-2 focus:ring-[#0a1e41] focus:border-[#0a1e41] transition"
+          />
+          <input
             type="email"
             placeholder="Email address"
-            autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -77,12 +97,31 @@ export function LoginForm() {
           <input
             type="password"
             placeholder="Password"
-            autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
             className="w-full px-4 py-3 rounded-xl text-sm bg-gray-100 border border-transparent focus:outline-none focus:ring-2 focus:ring-[#0a1e41] focus:border-[#0a1e41] transition"
           />
+          <input
+            type="url"
+            placeholder="Avatar image URL (optional)"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+            className="w-full px-4 py-3 rounded-xl text-sm bg-gray-100 border border-transparent focus:outline-none focus:ring-2 focus:ring-[#0a1e41] focus:border-[#0a1e41] transition"
+          />
+          {image && (
+            <div className="flex justify-center">
+              <img
+                src={image}
+                onError={(e) =>
+                  (e.currentTarget.src =
+                    "https://png.pngtree.com/png-clipart/20210129/ourmid/pngtree-default-male-avatar-png-image_2811083.jpg")
+                }
+                alt="Avatar Preview"
+                className="h-16 w-16 object-cover rounded-full border"
+              />
+            </div>
+          )}
         </div>
 
         <button
@@ -112,13 +151,14 @@ export function LoginForm() {
               />
             </svg>
           ) : (
-            "Sign In"
+            "Sign Up"
           )}
         </button>
+
         <p className="text-sm text-center mt-4">
-          Don’t have an account?{" "}
-          <Link href="/register" className="text-blue-600 hover:underline">
-            Register here
+          Already have an account?{" "}
+          <Link href="/login" className="text-blue-600 hover:underline">
+            Login here
           </Link>
         </p>
       </form>

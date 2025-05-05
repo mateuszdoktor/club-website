@@ -1,5 +1,3 @@
-"use server";
-
 import { commentService } from "@/lib/services/commentService";
 import { revalidatePath } from "next/cache";
 
