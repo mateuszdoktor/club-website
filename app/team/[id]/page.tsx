@@ -4,7 +4,12 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import PlayerProfileClient from "./PlayerProfileClient";
 
-export default async function PlayerPage({ params }) {
+type PlayerPageProps = {
+  params: { id: string };
+};
+
+
+export default async function PlayerPage({ params }: PlayerPageProps) {
   const { id } = await params;
   const playerData = await getPlayer({ id: Number(id) });
 
@@ -14,7 +19,8 @@ export default async function PlayerPage({ params }) {
 
   const { player, statistics } = playerData;
   const asset = playerAssets[player.id];
-  const flagCode = countryCodeMap[player.nationality];
+  const flagCode =
+    countryCodeMap[player.nationality as keyof typeof countryCodeMap] ?? "us";
 
   return (
     <div className="max-w-[100rem] mx-auto px-6 py-20 pt-36">

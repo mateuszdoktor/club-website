@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import NavbarLogo from "./NavbarLogo";
-import NavbarLinks from "./NavbarLinks";
-import MobileMenu from "./MobileMenu";
+import NavbarLogo from "./Header/Navbar/NavbarLogo";
+import NavbarLinks from "./Header/Navbar/NavbarLinks";
+import MobileMenu from "./Header/Navbar/MobileMenu";
 
 const navLinks = [
   { href: "/news", label: "News" },

@@ -1,8 +1,8 @@
 import { getGNews } from "@/lib/services/newsService";
 import { HeadlineService } from "@/lib/services/headlineService";
-import { FeaturedHeadlines } from "@/components/NewsPage/FeaturedHeadlines";
-import { CountryNews } from "@/components/NewsPage/CountryNews";
-import { NewsList } from "@/components/NewsPage/NewsList";
+import { FeaturedHeadlines } from "@/components/news/FeaturedHeadlines";
+import { CountryNews } from "@/components/news/CountryNews";
+import { NewsList } from "@/components/news/NewsList";
 
 export default async function NewsPage() {
   const [headlines, gnewsArticles] = await Promise.all([

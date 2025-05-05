@@ -8,14 +8,7 @@ import { useEffect } from "react";
 import $ from "jquery";
 import _ from "lodash";
 import noUiSlider from "nouislider";
-// import "datatables.net";
-// import "dropzone/dist/dropzone-min.js";
 
-// window.$ = $;
-// window._ = _;
-// window.jQuery = $;
-// window.DataTable = $.fn.dataTable;
-// window.noUiSlider = noUiSlider;
 
 async function loadFlyonUI() {
   return import("flyonui/flyonui");

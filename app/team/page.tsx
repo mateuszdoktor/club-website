@@ -1,23 +1,10 @@
 import { getPlayers } from "@/lib/services/playersService";
-import PlayerCard from "@/components/PlayerCard";
+import PlayerCard from "@/components/team/PlayerCard";
 import { playerAssets } from "@/lib/data/teamData";
-
-const orderedPositions = [
-  "Goalkeeper",
-  "Defender",
-  "Midfielder",
-  "Attacker",
-  "Unknown",
-];
-
-function groupPlayersByPosition(players) {
-  return players.reduce((acc, { player, statistics }) => {
-    const position = statistics?.[0]?.games?.position || "Unknown";
-    if (!acc[position]) acc[position] = [];
-    acc[position].push({ player, statistics });
-    return acc;
-  }, {});
-}
+import {
+  groupPlayersByPosition,
+  orderedPositions,
+} from "@/lib/utils/playerUtils";
 
 export default async function TeamPage() {
   const players = await getPlayers();
@@ -35,8 +22,8 @@ export default async function TeamPage() {
 
         const sortedPlayers = [...playersInPos].sort(
           (a, b) =>
-            (playerAssets[a.player.id]?.number ?? Infinity) -
-            (playerAssets[b.player.id]?.number ?? Infinity)
+            (playerAssets[a.player.id as number]?.number ?? Infinity) -
+            (playerAssets[b.player.id as number]?.number ?? Infinity)
         );
 
         return (

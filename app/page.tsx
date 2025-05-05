@@ -2,10 +2,10 @@ import { getUpcomingMatches } from "@/lib/services/matchService";
 import { getGNews } from "@/lib/services/newsService";
 import { HeadlineService } from "@/lib/services/headlineService";
 
-import HeadlinesCarousel from "@/components/Headlines/HeadlinesCarousel";
-import Matches from "@/components/Matches/Matches";
-import News from "@/components/News/News";
-import Header from "@/components/Header/Header";
+import HeadlinesCarousel from "@/components/homepage/headlines/HeadlinesCarousel";
+import Matches from "@/components/homepage/matches/Matches";
+import News from "@/components/homepage/news/News";
+import Header from "@/components/layout/header/Header";
 
 export const dynamic = "force-dynamic";
 

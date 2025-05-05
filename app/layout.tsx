@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SessionProviderWrapper } from "@/components/SessionProviderWrapper";
 import FlyonuiScript from "@/components/FlyonuiScript";
-import Footer from "@/components/Footer/Footer";
+import Footer from "@/components/layout/footer/Footer";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({

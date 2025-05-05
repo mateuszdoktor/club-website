@@ -1,7 +1,7 @@
-import NewsHeading from "@/components/News/NewsHeading";
-import FeaturedArticle from "@/components/News/FeaturedArticle";
-import ArticleGrid from "@/components/News/ArticleGrid";
-import ArticleBar from "@/components/News/ArticleBar";
+import NewsHeading from "@/components/homepage/news/NewsHeading";
+import FeaturedArticle from "@/components/homepage/news/FeaturedArticle";
+import ArticleGrid from "@/components/homepage/news/ArticleGrid";
+import ArticleBar from "@/components/homepage/news/ArticleBar";
 
 export default function News({ articles }) {
   try {

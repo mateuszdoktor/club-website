@@ -10,30 +10,28 @@ export default function PlayerProfileClient({
 }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const realMadridStats = useMemo(
-    () => statistics.filter((s) => s.team.id === 541),
-    [statistics]
-  );
-
-  const uniqueStats = useMemo(() => {
+  const realMadridStats = useMemo(() => {
     const seen = new Set();
-    return realMadridStats.filter((s) => {
-      if (seen.has(s.league.name)) return false;
+    return statistics.filter((s) => {
+      if (s.team.id !== 541 || seen.has(s.league.name)) return false;
       seen.add(s.league.name);
       return true;
     });
-  }, [realMadridStats]);
+  }, [statistics]);
 
   const competitions = useMemo(
     () =>
-      uniqueStats.map(({ league }) => ({
+      realMadridStats.map(({ league }) => ({
         name: league.name,
         logo: league.logo,
       })),
-    [uniqueStats]
+    [realMadridStats]
   );
 
-  const stats = uniqueStats[selectedIndex];
+  const stats = useMemo(
+    () => realMadridStats[selectedIndex],
+    [realMadridStats, selectedIndex]
+  );
 
   return (
     <div className="space-y-14">
@@ -156,7 +154,7 @@ export default function PlayerProfileClient({
 
 function renderStatGroup(title, statsArray) {
   const filtered = statsArray.filter(
-    ({ value }) => value !== null && value !== undefined && value !== "–"
+    ({ value }) => value != null && value !== "–"
   );
   if (filtered.length === 0) return null;
 
@@ -209,5 +207,4 @@ const formatRating = (rating) => {
 
 const formatPercent = (value) => (value != null ? `${value}%` : null);
 
-const safeStat = (value) =>
-  value !== undefined && value !== null ? value : null;
+const safeStat = (value) => (value != null ? value : null);

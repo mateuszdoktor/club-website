@@ -1,4 +1,4 @@
-import SolidNavbar from "@/components/Header/Navbar/SolidNavbar";
+import SolidNavbar from "@/components/layout/SolidNavbar";
 
 export default function TeamLayout({
   children,

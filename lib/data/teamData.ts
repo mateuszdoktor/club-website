@@ -1,4 +1,9 @@
-export const playerAssets = {
+export type PlayerAsset = {
+  image: string,
+  number: number,
+};
+
+export const playerAssets: Record<number, PlayerAsset> = {
   730: {
     image:
       "https://publish-p47754-e237306.adobeaemcloud.com/adobe/dynamicmedia/deliver/dm-aid--2b5b3b3f-d264-4b88-a686-7f3ffcf5acca/_80x501____9.app.webp?preferwebp=true&width=288&height=384",
@@ -92,7 +97,7 @@ export const playerAssets = {
   762: {
     image:
       "https://publish-p47754-e237306.adobeaemcloud.com/adobe/dynamicmedia/deliver/dm-aid--a97407da-37f5-4010-9dde-c3cd85827c11/_80x501____6.app.webp?preferwebp=true&width=288&height=384",
-    number: 10,
+    number: 7,
   },
   10009: {
     image:

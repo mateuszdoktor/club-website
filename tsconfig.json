@@ -31,8 +31,11 @@
     "app/api/translate/route.js",
     "app/news/[id]/page.tsx",
     "app/api/auth/[...nextauth]/route.ts",
-    "components/NewsPage/SingleNews/Comments/CommentsSection.jsx",
-    "components/NewsPage/SingleNews/Comments/CommentsForm.jsx"
-, "app/team/page.jsx", "components/MatchCard.jsx", "app/season/page.jsx"  ],
+    "components/news/single-news/comments/CommentsSection.jsx",
+    "components/news/single-news/comments/CommentsForm.jsx",
+    "app/team/page.tsx",
+    "components/season/MatchCard.jsx",
+    "app/season/page.tsx"
+  ],
   "exclude": ["node_modules"]
 }
