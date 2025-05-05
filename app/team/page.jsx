@@ -24,7 +24,7 @@ export default async function TeamPage() {
   const grouped = groupPlayersByPosition(players);
 
   return (
-    <div className="max-w-[90rem] mx-auto px-6 py-24 pt-[96px]">
+    <div className="max-w-[90rem] mx-auto px-6 py-24 pt-36">
       <h1 className="text-6xl font-extrabold text-center mb-24 text-neutral-900 tracking-tight">
         Real Madrid Squad
       </h1>

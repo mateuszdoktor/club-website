@@ -11,8 +11,8 @@ import MobileMenu from "./MobileMenu";
 const navLinks = [
   { href: "/news", label: "News" },
   { href: "/", label: "Season" },
-  { href: "/", label: "Team" },
-  { href: "/", label: "Club" },
+  { href: "/team", label: "Team" },
+  { href: "/club", label: "Club" },
 ];
 
 export default function SolidNavbar() {

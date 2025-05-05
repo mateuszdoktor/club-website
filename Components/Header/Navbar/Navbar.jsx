@@ -14,7 +14,7 @@ const navLinks = [
   { href: "/news", label: "News" },
   { href: "/", label: "Season" },
   { href: "/team", label: "Team" },
-  { href: "/", label: "Club" },
+  { href: "/club", label: "Club" },
 ];
 
 export default function Navbar() {
