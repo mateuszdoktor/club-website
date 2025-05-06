@@ -1,4 +1,4 @@
-# Real Madrid Fanpage – Fullstack Football Portal 🏟️⚽
+# Madridista – Fullstack Football Portal 🏟️⚽
 
 > ⚠️ This project is intended **for portfolio and educational purposes only**. It is not designed or maintained for public usage.
 
@@ -6,10 +6,9 @@
 
 ## 📌 About
 
-**Real Madrid Fanpage** is a fullstack football web application built with Next.js App Router and TailwindCSS, designed to deliver up-to-date football content, Real Madrid stats, and match info.
+Madridista is a fullstack web application dedicated to Real Madrid supporters. It offers live match updates, detailed player and team statistics, and the latest football news.
 
-The app combines external football and news APIs with internal content management, and even includes basic user account support for login and registration.
-
+The platform integrates real-time data from external football and news APIs, while also supporting internal content management. Users can create accounts, log in, and share their thoughts in comment.
 ---
 
 ## 🧠 Key Features
@@ -35,9 +34,8 @@ The app combines external football and news APIs with internal content managemen
   - Club history, stadium, and general info
 
 - **User Authentication**
-  - Sign up / log in using `NextAuth.js`
-  - Users stored and managed with Supabase
-
+  - Sign up / log in
+    
 ---
 
 ## 🧰 Tech Stack
@@ -46,7 +44,7 @@ The app combines external football and news APIs with internal content managemen
 |---------------------|-------------------------------------------------------------|
 | **Frontend**        | Next.js (App Router), React, Tailwind CSS, TypeScript       |
 | **Backend**         | API Routes (Next.js), Supabase, Prisma                      |
-| **Authentication**  | NextAuth.js with Supabase Adapter                           |
+| **Authentication**  | NextAuth.js                            |
 | **APIs**            | API-Football, GNews API, NewsData API                       |
 | **Database**        | PostgreSQL (hosted via Supabase)                            |
 
