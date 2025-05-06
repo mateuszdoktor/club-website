@@ -88,17 +88,14 @@ NEXTAUTH_URL=http://localhost:3000
 
 # Site base URL
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
+
 🚧 Roadmap / Limitations
 
 Project is not actively maintained.
 No admin panel – admin content is manually added.
 API rate limits may affect news/statistics fetching.
-User auth exists but is not used for advanced user features (e.g. commenting, saving favorites).
-🧠 What I Learned
 
-✍️ Add a short paragraph here on what you gained technically – e.g. fullstack setup, combining server/client components, external APIs, working with Supabase, learning NextAuth, etc.
 ✍️ Author
+Mateusz Doktor 
 
-Mateusz [fill in your GitHub or LinkedIn profile link if you'd like]
-© 2025 – All rights reserved
 
