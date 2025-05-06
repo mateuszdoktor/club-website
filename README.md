@@ -101,6 +101,7 @@ NEXTAUTH_URL=http://localhost:3000
 
 # Site base URL
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
 Replace all placeholders (your_...) with real credentials from your services.
 
 🚧 Roadmap / Limitations
