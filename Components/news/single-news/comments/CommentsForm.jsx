@@ -3,16 +3,14 @@
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { addCommentServerAction } from "@/app/actions/addComment";
-import { useRouter } from "next/navigation";
 
-export function CommentsForm({ headlineId }) {
+export function CommentsForm({ headlineId, onCommentAdded }) {
   const { data: session } = useSession();
   const isAuthenticated = !!session?.user;
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState("idle"); 
+  const [status, setStatus] = useState("idle");
 
-  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +28,7 @@ export function CommentsForm({ headlineId }) {
       });
       setText("");
       setStatus("success");
-      router.refresh();
+      onCommentAdded?.(); 
     } catch (err) {
       console.error(err);
       setStatus("error");
@@ -38,6 +36,7 @@ export function CommentsForm({ headlineId }) {
       setLoading(false);
     }
   };
+
 
   if (!isAuthenticated) {
     return (
