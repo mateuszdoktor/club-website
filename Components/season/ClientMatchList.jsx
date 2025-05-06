@@ -1,9 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import MatchCard from "@/components/season/MatchCard.jsx";
-
-export default function ClientMatchList({ matches }) {
+import MatchCard from "@/components/season/MatchCard";
+import Standings from "@/components/season/Standings"; 
+export default function ClientMatchList({
+  matches,
+  laligaStandings,
+  uclStandings,
+}) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const competitions = useMemo(() => {
@@ -76,6 +80,12 @@ export default function ClientMatchList({ matches }) {
           <MatchCard key={m.fixture.id} match={m} />
         ))}
       </div>
+
+      <Standings
+        leagueName={selected?.name}
+        laliga={laligaStandings}
+        ucl={uclStandings}
+      />
     </main>
   );
 }
