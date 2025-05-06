@@ -4,7 +4,11 @@ export default function Footer() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
         <div>
           <p className="text-gray-500 leading-relaxed">
-            © 2025 Real Madrid. All rights reserved.
+            This website is an unofficial fan-made project created solely for
+            educational and non-commercial purposes. It is not affiliated with,
+            endorsed, maintained, or authorized by Real Madrid CF or any of its
+            affiliates. All club names, logos, and trademarks are the property
+            of their respective owners. No copyright infringement is intended.
           </p>
         </div>
 
@@ -85,4 +89,3 @@ function SocialIcon({ name }) {
     </svg>
   );
 }
-
