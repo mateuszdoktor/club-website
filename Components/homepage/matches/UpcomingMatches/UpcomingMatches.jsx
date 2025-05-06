@@ -7,14 +7,20 @@ import MatchesNav from "./MatchesNav";
 
 export default function UpcomingMatches({ matches }) {
   const scrollRef = useRef(null);
+  const isScrolling = useRef(false);
+  const cardWidth = 380;
 
-  const handleScroll = (dir) => {
+  const scroll = (dir) => {
     const container = scrollRef.current;
-    if (!container) return;
+    if (!container || isScrolling.current) return;
 
-    const offset = 380 * (dir === "left" ? -1 : 1);
+    const offset = cardWidth * (dir === "left" ? -1 : 1);
+
+    isScrolling.current = true;
     container.scrollBy({ left: offset, behavior: "smooth" });
+    setTimeout(() => (isScrolling.current = false), 350);
   };
+
 
   return (
     <section className="relative bg-white p-8 space-y-6 w-full overflow-hidden">
@@ -27,8 +33,8 @@ export default function UpcomingMatches({ matches }) {
       </div>
 
       <div className="relative">
-        <MatchesNav direction="left" onClick={() => handleScroll("left")} />
-        <MatchesNav direction="right" onClick={() => handleScroll("right")} />
+        <MatchesNav direction="left" onClick={() => scroll("left")} />
+        <MatchesNav direction="right" onClick={() => scroll("right")} />
 
         <div ref={scrollRef} className="overflow-x-auto no-scrollbar">
           <ul className="flex gap-6 snap-x snap-mandatory pb-4">

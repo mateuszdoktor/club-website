@@ -8,26 +8,30 @@ import CarouselHeader from "./CarouselHeader";
 export default function HeadlinesCarousel({ content }) {
   const scrollRef = useRef(null);
   const firstItemRef = useRef(null);
+  const isScrolling = useRef(false);
   const fallbackWidth = 300;
+
+  const getItemWidth = () => firstItemRef.current?.offsetWidth || fallbackWidth;
 
   const scroll = (dir) => {
     const container = scrollRef.current;
-    if (!container) return;
+    if (!container || isScrolling.current) return;
 
-    const itemWidth = firstItemRef.current?.offsetWidth || fallbackWidth;
+    const width = getItemWidth();
     const max = container.scrollWidth - container.clientWidth;
     const current = container.scrollLeft;
-
     const next =
       dir === "left"
         ? current === 0
           ? max
-          : current - itemWidth
-        : Math.ceil(current) >= max
+          : current - width
+        : current >= max
         ? 0
-        : current + itemWidth;
+        : current + width;
 
+    isScrolling.current = true;
     container.scrollTo({ left: next, behavior: "smooth" });
+    setTimeout(() => (isScrolling.current = false), 350);
   };
 
   return (
@@ -39,14 +43,15 @@ export default function HeadlinesCarousel({ content }) {
       <div className="relative w-full max-w-[1680px]">
         <div
           ref={scrollRef}
-          className="flex overflow-x-auto overflow-y-hidden scroll-smooth gap-6 no-scrollbar px-4"
+          className="flex overflow-x-auto scroll-smooth snap-x snap-mandatory gap-6 no-scrollbar px-4"
         >
           {content.map((item, i) => (
-            <CarouselItem
-              key={item.id}
-              item={item}
-              ref={i === 0 ? firstItemRef : undefined}
-            />
+            <div key={item.id} className="snap-start shrink-0">
+              <CarouselItem
+                item={item}
+                ref={i === 0 ? firstItemRef : undefined}
+              />
+            </div>
           ))}
         </div>
 
