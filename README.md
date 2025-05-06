@@ -104,10 +104,11 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 Replace all placeholders (your_...) with real credentials from your services.
 
-🚧 Roadmap / Limitations
+## 🚧 Roadmap / Limitations
 
-No admin panel – content for the headlines must be added manually
-API rate limits may affect news and stats loading
+- No admin panel – content for the headlines must be added manually
+- Comment upvoting/downvoting
+- API rate limits may affect news and stats loading
 
-✍️ Author
+## ✍️ Author
 Mateusz Doktor
