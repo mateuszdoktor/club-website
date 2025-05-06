@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Real Madrid Fanpage – Fullstack Football Portal 🏟️⚽
 
-## Getting Started
+> ⚠️ This project is intended **for portfolio and educational purposes only**. It is not designed or maintained for public usage.
 
-First, run the development server:
+## 📌 About
+
+**Real Madrid Fanpage** is a fullstack football web application built with Next.js App Router and TailwindCSS, designed to deliver up-to-date football content, Real Madrid stats, and match info.
+
+The app combines external football and news APIs with internal content management, and even includes basic user account support for login and registration.
+
+> 💬 Add 2-3 sentences here about your motivation, what this project helped you learn, or what was technically challenging/interesting.
+
+---
+
+## 🧠 Key Features
+
+- **Homepage**  
+  - Displays top headlines created by administrators  
+  - Latest news from external APIs  
+  - Upcoming matches of Real Madrid
+
+- **News Section**  
+  - General football news from APIs (e.g. GNews, NewsData)  
+  - Filterable news by country/media source
+
+- **Season Overview**  
+  - Real Madrid match results across different competitions  
+  - League standings (tables)
+
+- **Team Section**  
+  - Squad list with player info  
+  - Individual player statistics across competitions
+
+- **Club Info**  
+  - General club history, stadium, and overview
+
+- **User Accounts**  
+  - Sign up / login using `NextAuth.js`  
+  - User data securely stored and managed via Supabase
+
+---
+
+## 🧰 Tech Stack
+
+| Layer | Technologies |
+|-------|--------------|
+| **Frontend** | Next.js (App Router), React, Tailwind CSS, TypeScript |
+| **Backend** | API Routes (Next.js), Supabase (auth/db), Prisma |
+| **Authentication** | NextAuth.js (with Supabase Adapter) |
+| **APIs** | API-Football, GNews API, NewsData API |
+| **Database** | PostgreSQL (hosted via Supabase) |
+
+---
+
+## 🧪 Local Setup
+
+1. **Clone the repository**
 
 ```bash
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
+Install dependencies
+npm install
+Configure environment variables
+Create a .env file in the root of the project and copy values from .env.example (see below).
+
+Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The app should now be running at http://localhost:3000
+🔐 Environment Variables
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Here’s a sample .env.example file:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# External API keys
+API_FOOTBALL_KEY=your_api_football_key
+GNEWS_API_KEY=your_gnews_api_key
+NEWSDATA_API_KEY=your_newsdata_api_key
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Supabase credentials (DB + Auth)
+DATABASE_URL=your_supabase_postgres_url
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_ANON_KEY=your_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_key
 
-## Learn More
+# NextAuth
+NEXTAUTH_SECRET=your_nextauth_secret
+NEXTAUTH_URL=http://localhost:3000
 
-To learn more about Next.js, take a look at the following resources:
+# Site base URL
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+🚧 Roadmap / Limitations
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Project is not actively maintained.
+No admin panel – admin content is manually added.
+API rate limits may affect news/statistics fetching.
+User auth exists but is not used for advanced user features (e.g. commenting, saving favorites).
+🧠 What I Learned
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+✍️ Add a short paragraph here on what you gained technically – e.g. fullstack setup, combining server/client components, external APIs, working with Supabase, learning NextAuth, etc.
+✍️ Author
 
-## Deploy on Vercel
+Mateusz [fill in your GitHub or LinkedIn profile link if you'd like]
+© 2025 – All rights reserved
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
