@@ -1,44 +1,49 @@
 "use client";
 
+import { useState, useTransition } from "react";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
 import { addCommentServerAction } from "@/app/actions/addComment";
 
-export function CommentsForm({ headlineId, onCommentAdded }) {
+export function CommentsForm({ headlineId, onComment }) {
   const { data: session } = useSession();
-  const isAuthenticated = !!session?.user;
   const [text, setText] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
   const [status, setStatus] = useState("idle");
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!isAuthenticated || text.trim().length < 5) {
+
+    if (!session?.user || text.trim().length < 5) {
       setStatus("error");
       return;
     }
 
-    try {
-      setLoading(true);
-      await addCommentServerAction({
-        headlineId,
-        userId: session.user.id,
-        text,
-      });
-      setText("");
-      setStatus("success");
-      onCommentAdded?.(); 
-    } catch (err) {
-      console.error(err);
-      setStatus("error");
-    } finally {
-      setLoading(false);
-    }
+    startTransition(async () => {
+      try {
+        setStatus("idle");
+        onComment({
+          id: Math.random().toString(),
+          text,
+          user: session.user,
+          createdAt: new Date().toISOString(),
+        });
+
+        await addCommentServerAction({
+          headlineId,
+          userId: session.user.id,
+          text,
+        });
+
+        setText("");
+        setStatus("success");
+      } catch (err) {
+        console.error(err);
+        setStatus("error");
+      }
+    });
   };
 
-
-  if (!isAuthenticated) {
+  if (!session?.user) {
     return (
       <p className="text-gray-400 text-center mb-12">
         Please log in to comment.
@@ -54,18 +59,18 @@ export function CommentsForm({ headlineId, onCommentAdded }) {
         value={text}
         onChange={(e) => setText(e.target.value)}
         rows={4}
-        disabled={loading}
+        disabled={isPending}
       />
-      <div className="flex items-center justify-between">
+      <div className="flex justify-between">
         <button
           type="submit"
-          disabled={loading}
           className="px-6 py-3 bg-gray-800 text-white font-medium rounded-full hover:bg-gray-700 transition disabled:opacity-50"
+          disabled={isPending}
         >
-          {loading ? "Posting..." : "Post"}
+          {isPending ? "Posting..." : "Post"}
         </button>
         {status === "error" && (
-          <span className="text-sm text-red-500">
+          <span className="text-sm text-red-600">
             Please write more or log in
           </span>
         )}

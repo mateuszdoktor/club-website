@@ -16,19 +16,6 @@ export async function addCommentServerAction({
     throw new Error("Invalid input");
   }
 
-  const newComment = await commentService.addComment({
-    headlineId,
-    userId,
-    text,
-  });
-
+  await commentService.addComment({ headlineId, userId, text });
   revalidatePath(`/headline/${headlineId}`);
-
-  return {
-    id: newComment.id,
-    text: newComment.text,
-    createdAt: newComment.createdAt,
-    author: newComment.user.name,
-    image: newComment.user.image ?? "/default-avatar.png",
-  };
 }
