@@ -23,8 +23,8 @@ export function CommentsSection({ headlineId }) {
       <CommentsList comments={comments} />
       {hasMore && (
         <button
-          onClick={loadMore}
-          className="px-4 py-2 mt-4 bg-gray-100 font-medium text-sm rounded-lg border border-gray-700 shadow-md transition duration-200 transform hover:bg-gray-200 hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-400"
+          onClick={() => loadMore()}
+          className="px-5 py-2 mt-4 bg-white text-gray-800 font-medium text-sm rounded-lg border border-gray-300 shadow-sm transition-all duration-200 hover:bg-gray-100 hover:shadow-md hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-400 active:scale-100"
         >
           Load more comments
         </button>

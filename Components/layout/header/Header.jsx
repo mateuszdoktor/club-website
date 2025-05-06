@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Navbar from "./Navbar/Navbar";
+import Navbar from "./navbar/Navbar";
 
 export default function Header() {
   return (

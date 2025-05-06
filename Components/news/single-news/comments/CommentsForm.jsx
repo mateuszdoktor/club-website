@@ -64,11 +64,12 @@ export function CommentsForm({ headlineId, onComment }) {
       <div className="flex justify-between">
         <button
           type="submit"
-          className="px-6 py-3 bg-gray-800 text-white font-medium rounded-full hover:bg-gray-700 transition disabled:opacity-50"
           disabled={isPending}
+          className="px-6 py-3 mt-4 bg-gray-800 text-white font-semibold text-base rounded-xl border border-transparent shadow-lg transition-all duration-300 hover:bg-gray-700 hover:shadow-xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-500 active:scale-100 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isPending ? "Posting..." : "Post"}
         </button>
+
         {status === "error" && (
           <span className="text-sm text-red-600">
             Please write more or log in

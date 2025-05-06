@@ -67,7 +67,7 @@ export default function MobileMenu({ links, onClose }) {
               signIn();
               onClose();
             }}
-            className="w-full py-2 px-4 text-sm font-medium bg-gray-900 text-white rounded-full hover:bg-gray-700 transition"
+            className="w-3xs py-2 px-4 text-sm font-medium bg-gray-900 text-white rounded-full hover:bg-gray-700 transition"
           >
             Sign In
           </button>
