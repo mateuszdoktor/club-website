@@ -4,11 +4,14 @@ import { HeadlineDetail } from "@/components/news/single-news/HeadlineDetail";
 import { MoreHeadlines } from "@/components/news/single-news/MoreHeadlines";
 import { CommentsSection } from "@/components/news/single-news/comments/CommentsSection";
 
-export default async function HeadlinePage(
-  props: Promise<{ params: { id: string } }>
-) {
-  const { params } = await props;
-  const { id } = await params;
+type PageProps = {
+  params: {
+    id: string;
+  };
+};
+
+export default async function HeadlinePage({ params }: PageProps) {
+  const { id } = params;
 
   const headlines = await HeadlineService.getAllHeadlines();
   const headline = headlines.find((h) => h.id === id);
