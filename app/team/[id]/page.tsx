@@ -4,13 +4,9 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import PlayerProfileClient from "./PlayerProfileClient";
 
-type PlayerPageProps = {
-  params: { id: string };
-};
-
-
-export default async function PlayerPage({ params }: PlayerPageProps) {
+export default async function PlayerPage({ params }) {
   const { id } = await params;
+  
   const playerData = await getPlayer({ id: Number(id) });
 
   if (!playerData) {

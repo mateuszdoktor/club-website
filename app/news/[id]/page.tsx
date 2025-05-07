@@ -4,6 +4,7 @@ import { HeadlineDetail } from "@/components/news/single-news/HeadlineDetail";
 import { MoreHeadlines } from "@/components/news/single-news/MoreHeadlines";
 import { CommentsSection } from "@/components/news/single-news/comments/CommentsSection";
 
+
 export default async function HeadlinePage({ params }) {
   const { id } = await params;
 
