@@ -41,7 +41,7 @@ export async function POST(req: Request) {
       password: hashedPassword,
       image:
         image ||
-        "https://png.pngtree.com/png-clipart/20210129/ourmid/pngtree-default-male-avatar-png-image_2811083.jpg",
+        "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png",
     },
   });
 
