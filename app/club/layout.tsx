@@ -1,4 +1,4 @@
-import SolidNavbar from "../../components/layout/SolidNavbar";
+import SolidNavbar from "@/components/layout/SolidNavbar";
 
 export default function ClubLayout({
   children,
