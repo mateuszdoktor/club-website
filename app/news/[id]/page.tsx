@@ -11,7 +11,7 @@ type PageProps = {
 };
 
 export default async function HeadlinePage({ params }: PageProps) {
-  const { id } = params;
+  const id = params.id;
 
   const headlines = await HeadlineService.getAllHeadlines();
   const headline = headlines.find((h) => h.id === id);
