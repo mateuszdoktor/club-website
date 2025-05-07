@@ -5,9 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 // Optional third-party libraries
-import $ from "jquery";
 import _ from "lodash";
-import noUiSlider from "nouislider";
 
 
 async function loadFlyonUI() {
