@@ -12,6 +12,10 @@ export default async function SeasonPage() {
     getChampionsLeagueStandings(),
   ]);
 
+  if (!matches || !laliga || !ucl) {
+    return <p>Data error</p>;
+  }
+
   return (
     <ClientMatchList
       matches={matches}
