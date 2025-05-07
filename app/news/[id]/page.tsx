@@ -6,12 +6,13 @@ import { CommentsSection } from "@/components/news/single-news/comments/Comments
 
 
 type HeadlinePageProps = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
-export default async function HeadlinePage({ params }: HeadlinePageProps) {
+export default async function HeadlinePage(props: HeadlinePageProps) {
+  const params = await props.params;
   const { id } = params;
 
   const headlines = await HeadlineService.getAllHeadlines();
