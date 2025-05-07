@@ -9,6 +9,7 @@ export default async function NewsPage() {
     HeadlineService.getAllHeadlines(),
     getGNews(),
   ]);
+  console.log("Headlines:", headlines);
 
   return (
     <div className="min-h-screen bg-white px-4 pt-24 pb-48 sm:px-8">

@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 export function FeaturedHeadlines({ headlines }) {
-  if (!headlines.length) return null;
 
   return (
     <section className="mb-24 py-8">
