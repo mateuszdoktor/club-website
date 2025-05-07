@@ -15,7 +15,7 @@ const navLinks = [
   { href: "/club", label: "Club" },
 ];
 
-export default function SolidNavbar() {
+export default function solidnavbar() {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
