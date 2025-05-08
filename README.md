@@ -1,17 +1,17 @@
 # Madridista – Fullstack Football Portal 🏟️⚽
 
-> ⚠️ This project is intended **for portfolio and educational purposes only**. It is not designed or maintained for public usage.
+> This project is intended **for portfolio and educational purposes only**. It is not designed or maintained for public usage.
 
 ---
 
-## 📌 About
+##  About
 
 Madridista is a fullstack web application dedicated to Real Madrid supporters. It offers live match updates, detailed player and team statistics, and the latest football news.
 
 The platform integrates real-time data from external football and news APIs, while also supporting internal content management. Users can create accounts, log in, and share their thoughts in comment.
 ---
 
-## 🧠 Key Features
+##  Key Features
 
 - **Homepage**
   - Admin-created headlines
@@ -38,7 +38,7 @@ The platform integrates real-time data from external football and news APIs, whi
     
 ---
 
-## 🧰 Tech Stack
+##  Tech Stack
 
 | Layer               | Technologies                                                |
 |---------------------|-------------------------------------------------------------|
@@ -49,12 +49,12 @@ The platform integrates real-time data from external football and news APIs, whi
 | **Database**        | PostgreSQL (hosted via Supabase)                            |
 
 ---
-## 🧪 Local Setup
+##  Local Setup
 
 1. **Clone the repository**
 
     ```bash
-    git clone https://github.com/your-username/your-repo-name.git
+    git clone https://github.com/mateuszdokor/madridista.git
     cd your-repo-name
     ```
 
@@ -77,7 +77,7 @@ The platform integrates real-time data from external football and news APIs, whi
     The app will be available at: [http://localhost:3000](http://localhost:3000)
 ---
 
-## 🔐 Environment Variables
+##  Environment Variables
 
 Example `.env.example`:
 
@@ -102,11 +102,12 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 Replace all placeholders (your_...) with real credentials from your services.
 
-## 🚧 Roadmap / Limitations
+##  Roadmap / Limitations
 
 - No admin panel – content for the headlines must be added manually
-- Comment upvoting/downvoting
+- User profile customization
+- Comment upvoting and downvoting
 - API rate limits may affect news and stats loading
 
-## ✍️ Author
+##  Author
 Mateusz Doktor
