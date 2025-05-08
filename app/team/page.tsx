@@ -1,13 +1,14 @@
 import { getPlayers } from "@/lib/services/playersService";
 import PlayerCard from "@/components/team/PlayerCard";
-import { playerAssets } from "@/lib/data/teamData";
 import {
   groupPlayersByPosition,
   orderedPositions,
+  normalizePlayerPositions,
 } from "@/lib/utils/playerUtils";
 
 export default async function TeamPage() {
-  const players = await getPlayers();
+  const rawPlayers = await getPlayers();
+  const players = normalizePlayerPositions(rawPlayers);
   const grouped = groupPlayersByPosition(players);
 
   return (
@@ -21,9 +22,7 @@ export default async function TeamPage() {
         if (!playersInPos?.length) return null;
 
         const sortedPlayers = [...playersInPos].sort(
-          (a, b) =>
-            (playerAssets[a.player.id as number]?.number ?? Infinity) -
-            (playerAssets[b.player.id as number]?.number ?? Infinity)
+          (a, b) => (a.shirtNumber ?? Infinity) - (b.shirtNumber ?? Infinity)
         );
 
         return (
@@ -34,12 +33,12 @@ export default async function TeamPage() {
 
             <div className="relative overflow-visible">
               <div className="flex gap-6 snap-x snap-mandatory overflow-x-scroll px-1 scroll-smooth hide-scrollbar pb-4">
-                {sortedPlayers.map(({ player, statistics }) => (
+                {sortedPlayers.map((player) => (
                   <div
                     key={player.id}
                     className="snap-start shrink-0 transition-transform duration-300 hover:scale-[1.03]"
                   >
-                    <PlayerCard player={player} statistics={statistics} />
+                    <PlayerCard player={player} />
                   </div>
                 ))}
               </div>

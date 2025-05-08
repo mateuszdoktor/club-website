@@ -3,14 +3,13 @@
 import { format } from "date-fns";
 
 export default function MatchCard({ match }) {
-  const { teams, goals, fixture, league } = match;
-  const date = format(new Date(fixture.date), "dd MMM yyyy, HH:mm");
+  const date = format(new Date(match.utcDate), "dd MMM yyyy, HH:mm");
 
   const TeamBlock = ({ team }) => (
     <div className="flex items-center gap-2 w-1/3 min-w-0">
       <div className="w-7 h-7 flex-shrink-0">
         <img
-          src={team.logo}
+          src={team.crest}
           alt={team.name}
           className="w-full h-full object-contain"
         />
@@ -24,16 +23,16 @@ export default function MatchCard({ match }) {
       <div className="flex justify-between items-center mb-4 text-xs text-gray-500 dark:text-gray-400">
         <time>{date}</time>
         <span className="bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-full text-[10px] font-medium tracking-wide">
-          {league.round}
+          {match.matchday ? `MD ${match.matchday}` : match.stage}
         </span>
       </div>
 
       <div className="flex items-center justify-between text-base font-semibold text-gray-900 dark:text-white">
-        <TeamBlock team={teams.home} />
+        <TeamBlock team={match.homeTeam} />
         <span className="text-center w-1/3">
-          {goals.home} - {goals.away}
+          {match.score.fullTime.home ?? 0} - {match.score.fullTime.away ?? 0}
         </span>
-        <TeamBlock team={teams.away} />
+        <TeamBlock team={match.awayTeam} />
       </div>
     </div>
   );

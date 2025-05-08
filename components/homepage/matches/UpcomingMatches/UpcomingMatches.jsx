@@ -21,7 +21,6 @@ export default function UpcomingMatches({ matches }) {
     setTimeout(() => (isScrolling.current = false), 350);
   };
 
-
   return (
     <section className="relative bg-white p-8 space-y-6 w-full overflow-hidden">
       <div className="mb-10">
@@ -39,7 +38,7 @@ export default function UpcomingMatches({ matches }) {
         <div ref={scrollRef} className="overflow-x-auto no-scrollbar">
           <ul className="flex gap-6 snap-x snap-mandatory pb-4">
             {matches.map((match) => (
-              <MatchCard key={match.fixture.id} match={match} />
+              <MatchCard key={match.id} match={match} />
             ))}
           </ul>
         </div>

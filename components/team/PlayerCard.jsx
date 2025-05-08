@@ -1,20 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { playerAssets, countryCodeMap } from "@/lib/data/teamData";
+import { countryCodeMap } from "@/lib/data/teamData";
 
-export default function PlayerCard({ player, statistics }) {
-  const asset = playerAssets[player.id];
-  const imageSrc = asset?.image || player.photo;
-  const position = statistics?.[0]?.games?.position || "Unknown";
-  const number = asset?.number ?? "?";
+export default function PlayerCard({ player }) {
+  const imageSrc = player.image || "";
+  const position = player.position || "Unknown";
+  const number = player.shirtNumber ?? "?";
   const flag = countryCodeMap[player.nationality]?.toLowerCase();
 
   return (
-    <Link
-      href={`/team/${player.id}`}
-      className="snap-start shrink-0 w-80 rounded-3xl bg-white/30 backdrop-blur-md border border-neutral-200 shadow-[0_4px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_6px_40px_rgba(99,102,241,0.3)] transition-all duration-300 group hover:scale-[1.04] z-[1] hover:z-[10] overflow-hidden"
-    >
+    <>
       <div className="relative w-full h-72 overflow-hidden">
         <img
           src={imageSrc}
@@ -56,6 +52,6 @@ export default function PlayerCard({ player, statistics }) {
           View Stats →
         </span>
       </div>
-    </Link>
+    </>
   );
 }

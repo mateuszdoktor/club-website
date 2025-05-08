@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from "react";
 import MatchCard from "@/components/season/MatchCard";
-import Standings from "@/components/season/Standings"; 
+import Standings from "@/components/season/Standings";
+
 export default function ClientMatchList({
   matches,
   laligaStandings,
@@ -12,46 +13,36 @@ export default function ClientMatchList({
 
   const competitions = useMemo(() => {
     const seen = new Set();
-    const ordered = [
-      "La Liga",
-      "UEFA Champions League",
-      "Copa del Rey",
-      "Super Cup",
-      "Friendlies",
-    ];
 
     return matches
-      .filter(({ league }) => {
-        if (seen.has(league.name)) return false;
-        seen.add(league.name);
+      .filter(({ competition }) => {
+        if (seen.has(competition.code)) return false;
+        seen.add(competition.code);
         return true;
       })
-      .map(({ league }) => ({ name: league.name, logo: league.logo }))
-      .sort((a, b) => {
-        const ai = ordered.indexOf(a.name);
-        const bi = ordered.indexOf(b.name);
-        if (ai !== -1 || bi !== -1)
-          return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
-        return a.name.localeCompare(b.name);
-      });
+      .map(({ competition }) => ({
+        name: competition.name,
+        code: competition.code,
+        logo: competition.emblem,
+      }));
   }, [matches]);
 
   const selected = competitions[selectedIndex];
   const filtered = useMemo(
-    () => matches.filter((m) => m.league.name === selected?.name),
+    () => matches.filter((m) => m.competition.code === selected?.code),
     [matches, selected]
   );
 
   return (
     <main className="max-w-7xl mx-auto px-6 pt-36 pb-36 py-10">
       <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-8">
-        2023/24 Season – Match Results
+        2024/25 Season – Match Results
       </h1>
 
       <div className="flex items-center gap-3 flex-wrap mb-10">
         {competitions.map((c, i) => (
           <button
-            key={c.name}
+            key={c.code}
             onClick={() => setSelectedIndex(i)}
             className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all border shadow-sm ${
               selectedIndex === i
@@ -59,12 +50,19 @@ export default function ClientMatchList({
                 : "bg-white text-neutral-600 hover:bg-neutral-100 border-neutral-200"
             }`}
           >
-            {c.logo && (
+            {c.logo ? (
               <img
                 src={c.logo}
                 alt={c.name}
                 className="w-5 h-5 object-contain"
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = "/default-league-logo.svg";
+                }}
               />
+            ) : (
+              <div className="w-5 h-5 bg-neutral-300 rounded-full" />
             )}
             {c.name}
           </button>
@@ -77,12 +75,12 @@ export default function ClientMatchList({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filtered.map((m) => (
-          <MatchCard key={m.fixture.id} match={m} />
+          <MatchCard key={m.id} match={m} />
         ))}
       </div>
 
       <Standings
-        leagueName={selected?.name}
+        leagueCode={selected?.code}
         laliga={laligaStandings}
         ucl={uclStandings}
       />

@@ -12,7 +12,7 @@ export default function Matches({ matches }) {
     }
 
     const sorted = matches.sort(
-      (a, b) => new Date(a.fixture.date) - new Date(b.fixture.date)
+      (a, b) => new Date(a.utcDate) - new Date(b.utcDate)
     );
 
     return (

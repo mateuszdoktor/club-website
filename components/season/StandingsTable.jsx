@@ -1,4 +1,7 @@
 export default function StandingsTable({ title, data }) {
+  const isRealMadrid = (name = "") =>
+    name.toLowerCase().includes("real madrid");
+
   return (
     <section className="mt-16 mb-12 max-w-5xl mx-auto px-4 sm:px-6 lg:px-0">
       <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white mb-6 tracking-tight">
@@ -20,32 +23,34 @@ export default function StandingsTable({ title, data }) {
           </thead>
           <tbody className="divide-y divide-neutral-200 dark:divide-neutral-800">
             {data.map((team) => {
-              const isReal = team.team.name === "Real Madrid";
+              const teamData = team.team || team;
+              const isReal = isRealMadrid(teamData.name);
+
               return (
                 <tr
-                  key={team.team.id}
+                  key={teamData.id}
                   className={`transition-all duration-200 ${
                     isReal
                       ? "bg-gradient-to-r from-indigo-100 to-indigo-200 dark:from-indigo-900/50 dark:to-indigo-800/40 text-indigo-900 dark:text-indigo-200 font-semibold backdrop-blur-sm"
                       : "hover:bg-neutral-50 dark:hover:bg-neutral-800"
                   }`}
                 >
-                  <td className="px-4 py-4 text-left">{team.rank}</td>
+                  <td className="px-4 py-4 text-left">{team.position}</td>
                   <td className="px-4 py-4 flex items-center gap-2">
                     <img
-                      src={team.team.logo}
-                      alt={team.team.name}
+                      src={teamData.crest}
+                      alt={teamData.name}
                       className="w-6 h-6 sm:w-7 sm:h-7 object-contain"
                     />
-                    {team.team.name}
+                    {teamData.name}
                   </td>
                   <td className="text-center">{team.points}</td>
-                  <td className="text-center">{team.all.win}</td>
-                  <td className="text-center">{team.all.draw}</td>
-                  <td className="text-center">{team.all.lose}</td>
+                  <td className="text-center">{team.won}</td>
+                  <td className="text-center">{team.draw}</td>
+                  <td className="text-center">{team.lost}</td>
                   <td className="text-center">
-                    {team.goalsDiff >= 0 ? "+" : ""}
-                    {team.goalsDiff}
+                    {team.goalDifference >= 0 ? "+" : ""}
+                    {team.goalDifference}
                   </td>
                 </tr>
               );

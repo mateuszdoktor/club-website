@@ -4,7 +4,7 @@ export default function TeamDisplay({ team, align }) {
     <div className="flex items-center gap-4">
       {isLeft && (
         <img
-          src={team.logo}
+          src={team.crest}
           alt={team.name}
           className="h-20 w-20 md:h-24 md:w-24 object-contain"
         />
@@ -18,7 +18,7 @@ export default function TeamDisplay({ team, align }) {
       </span>
       {!isLeft && (
         <img
-          src={team.logo}
+          src={team.crest}
           alt={team.name}
           className="h-20 w-20 md:h-24 md:w-24 object-contain"
         />
