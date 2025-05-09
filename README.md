@@ -1,8 +1,12 @@
-# Madridista – Fullstack Football Portal 🏟️⚽
+# Madridista – Fullstack Football Portal ⚽
 
 > This project is intended **for portfolio and educational purposes only**. It is not designed or maintained for public usage.
 
 ---
+
+## Live Demo
+
+You can see the live version of the app here: [Madridista on Vercel](https://madridista-puce.vercel.app).
 
 ##  About
 
@@ -28,7 +32,6 @@ The platform integrates real-time data from external football and news APIs, whi
 
 - **Team Page**
   - Full squad display
-  - Player statistics per competition
 
 - **Club Info**
   - Club history, stadium, and general info
@@ -45,7 +48,7 @@ The platform integrates real-time data from external football and news APIs, whi
 | **Frontend**        | Next.js (App Router), React, Tailwind CSS, TypeScript       |
 | **Backend**         | API Routes (Next.js), Supabase, Prisma                      |
 | **Authentication**  | NextAuth.js                            |
-| **APIs**            | API-Football, GNews API, NewsData API                       |
+| **APIs**            | football-data, GNews API, NewsData API                       |
 | **Database**        | PostgreSQL (hosted via Supabase)                            |
 
 ---
@@ -83,7 +86,7 @@ Example `.env.example`:
 
 ```env
 # External API keys
-API_FOOTBALL_KEY=your_api_football_key
+FOOTBALL_DATA_API_KEY=your_football_data_key
 GNEWS_API_KEY=your_gnews_api_key
 NEWSDATA_API_KEY=your_newsdata_api_key
 
