@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { countryCodeMap } from "@/lib/data/teamData";
+import { motion } from "framer-motion";
 
 export default function PlayerCard({ player }) {
   const imageSrc = player.image || "";
@@ -10,7 +10,11 @@ export default function PlayerCard({ player }) {
   const flag = countryCodeMap[player.nationality]?.toLowerCase();
 
   return (
-    <>
+    <motion.div
+      whileHover={{ y: -4 }}
+      transition={{ type: "spring", stiffness: 150 }}
+      className="w-64 bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 cursor-pointer group"
+    >
       <div className="relative w-full h-72 overflow-hidden">
         <img
           src={imageSrc}
@@ -48,10 +52,15 @@ export default function PlayerCard({ player }) {
 
         <p className="text-sm text-neutral-400">{player.nationality}</p>
 
-        <span className="inline-block mt-2 text-indigo-500 text-sm font-semibold opacity-0 group-hover:opacity-100 transition">
+        <motion.span
+          initial={{ opacity: 0 }}
+          whileHover={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="inline-block mt-2 text-indigo-500 text-sm font-semibold opacity-0 group-hover:opacity-100"
+        >
           View Stats →
-        </span>
+        </motion.span>
       </div>
-    </>
+    </motion.div>
   );
 }

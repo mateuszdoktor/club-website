@@ -6,7 +6,6 @@ import { timelineData } from "@/lib/data/timelineData";
 export default function ClubPage() {
   return (
     <main className="bg-white min-h-screen text-gray-900 font-sans">
-      {/* Hero */}
       <div className="relative py-24 pt-36 text-center bg-gradient-to-br from-white via-[#f9f9f9] to-white">
         <h1 className="text-6xl font-extrabold mb-4">
           Real Madrid Club de Fútbol

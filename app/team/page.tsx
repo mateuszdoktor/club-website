@@ -36,7 +36,7 @@ export default async function TeamPage() {
                 {sortedPlayers.map((player) => (
                   <div
                     key={player.id}
-                    className="snap-start shrink-0 transition-transform duration-300 hover:scale-[1.03]"
+                    className="snap-start shrink-0 group transition-transform duration-300 hover:scale-[1.03]"
                   >
                     <PlayerCard player={player} />
                   </div>
