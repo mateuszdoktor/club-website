@@ -1,4 +1,4 @@
-import { HeadlineService } from "@/lib/services/headlineService";
+import { headlineService } from "@/lib/services/headlineService";
 import { notFound } from "next/navigation";
 import { HeadlineDetail } from "@/components/news/single-news/HeadlineDetail";
 import { MoreHeadlines } from "@/components/news/single-news/MoreHeadlines";
@@ -15,7 +15,7 @@ export default async function HeadlinePage(props: HeadlinePageProps) {
   const params = await props.params;
   const { id } = params;
 
-  const headlines = await HeadlineService.getAllHeadlines();
+  const headlines = await headlineService.getAllHeadlines();
   const headline = headlines.find((h) => h.id === id);
 
   if (!headline) return notFound();

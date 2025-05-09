@@ -1,6 +1,6 @@
 import { getUpcomingMatches } from "@/lib/services/matchService";
 import { getGNews } from "@/lib/services/newsService";
-import { HeadlineService } from "@/lib/services/headlineService";
+import { headlineService } from "@/lib/services/headlineService";
 
 import HeadlinesCarousel from "@/components/homepage/headlines/HeadlinesCarousel";
 import Matches from "@/components/homepage/matches/Matches";
@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const [headlines, matches, newsArticles] = await Promise.all([
-    HeadlineService.getAllHeadlines(),
+    headlineService.getAllHeadlines(),
     getUpcomingMatches(),
     getGNews(),
   ]);

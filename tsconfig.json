@@ -36,6 +36,6 @@
     "app/team/page.tsx",
     "components/season/MatchCard.jsx",
     "app/season/page.tsx"
-, "lib/services/standingsService.js"  ],
+, "lib/services/standingsService.ts", "lib/services/matchService.js"  ],
   "exclude": ["node_modules"]
 }

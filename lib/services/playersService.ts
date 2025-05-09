@@ -1,19 +1,21 @@
+import { playerAssets } from "@/lib/data/teamData";
+
 const TEAM_ID = 86;
 const API_BASE = "https://api.football-data.org/v4";
-const HEADERS = { "X-Auth-Token": process.env.FOOTBALL_DATA_API_KEY };
-const OPTIONS = { headers: HEADERS, next: { revalidate: 6000 } };
 
-import { playerAssets } from "@/lib/data/teamData";
+const OPTIONS = {
+  headers: { "X-Auth-Token": process.env.FOOTBALL_DATA_API_KEY! },
+  next: { revalidate: 6000 },
+};
 
 export const getPlayers = async () => {
   const res = await fetch(`${API_BASE}/teams/${TEAM_ID}`, OPTIONS);
-  if (!res.ok) throw new Error(`API Error: ${res.status}`);
+  if (!res.ok) throw new Error(`API error: ${res.status}`);
 
   const { squad } = await res.json();
-
   return squad
-    .filter((p) => playerAssets[p.id])
-    .map((p) => ({
+    .filter((p: any) => playerAssets[p.id])
+    .map((p: any) => ({
       id: p.id,
       name: p.name,
       position: p.position,
