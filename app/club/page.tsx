@@ -29,7 +29,6 @@ export default function ClubPage() {
         image="https://www.telemadrid.es/2022/04/27/deportes/_2445365526_33907490_1300x731.jpg"
       />
 
-      {/* Timeline */}
       <section className="my-24 px-6">
         <h2 className="text-3xl font-bold mb-10 text-center">Key Moments</h2>
         <div className="overflow-x-auto snap-x snap-mandatory flex gap-6 px-4 scrollbar-hide">
@@ -46,7 +45,6 @@ export default function ClubPage() {
         reverse
       />
 
-      {/* Trophy Stats */}
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mt-16 px-6 max-w-5xl mx-auto text-center">
         <TrophyCounter label="Champions Leagues" end={15} />
         <TrophyCounter label="La Liga Titles" end={35} />

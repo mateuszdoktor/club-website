@@ -3,6 +3,16 @@
 import { useMemo, useState } from "react";
 import MatchCard from "@/components/season/MatchCard";
 import Standings from "@/components/season/Standings";
+import {
+  extractCompetitions,
+  filterMatchesByCompetition,
+  groupMatchesByMatchday,
+  normalizeStageName,
+  extractStagesForCompetition,
+  filterMatchesByStage,
+} from "@/lib/utils/matchesUtils";
+
+const GROUP_SIZE = 6;
 
 export default function ClientMatchList({
   matches,
@@ -10,28 +20,40 @@ export default function ClientMatchList({
   uclStandings,
 }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedStage, setSelectedStage] = useState(null);
+  const [currentGroupIndex, setCurrentGroupIndex] = useState(0);
 
-  const competitions = useMemo(() => {
-    const seen = new Set();
-
-    return matches
-      .filter(({ competition }) => {
-        if (seen.has(competition.code)) return false;
-        seen.add(competition.code);
-        return true;
-      })
-      .map(({ competition }) => ({
-        name: competition.name,
-        code: competition.code,
-        logo: competition.emblem,
-      }));
-  }, [matches]);
-
+  const competitions = useMemo(() => extractCompetitions(matches), [matches]);
   const selected = competitions[selectedIndex];
-  const filtered = useMemo(
-    () => matches.filter((m) => m.competition.code === selected?.code),
-    [matches, selected]
-  );
+
+  const filtered = useMemo(() => {
+    const byCompetition = filterMatchesByCompetition(matches, selected?.code);
+    return selectedStage
+      ? filterMatchesByStage(byCompetition, selectedStage)
+      : byCompetition;
+  }, [matches, selected, selectedStage]);
+
+  const groupedMatches = useMemo(() => {
+    if (selected?.code === "CL") {
+      return [
+        {
+          label: "All Matches",
+          matches: filtered.sort(
+            (a, b) => new Date(b.utcDate) - new Date(a.utcDate)
+          ),
+        },
+      ];
+    }
+    return groupMatchesByMatchday(filtered, GROUP_SIZE);
+  }, [filtered, selected]);
+
+  const stages = useMemo(() => {
+    return selected?.code === "CL"
+      ? extractStagesForCompetition(matches, selected.code)
+      : null;
+  }, [matches, selected]);
+
+  const visibleMatches = groupedMatches[currentGroupIndex]?.matches ?? [];
 
   return (
     <main className="max-w-7xl mx-auto px-6 pt-36 pb-36 py-10">
@@ -43,7 +65,12 @@ export default function ClientMatchList({
         {competitions.map((c, i) => (
           <button
             key={c.code}
-            onClick={() => setSelectedIndex(i)}
+            onClick={() => {
+              setSelectedIndex(i);
+              const stages = extractStagesForCompetition(matches, c.code);
+              setSelectedStage(stages.length > 0 ? stages[0] : null);
+              setCurrentGroupIndex(0);
+            }}
             className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all border shadow-sm ${
               selectedIndex === i
                 ? "bg-indigo-600 text-white border-indigo-600"
@@ -73,8 +100,47 @@ export default function ClientMatchList({
         {selected?.name}
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filtered.map((m) => (
+      {selected?.code === "CL" && stages?.length > 0 && (
+        <div className="flex flex-wrap gap-2 mb-6">
+          {stages.map((stage) => (
+            <button
+              key={stage}
+              onClick={() => {
+                setSelectedStage(stage);
+                setCurrentGroupIndex(0);
+              }}
+              className={`px-3 py-1 rounded-md text-sm font-medium border ${
+                selectedStage === stage
+                  ? "bg-indigo-600 text-white border-indigo-600"
+                  : "bg-white text-neutral-700 hover:bg-neutral-100 border-neutral-200"
+              }`}
+            >
+              {normalizeStageName(stage)}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {groupedMatches.length > 1 && (
+        <div className="flex flex-wrap gap-2 mb-6">
+          {groupedMatches.map((group, i) => (
+            <button
+              key={group.label}
+              onClick={() => setCurrentGroupIndex(i)}
+              className={`px-3 py-1 rounded-md text-sm font-medium border ${
+                currentGroupIndex === i
+                  ? "bg-indigo-600 text-white border-indigo-600"
+                  : "bg-white text-neutral-700 hover:bg-neutral-100 border-neutral-200"
+              }`}
+            >
+              {group.label}
+            </button>
+          ))}
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+        {visibleMatches.map((m) => (
           <MatchCard key={m.id} match={m} />
         ))}
       </div>

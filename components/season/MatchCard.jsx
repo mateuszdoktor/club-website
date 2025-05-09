@@ -4,35 +4,34 @@ import { format } from "date-fns";
 
 export default function MatchCard({ match }) {
   const date = format(new Date(match.utcDate), "dd MMM yyyy, HH:mm");
+  const { fullTime } = match.score ?? {};
+  const { homeTeam, awayTeam } = match;
 
   const TeamBlock = ({ team }) => (
     <div className="flex items-center gap-2 w-1/3 min-w-0">
-      <div className="w-7 h-7 flex-shrink-0">
-        <img
-          src={team.crest}
-          alt={team.name}
-          className="w-full h-full object-contain"
-        />
-      </div>
-      <span className="truncate">{team.name}</span>
+      <img
+        src={team.crest}
+        alt={team.name}
+        className="w-6 h-6 object-contain"
+      />
+      <span className="truncate text-sm font-medium">{team.name}</span>
     </div>
   );
 
   return (
-    <div className="rounded-3xl bg-gradient-to-br from-white to-gray-100 dark:from-zinc-800 dark:to-zinc-900 p-6 shadow-xl hover:shadow-2xl transition-all hover:scale-[1.02] border border-zinc-200 dark:border-zinc-700">
-      <div className="flex justify-between items-center mb-4 text-xs text-gray-500 dark:text-gray-400">
+    <div className="rounded-3xl p-6 bg-white dark:bg-zinc-900 shadow-lg border border-zinc-200 dark:border-zinc-800 hover:shadow-xl transition-all hover:scale-[1.015]">
+      <div className="flex justify-between items-center mb-3 text-xs text-gray-500 dark:text-gray-400">
         <time>{date}</time>
-        <span className="bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-full text-[10px] font-medium tracking-wide">
+        <span className="text-[10px] uppercase tracking-wide font-medium">
           {match.matchday ? `MD ${match.matchday}` : match.stage}
         </span>
       </div>
-
-      <div className="flex items-center justify-between text-base font-semibold text-gray-900 dark:text-white">
-        <TeamBlock team={match.homeTeam} />
-        <span className="text-center w-1/3">
-          {match.score.fullTime.home ?? 0} - {match.score.fullTime.away ?? 0}
-        </span>
-        <TeamBlock team={match.awayTeam} />
+      <div className="flex items-center justify-between font-semibold text-gray-900 dark:text-white text-base">
+        <TeamBlock team={homeTeam} />
+        <div className="text-center w-1/3 text-lg font-bold">
+          {fullTime?.home ?? "-"} - {fullTime?.away ?? "-"}
+        </div>
+        <TeamBlock team={awayTeam} />
       </div>
     </div>
   );
