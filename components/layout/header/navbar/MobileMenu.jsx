@@ -14,24 +14,24 @@ export default function MobileMenu({ links, onClose }) {
       animate={{ y: 0 }}
       exit={{ y: "100%" }}
       transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-      className="fixed inset-0 z-[999] flex flex-col md:hidden bg-white text-gray-900"
+      className="fixed inset-0 z-[999] flex flex-col md:hidden bg-white text-neutral-900"
     >
-      <div className="flex justify-end px-4 py-4 border-b border-gray-200">
+      <div className="flex justify-end px-6 py-5 border-b border-neutral-200">
         <button
           onClick={onClose}
-          className="p-2 rounded-full hover:bg-gray-100 transition"
+          className="p-2 rounded-lg hover:bg-neutral-100 transition"
           aria-label="Close Menu"
         >
           <X size={28} />
         </button>
       </div>
 
-      <nav className="flex flex-col items-center justify-center flex-1 gap-6 px-4 text-center">
+      <nav className="flex flex-col items-center justify-center flex-1 gap-8 px-4 text-center">
         {links.map(({ label, href }) => (
           <NavLink key={label} href={href} solid>
             <span
               onClick={onClose}
-              className="text-2xl font-semibold tracking-tight hover:opacity-80 transition"
+              className="text-2xl font-bold tracking-tight hover:text-[#0055A4] transition"
             >
               {label}
             </span>
@@ -39,26 +39,26 @@ export default function MobileMenu({ links, onClose }) {
         ))}
       </nav>
 
-      <div className="border-t border-gray-200 px-6 py-6 text-center">
+      <div className="border-t border-neutral-200 px-6 py-8 text-center">
         {session ? (
           <>
-            <div className="flex flex-col items-center gap-2 mb-4">
+            <div className="flex flex-col items-center gap-3 mb-6">
               <img
                 src={session.user?.image || "/default-avatar.png"}
                 alt="User avatar"
-                className="w-12 h-12 rounded-full object-cover"
+                className="w-14 h-14 rounded-full object-cover border-2 border-[#0055A4]/20"
               />
-              <p className="text-sm font-medium">{session.user?.name}</p>
-              <p className="text-xs text-gray-500">{session.user?.email}</p>
+              <p className="text-sm font-bold">{session.user?.name}</p>
+              <p className="text-xs text-neutral-500">{session.user?.email}</p>
             </div>
             <button
               onClick={() => {
                 signOut();
                 onClose();
               }}
-              className="w-full py-2 px-4 text-sm font-medium bg-gray-900 text-white rounded-full hover:bg-gray-700 transition"
+              className="w-full py-3 px-6 text-sm font-bold bg-[#0055A4] text-white rounded-xl hover:bg-[#004494] transition shadow-md"
             >
-              Sign Out
+              SIGN OUT
             </button>
           </>
         ) : (
@@ -67,9 +67,9 @@ export default function MobileMenu({ links, onClose }) {
               signIn();
               onClose();
             }}
-            className="w-3xs py-2 px-4 text-sm font-medium bg-gray-900 text-white rounded-full hover:bg-gray-700 transition"
+            className="w-full py-3 px-6 text-sm font-bold bg-[#0055A4] text-white rounded-xl hover:bg-[#004494] transition shadow-md"
           >
-            Sign In
+            SIGN IN
           </button>
         )}
       </div>

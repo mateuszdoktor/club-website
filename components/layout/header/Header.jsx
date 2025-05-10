@@ -18,7 +18,7 @@ export default function Header() {
         priority
         placeholder="blur"
         blurDataURL="/IMG_2739.JPG"
-        onLoad={() => setLoaded(true)} 
+        onLoad={() => setLoaded(true)}
         className={`object-cover object-center z-0 transition-opacity duration-700 ${
           loaded ? "opacity-100" : "opacity-0"
         }`}

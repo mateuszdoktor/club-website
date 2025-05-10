@@ -7,15 +7,15 @@ export default function News({ articles }) {
   try {
     if (!articles?.length) {
       return (
-        <div className="p-4 bg-yellow-100 text-yellow-800 border border-yellow-300 rounded max-w-4xl mx-auto my-8">
-          <p>No news available.</p>
+        <div className="p-6 bg-white border border-gray-200 rounded-xl max-w-7xl mx-auto my-8 text-center">
+          <p className="text-neutral-600">No news available at this time.</p>
         </div>
       );
     }
 
     return (
       <section className="w-full py-20 bg-white">
-        <div className="max-w-[92%] mx-auto flex flex-col gap-14">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col gap-16">
           <NewsHeading />
           <FeaturedArticle article={articles[0]} />
           <ArticleGrid articles={articles.slice(1, 7)} />
@@ -25,8 +25,8 @@ export default function News({ articles }) {
     );
   } catch (error) {
     return (
-      <div className="p-4 bg-red-100 text-red-800 border border-red-300 rounded max-w-4xl mx-auto my-8">
-        <p>Error displaying news: {error.message}</p>
+      <div className="p-6 bg-white border border-red-200 rounded-xl max-w-7xl mx-auto my-8 text-center">
+        <p className="text-red-600">Error loading news content.</p>
       </div>
     );
   }

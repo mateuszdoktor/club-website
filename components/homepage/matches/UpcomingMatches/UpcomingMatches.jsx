@@ -21,27 +21,31 @@ export default function UpcomingMatches({ matches }) {
   };
 
   return (
-    <section className="relative bg-white px-6 py-12 space-y-10 w-full overflow-hidden">
-      <div>
-        <h2 className="text-[2.25rem] sm:text-[2.75rem] font-bold tracking-tight flex items-center gap-3 text-neutral-900">
-          <CalendarDays className="w-8 h-8 text-neutral-800" />
-          Upcoming Matches
-        </h2>
-        <p className="text-neutral-500 mt-2 text-lg">
-          See what’s coming up next
-        </p>
-      </div>
+    <section className="relative bg-white px-6 py-20 space-y-12 w-full overflow-hidden">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex items-end justify-between">
+          <div>
+            <h2 className="text-5xl font-black tracking-tight text-neutral-900 flex items-center gap-4">
+              <CalendarDays className="w-10 h-10 text-neutral-900" />
+              UPCOMING MATCHES
+            </h2>
+            <p className="text-neutral-500 mt-3 text-lg font-light">
+              Real Madrid's upcoming fixtures
+            </p>
+          </div>
+        </div>
 
-      <div className="relative">
-        <MatchesNav direction="left" onClick={() => scroll("left")} />
-        <MatchesNav direction="right" onClick={() => scroll("right")} />
+        <div className="relative mt-12">
+          <MatchesNav direction="left" onClick={() => scroll("left")} />
+          <MatchesNav direction="right" onClick={() => scroll("right")} />
 
-        <div ref={scrollRef} className="overflow-x-auto no-scrollbar">
-          <ul className="flex gap-6 snap-x snap-mandatory pb-4">
-            {matches.map((match) => (
-              <MatchCard key={match.id} match={match} />
-            ))}
-          </ul>
+          <div ref={scrollRef} className="overflow-x-auto no-scrollbar">
+            <ul className="flex gap-8 snap-x snap-mandatory pb-8">
+              {matches.map((match) => (
+                <MatchCard key={match.id} match={match} />
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>

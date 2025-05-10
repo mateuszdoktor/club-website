@@ -36,25 +36,25 @@ export function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f8fafc] to-[#e2e8f0] px-4 py-12">
+    <div className="min-h-screen flex items-center justify-center bg-white px-4 py-12">
       <form
         onSubmit={handleLogin}
-        className="w-full max-w-md space-y-6 bg-white p-10 rounded-3xl border border-gray-200 shadow-2xl"
+        className="w-full max-w-md space-y-6 bg-white p-10 rounded-xl border border-neutral-200 shadow-lg"
       >
-        <div className="flex justify-center mb-4">
+        <div className="flex justify-center mb-6">
           <img
-            src="/logo-navy-no-bg.png"
+            src="/Real_Madrid_CF.svg.png"
             alt="Real Madrid Logo"
-            className="h-16 w-16 object-contain"
+            className="h-20 w-20 object-contain"
           />
         </div>
 
         <div className="text-center">
-          <h1 className="text-3xl font-black text-[#0a1e41] tracking-tight uppercase">
-            Welcome, Madridista
+          <h1 className="text-3xl font-black text-[#0055A4] tracking-tight uppercase">
+            MADRIDISTA LOGIN
           </h1>
-          <p className="mt-2 text-sm text-gray-500">
-            Sign in to continue your journey
+          <p className="mt-2 text-sm text-neutral-500">
+            Access your exclusive content
           </p>
         </div>
 
@@ -72,7 +72,7 @@ export function LoginForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full px-4 py-3 rounded-xl text-sm bg-gray-100 border border-transparent focus:outline-none focus:ring-2 focus:ring-[#0a1e41] focus:border-[#0a1e41] transition"
+            className="w-full px-5 py-3 rounded-xl text-sm bg-neutral-50 border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-[#0055A4] focus:border-[#0055A4] transition"
           />
           <input
             type="password"
@@ -81,44 +81,50 @@ export function LoginForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full px-4 py-3 rounded-xl text-sm bg-gray-100 border border-transparent focus:outline-none focus:ring-2 focus:ring-[#0a1e41] focus:border-[#0a1e41] transition"
+            className="w-full px-5 py-3 rounded-xl text-sm bg-neutral-50 border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-[#0055A4] focus:border-[#0055A4] transition"
           />
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3 rounded-xl bg-[#0a1e41] text-white font-semibold text-sm tracking-wide hover:bg-[#071731] transition flex items-center justify-center"
+          className="w-full py-3.5 rounded-xl bg-[#0055A4] text-white font-bold text-sm tracking-wider hover:bg-[#004494] transition flex items-center justify-center gap-2"
         >
           {loading ? (
-            <svg
-              className="w-5 h-5 animate-spin text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              />
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-              />
-            </svg>
+            <>
+              <svg
+                className="w-5 h-5 animate-spin text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                />
+              </svg>
+              SIGNING IN...
+            </>
           ) : (
-            "Sign In"
+            "SIGN IN"
           )}
         </button>
-        <p className="text-sm text-center mt-4">
-          Don’t have an account?{" "}
-          <Link href="/register" className="text-blue-600 hover:underline">
-            Register here
+        <p className="text-sm text-center mt-6 text-neutral-600">
+          Not a member?{" "}
+          <Link
+            href="/register"
+            className="text-[#0055A4] hover:underline font-medium"
+          >
+            REGISTER NOW
           </Link>
         </p>
       </form>

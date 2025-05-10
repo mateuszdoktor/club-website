@@ -9,13 +9,13 @@ import NavbarLinks from "./header/navbar/NavbarLinks";
 import MobileMenu from "./header/navbar/MobileMenu";
 
 const navLinks = [
-  { href: "/news", label: "News" },
-  { href: "/season", label: "Season" },
-  { href: "/team", label: "Team" },
-  { href: "/club", label: "Club" },
+  { href: "/news", label: "NEWS" },
+  { href: "/season", label: "SEASON" },
+  { href: "/team", label: "TEAM" },
+  { href: "/club", label: "CLUB" },
 ];
 
-export default function solidnavbar() {
+export default function SolidNavbar() {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
@@ -47,17 +47,17 @@ export default function solidnavbar() {
         initial={{ y: 0 }}
         animate={{ y: showNavbar ? 0 : -80 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="fixed top-0 z-[999] isolate w-full bg-white/90 backdrop-blur-md text-gray-900 border-b border-gray-200 pointer-events-auto"
+        className="fixed top-0 z-[999] isolate w-full bg-white/95 backdrop-blur-md text-neutral-900 border-b border-neutral-200 pointer-events-auto shadow-sm"
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-4 md:px-8">
-          <div className="hidden md:flex flex-1 justify-start gap-6">
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+          <div className="hidden md:flex flex-1 justify-start gap-8">
             <NavbarLinks links={navLinks.slice(0, 2)} solid />
           </div>
 
           <NavbarLogo isSolid />
 
-          <div className="flex flex-1 justify-end items-center gap-4">
-            <div className="hidden md:flex gap-6">
+          <div className="flex flex-1 justify-end items-center gap-6">
+            <div className="hidden md:flex gap-8">
               <NavbarLinks links={navLinks.slice(2)} solid />
             </div>
 
@@ -67,11 +67,11 @@ export default function solidnavbar() {
                 onMouseEnter={() => setShowUserMenu(true)}
                 onMouseLeave={() => setShowUserMenu(false)}
               >
-                <button className="flex items-center gap-2 rounded-full p-1.5 transition hover:bg-gray-100">
+                <button className="flex items-center gap-2 rounded-full p-1.5 transition hover:bg-neutral-100">
                   <img
                     src={session.user?.image || "/default-avatar.png"}
                     alt="User avatar"
-                    className="w-9 h-9 rounded-full object-cover"
+                    className="w-9 h-9 rounded-full object-cover border-2 border-[#0055A4]/20"
                   />
                 </button>
 
@@ -82,21 +82,21 @@ export default function solidnavbar() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -5 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute right-0 mt-3 w-48 rounded-lg shadow-xl bg-white text-gray-900 overflow-hidden z-50"
+                      className="absolute right-0 mt-3 w-56 rounded-xl shadow-lg bg-white text-neutral-900 overflow-hidden z-50 border border-neutral-200"
                     >
-                      <div className="px-4 py-3 border-b">
-                        <p className="text-sm font-medium">
+                      <div className="px-4 py-3 border-b border-neutral-200">
+                        <p className="text-sm font-bold">
                           {session.user?.name}
                         </p>
-                        <p className="text-xs text-gray-500 truncate">
+                        <p className="text-xs text-neutral-500 truncate">
                           {session.user?.email}
                         </p>
                       </div>
                       <button
                         onClick={() => signOut()}
-                        className="w-full text-left px-4 py-3 hover:bg-gray-100 text-sm"
+                        className="w-full text-left px-4 py-3 hover:bg-neutral-100 text-sm font-medium"
                       >
-                        Sign Out
+                        SIGN OUT
                       </button>
                     </motion.div>
                   )}
@@ -105,9 +105,9 @@ export default function solidnavbar() {
             ) : (
               <button
                 onClick={() => signIn()}
-                className="hidden md:inline-flex px-5 py-2 rounded-full text-sm font-medium transition bg-gray-900 text-white hover:bg-gray-700"
+                className="hidden md:inline-flex px-6 py-2.5 rounded-xl text-sm font-bold tracking-wide transition bg-[#0055A4] text-white hover:bg-[#004494] shadow-md"
               >
-                Sign In
+                SIGN IN
               </button>
             )}
 
@@ -116,6 +116,7 @@ export default function solidnavbar() {
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setIsOpen(!isOpen)}
                 aria-label="Toggle Mobile Menu"
+                className="p-2 rounded-lg hover:bg-neutral-100 transition"
               >
                 {isOpen ? <X size={28} /> : <Menu size={28} />}
               </motion.button>

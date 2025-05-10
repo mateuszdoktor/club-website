@@ -56,12 +56,12 @@ export default function ClientMatchList({
   const visibleMatches = groupedMatches[currentGroupIndex]?.matches ?? [];
 
   return (
-    <main className="max-w-7xl mx-auto px-6 pt-36 pb-36 py-10">
-      <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-8">
-        2024/25 Season – Match Results
+    <main className="max-w-7xl mx-auto px-6 pt-32 pb-32">
+      <h1 className="text-4xl font-black tracking-tight text-neutral-900 mb-12">
+        2024/25 SEASON MATCHES
       </h1>
 
-      <div className="flex items-center gap-3 flex-wrap mb-10">
+      <div className="flex items-center gap-3 flex-wrap mb-12">
         {competitions.map((c, i) => (
           <button
             key={c.code}
@@ -71,10 +71,10 @@ export default function ClientMatchList({
               setSelectedStage(stages.length > 0 ? stages[0] : null);
               setCurrentGroupIndex(0);
             }}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all border shadow-sm ${
+            className={`flex items-center gap-3 px-5 py-2.5 rounded-full text-sm font-bold transition-all border ${
               selectedIndex === i
-                ? "bg-indigo-600 text-white border-indigo-600"
-                : "bg-white text-neutral-600 hover:bg-neutral-100 border-neutral-200"
+                ? "bg-[#0055A4] text-white border-[#0055A4] shadow-md"
+                : "bg-white text-neutral-700 hover:bg-neutral-100 border-neutral-200"
             }`}
           >
             {c.logo ? (
@@ -83,25 +83,21 @@ export default function ClientMatchList({
                 alt={c.name}
                 className="w-5 h-5 object-contain"
                 loading="lazy"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = "/default-league-logo.svg";
-                }}
               />
             ) : (
               <div className="w-5 h-5 bg-neutral-300 rounded-full" />
             )}
-            {c.name}
+            {c.name.toUpperCase()}
           </button>
         ))}
       </div>
 
-      <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mt-4 mb-4 border-b pb-2">
-        {selected?.name}
+      <h2 className="text-2xl font-bold text-neutral-900 mb-6 border-b pb-2">
+        {selected?.name.toUpperCase()}
       </h2>
 
       {selected?.code === "CL" && stages?.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-6">
+        <div className="flex flex-wrap gap-2 mb-8">
           {stages.map((stage) => (
             <button
               key={stage}
@@ -109,37 +105,37 @@ export default function ClientMatchList({
                 setSelectedStage(stage);
                 setCurrentGroupIndex(0);
               }}
-              className={`px-3 py-1 rounded-md text-sm font-medium border ${
+              className={`px-4 py-2 rounded-full text-xs font-bold border ${
                 selectedStage === stage
-                  ? "bg-indigo-600 text-white border-indigo-600"
+                  ? "bg-[#0055A4] text-white border-[#0055A4]"
                   : "bg-white text-neutral-700 hover:bg-neutral-100 border-neutral-200"
               }`}
             >
-              {normalizeStageName(stage)}
+              {normalizeStageName(stage).toUpperCase()}
             </button>
           ))}
         </div>
       )}
 
       {groupedMatches.length > 1 && (
-        <div className="flex flex-wrap gap-2 mb-6">
+        <div className="flex flex-wrap gap-2 mb-8">
           {groupedMatches.map((group, i) => (
             <button
               key={group.label}
               onClick={() => setCurrentGroupIndex(i)}
-              className={`px-3 py-1 rounded-md text-sm font-medium border ${
+              className={`px-4 py-2 rounded-full text-xs font-bold border ${
                 currentGroupIndex === i
-                  ? "bg-indigo-600 text-white border-indigo-600"
+                  ? "bg-[#0055A4] text-white border-[#0055A4]"
                   : "bg-white text-neutral-700 hover:bg-neutral-100 border-neutral-200"
               }`}
             >
-              {group.label}
+              {group.label.toUpperCase()}
             </button>
           ))}
         </div>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-16">
         {visibleMatches.map((m) => (
           <MatchCard key={m.id} match={m} />
         ))}

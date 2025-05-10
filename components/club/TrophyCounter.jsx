@@ -18,10 +18,12 @@ export default function TrophyCounter({ label, end, delay = 0.2 }) {
         },
       }}
     >
-      <h3 className="text-5xl font-extrabold text-gold mb-2">
+      <h3 className="text-5xl font-black text-[#0055A4] mb-2">
         <CountUp end={end} duration={2} />
       </h3>
-      <p className="text-lg text-gray-700">{label}</p>
+      <p className="text-lg font-medium text-neutral-700 uppercase tracking-wider">
+        {label}
+      </p>
     </motion.div>
   );
 }

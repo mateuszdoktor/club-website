@@ -49,25 +49,25 @@ export function RegisterForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-white">
       <form
         onSubmit={handleRegister}
-        className="w-full max-w-md space-y-6 bg-white p-10 rounded-3xl border border-gray-200 shadow-2xl"
+        className="w-full max-w-md space-y-6 bg-white p-10 rounded-xl border border-neutral-200 shadow-lg"
       >
-        <div className="flex justify-center mb-4">
+        <div className="flex justify-center mb-6">
           <img
-            src="/logo-navy-no-bg.png"
+            src="/Real_Madrid_CF.svg.png"
             alt="Real Madrid Logo"
-            className="h-16 w-16 object-contain"
+            className="h-20 w-20 object-contain"
           />
         </div>
 
         <div className="text-center">
-          <h1 className="text-3xl font-black text-[#0a1e41] tracking-tight uppercase">
-            Join the club
+          <h1 className="text-3xl font-black text-[#0055A4] tracking-tight uppercase">
+            BECOME A MADRIDISTA
           </h1>
-          <p className="mt-2 text-sm text-gray-500">
-            Create an account to get started
+          <p className="mt-2 text-sm text-neutral-500">
+            Join the Real Madrid family
           </p>
         </div>
 
@@ -80,19 +80,19 @@ export function RegisterForm() {
         <div className="space-y-4">
           <input
             type="text"
-            placeholder="Name"
+            placeholder="Full Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            className="w-full px-4 py-3 rounded-xl text-sm bg-gray-100 border border-transparent focus:outline-none focus:ring-2 focus:ring-[#0a1e41] focus:border-[#0a1e41] transition"
+            className="w-full px-5 py-3 rounded-xl text-sm bg-neutral-50 border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-[#0055A4] focus:border-[#0055A4] transition"
           />
           <input
             type="email"
-            placeholder="Email address"
+            placeholder="Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full px-4 py-3 rounded-xl text-sm bg-gray-100 border border-transparent focus:outline-none focus:ring-2 focus:ring-[#0a1e41] focus:border-[#0a1e41] transition"
+            className="w-full px-5 py-3 rounded-xl text-sm bg-neutral-50 border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-[#0055A4] focus:border-[#0055A4] transition"
           />
           <input
             type="password"
@@ -100,14 +100,14 @@ export function RegisterForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full px-4 py-3 rounded-xl text-sm bg-gray-100 border border-transparent focus:outline-none focus:ring-2 focus:ring-[#0a1e41] focus:border-[#0a1e41] transition"
+            className="w-full px-5 py-3 rounded-xl text-sm bg-neutral-50 border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-[#0055A4] focus:border-[#0055A4] transition"
           />
           <input
             type="url"
-            placeholder="Avatar image URL (optional)"
+            placeholder="Avatar Image URL (Optional)"
             value={image}
             onChange={(e) => setImage(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl text-sm bg-gray-100 border border-transparent focus:outline-none focus:ring-2 focus:ring-[#0a1e41] focus:border-[#0a1e41] transition"
+            className="w-full px-5 py-3 rounded-xl text-sm bg-neutral-50 border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-[#0055A4] focus:border-[#0055A4] transition"
           />
           {image && (
             <div className="flex justify-center">
@@ -118,7 +118,7 @@ export function RegisterForm() {
                     "https://png.pngtree.com/png-clipart/20210129/ourmid/pngtree-default-male-avatar-png-image_2811083.jpg")
                 }
                 alt="Avatar Preview"
-                className="h-16 w-16 object-cover rounded-full border"
+                className="h-16 w-16 object-cover rounded-full border-2 border-[#0055A4]/20"
               />
             </div>
           )}
@@ -127,38 +127,44 @@ export function RegisterForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3 rounded-xl bg-[#0a1e41] text-white font-semibold text-sm tracking-wide hover:bg-[#071731] transition flex items-center justify-center"
+          className="w-full py-3.5 rounded-xl bg-[#0055A4] text-white font-bold text-sm tracking-wider hover:bg-[#004494] transition flex items-center justify-center gap-2"
         >
           {loading ? (
-            <svg
-              className="w-5 h-5 animate-spin text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              />
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-              />
-            </svg>
+            <>
+              <svg
+                className="w-5 h-5 animate-spin text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                />
+              </svg>
+              CREATING ACCOUNT...
+            </>
           ) : (
-            "Sign Up"
+            "REGISTER NOW"
           )}
         </button>
 
-        <p className="text-sm text-center mt-4">
-          Already have an account?{" "}
-          <Link href="/login" className="text-blue-600 hover:underline">
-            Login here
+        <p className="text-sm text-center mt-6 text-neutral-600">
+          Already a member?{" "}
+          <Link
+            href="/login"
+            className="text-[#0055A4] hover:underline font-medium"
+          >
+            LOGIN HERE
           </Link>
         </p>
       </form>

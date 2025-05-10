@@ -4,24 +4,28 @@ export default function MatchDateInfo({ date }) {
   const d = new Date(date);
 
   return (
-    <div className="flex flex-col items-center text-base text-neutral-600 gap-2">
-      <div className="flex items-center gap-2">
-        <CalendarDays className="h-5 w-5 text-neutral-400" />
-        <span className="font-medium">
-          {d.toLocaleDateString("en-EN", {
-            weekday: "short",
-            month: "short",
-            day: "numeric",
-          })}
+    <div className="flex flex-col items-center text-neutral-600 gap-3">
+      <div className="flex items-center gap-3 font-mono text-sm tracking-wider">
+        <CalendarDays className="h-4 w-4 text-neutral-900" />
+        <span>
+          {d
+            .toLocaleDateString("en-EN", {
+              weekday: "short",
+              month: "short",
+              day: "numeric",
+            })
+            .toUpperCase()}
         </span>
       </div>
-      <div className="flex items-center gap-2">
-        <Clock className="h-5 w-5 text-neutral-400" />
-        <span className="font-medium">
-          {d.toLocaleTimeString("en-EN", {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
+      <div className="flex items-center gap-3 font-mono text-sm tracking-wider">
+        <Clock className="h-4 w-4 text-neutral-900" />
+        <span>
+          {d
+            .toLocaleTimeString("en-EN", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })
+            .toUpperCase()}
         </span>
       </div>
     </div>

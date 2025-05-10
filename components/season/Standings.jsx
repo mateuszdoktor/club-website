@@ -1,8 +1,8 @@
 import StandingsTable from "./StandingsTable";
 
 const STANDINGS_TITLES = {
-  PD: "La Liga Standings",
-  CL: "Champions League Standings",
+  PD: "LA LIGA STANDINGS",
+  CL: "CHAMPIONS LEAGUE STANDINGS",
 };
 
 export default function Standings({ leagueCode, laliga, ucl }) {
@@ -13,7 +13,7 @@ export default function Standings({ leagueCode, laliga, ucl }) {
 
   return (
     <StandingsTable
-      title={STANDINGS_TITLES[leagueCode] || "Standings"}
+      title={STANDINGS_TITLES[leagueCode] || "STANDINGS"}
       data={standings}
     />
   );

@@ -58,13 +58,13 @@ export default function Section({
     >
       <motion.div className="lg:w-1/2 space-y-6" variants={textVariants}>
         <motion.h2
-          className="text-4xl font-extrabold text-gray-900"
+          className="text-4xl font-black text-neutral-900"
           variants={textVariants}
         >
           {title}
         </motion.h2>
         <motion.p
-          className="text-lg text-gray-700 leading-relaxed"
+          className="text-lg text-neutral-700 leading-relaxed"
           variants={textVariants}
         >
           {description}
@@ -75,8 +75,8 @@ export default function Section({
         <motion.img
           src={image}
           alt={title}
-          className="rounded-3xl shadow-xl object-cover border border-gray-200 transition-transform duration-500 hover:scale-105"
-          whileHover={{ scale: 1.05 }}
+          className="rounded-xl shadow-lg object-cover border border-neutral-200 transition-transform duration-500 hover:scale-[1.02]"
+          whileHover={{ scale: 1.03 }}
         />
       </motion.div>
     </motion.section>

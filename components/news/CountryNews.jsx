@@ -13,7 +13,7 @@ const countries = [
 ];
 
 export function CountryNews() {
-  const [country, setCountry] = useState("pl");
+  const [country, setCountry] = useState("es"); // Default to Spain
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -48,22 +48,22 @@ export function CountryNews() {
   }, [country]);
 
   return (
-    <div>
-      <div className="flex flex-wrap justify-center gap-4 mb-8">
+    <div className="max-w-7xl mx-auto px-6">
+      <div className="flex flex-wrap justify-center gap-3 mb-10">
         {countries.map((c) => (
           <button
             key={c.code}
             onClick={() => setCountry(c.code)}
-            className={`flex items-center gap-2 border rounded-full px-4 py-2 text-lg transition-all ${
+            className={`flex items-center gap-2 border rounded-full px-4 py-2 text-sm transition-all ${
               country === c.code
-                ? "bg-primary-100 border-primary-500 text-primary-700"
-                : "bg-gray-100 hover:bg-gray-200"
+                ? "bg-[#0055A4] border-[#0055A4] text-white"
+                : "bg-white border-neutral-200 hover:border-[#0055A4]/50"
             }`}
           >
             <img
               src={`https://flagcdn.com/w40/${c.code}.png`}
               alt={c.name}
-              className="w-6 h-4 object-cover rounded-sm"
+              className="w-5 h-3.5 object-cover rounded-sm"
             />
             <span>{c.name}</span>
           </button>
@@ -71,7 +71,9 @@ export function CountryNews() {
       </div>
 
       {loading ? (
-        <p className="text-center text-gray-500">Loading...</p>
+        <div className="text-center py-12">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#0055A4]"></div>
+        </div>
       ) : (
         <NewsList
           articles={articles}

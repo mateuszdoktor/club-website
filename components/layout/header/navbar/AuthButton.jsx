@@ -11,13 +11,13 @@ export default function AuthButton({ scrolled }) {
     return (
       <button
         onClick={() => signIn()}
-        className={`hidden md:inline-flex px-5 py-2 rounded-full text-sm font-medium transition ${
+        className={`hidden md:inline-flex px-6 py-2.5 rounded-xl text-sm font-bold tracking-wide transition ${
           scrolled
-            ? "bg-gray-900 text-white hover:bg-gray-700"
+            ? "bg-[#0055A4] text-white hover:bg-[#004494] shadow-md"
             : "bg-white/20 text-white hover:bg-white/30"
         }`}
       >
-        Sign In
+        SIGN IN
       </button>
     );
   }
@@ -30,12 +30,14 @@ export default function AuthButton({ scrolled }) {
     >
       <motion.button
         whileHover={{ scale: 1.05 }}
-        className="flex items-center gap-2 rounded-full p-1.5 transition hover:bg-white/10"
+        className={`flex items-center gap-2 rounded-full p-1.5 transition ${
+          scrolled ? "hover:bg-neutral-100" : "hover:bg-white/10"
+        }`}
       >
         <img
           src={session.user?.image || "/default-avatar.png"}
           alt="avatar"
-          className="w-11 h-11 rounded-full object-cover"
+          className="w-10 h-10 rounded-full object-cover border-2 border-[#0055A4]/20"
         />
       </motion.button>
       <AnimatePresence>
@@ -45,19 +47,19 @@ export default function AuthButton({ scrolled }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -5 }}
             transition={{ duration: 0.2 }}
-            className="absolute right-0 mt-3 w-48 rounded-lg shadow-xl bg-white text-gray-900 overflow-hidden z-50"
+            className="absolute right-0 mt-3 w-56 rounded-xl shadow-lg bg-white text-neutral-900 overflow-hidden z-50 border border-neutral-200"
           >
-            <div className="px-4 py-3 border-b">
-              <p className="text-sm font-medium">{session.user?.name}</p>
-              <p className="text-xs text-gray-500 truncate">
+            <div className="px-4 py-3 border-b border-neutral-200">
+              <p className="text-sm font-bold">{session.user?.name}</p>
+              <p className="text-xs text-neutral-500 truncate">
                 {session.user?.email}
               </p>
             </div>
             <button
               onClick={() => signOut()}
-              className="w-full text-left px-4 py-3 hover:bg-gray-100 text-sm"
+              className="w-full text-left px-4 py-3 hover:bg-neutral-100 text-sm font-medium"
             >
-              Sign Out
+              SIGN OUT
             </button>
           </motion.div>
         )}

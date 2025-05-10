@@ -18,9 +18,9 @@ export default function NavbarLogo({ isSolid = false }) {
         <Image
           src={isSolid ? logoNavy : logoWhite}
           alt="Real Madrid Logo"
-          width={isSolid ? 80 : 60}
-          height={isSolid ? 80 : 60}
-          className="object-contain transition-transform duration-300"
+          width={isSolid ? 90 : 60}
+          height={isSolid ? 90 : 60}
+          className="object-contain transition-transform duration-300 hover:scale-105"
           priority
         />
       </motion.div>

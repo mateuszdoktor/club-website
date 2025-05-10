@@ -1,9 +1,12 @@
 export default function Footer() {
   return (
-    <footer className="bg-white text-gray-800 px-6 md:px-20 py-16 border-t border-gray-200 text-base">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-        <div>
-          <p className="text-gray-500 leading-relaxed">
+    <footer className="bg-white text-neutral-800 px-6 md:px-20 py-16 border-t border-neutral-200 text-base">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <div className="md:col-span-2">
+          <h6 className="font-bold mb-4 uppercase text-neutral-900 text-sm tracking-wider">
+            Disclaimer
+          </h6>
+          <p className="text-neutral-600 leading-relaxed">
             This website is an unofficial fan-made project created solely for
             educational and non-commercial purposes. It is not affiliated with,
             endorsed, maintained, or authorized by Real Madrid CF or any of its
@@ -23,8 +26,11 @@ export default function Footer() {
         <FooterSocials />
       </div>
 
-      <div className="border-t border-gray-200 pt-8 text-sm text-gray-500 text-center">
-        <p>Legal | Privacy Policy | Cookie Policy | Accessibility</p>
+      <div className="max-w-7xl mx-auto border-t border-neutral-200 pt-8 text-sm text-neutral-500 text-center">
+        <p>
+          © {new Date().getFullYear()} Real Madrid Fan Page | Legal | Privacy
+          Policy | Cookie Policy | Accessibility
+        </p>
       </div>
     </footer>
   );
@@ -33,13 +39,13 @@ export default function Footer() {
 function FooterSection({ title, links }) {
   return (
     <div>
-      <h6 className="font-semibold mb-4 uppercase text-gray-700 text-sm tracking-wider">
+      <h6 className="font-bold mb-4 uppercase text-neutral-900 text-sm tracking-wider">
         {title}
       </h6>
       <ul className="space-y-3">
         {links.map((text) => (
           <li key={text}>
-            <a href="#" className="hover:underline">
+            <a href="#" className="hover:text-[#0055A4] transition-colors">
               {text}
             </a>
           </li>
@@ -54,7 +60,7 @@ function FooterSocials() {
 
   return (
     <div>
-      <h6 className="font-semibold mb-4 uppercase text-gray-700 text-sm tracking-wider">
+      <h6 className="font-bold mb-4 uppercase text-neutral-900 text-sm tracking-wider">
         Follow Us
       </h6>
       <div className="flex space-x-5">
@@ -62,7 +68,7 @@ function FooterSocials() {
           <a
             key={name}
             href="#"
-            className="text-gray-500 hover:text-black"
+            className="text-neutral-600 hover:text-[#0055A4] transition-colors"
             aria-label={name}
           >
             <SocialIcon name={name} />

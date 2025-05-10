@@ -12,23 +12,25 @@ export function CommentsSection({ headlineId }) {
   };
 
   return (
-    <section className="bg-white py-20 px-4 border-t border-gray-100">
-      <h2 className="text-3xl font-bold text-gray-900 mb-10">
-        Join the conversation
-      </h2>
-      <CommentsForm
-        headlineId={headlineId}
-        onComment={handleOptimisticComment}
-      />
-      <CommentsList comments={comments} />
-      {hasMore && (
-        <button
-          onClick={() => loadMore()}
-          className="px-5 py-2 mt-4 bg-white text-gray-800 font-medium text-sm rounded-lg border border-gray-300 shadow-sm transition-all duration-200 hover:bg-gray-100 hover:shadow-md hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-400 active:scale-100"
-        >
-          Load more comments
-        </button>
-      )}
+    <section className="bg-white py-16 px-6 border-t border-neutral-100">
+      <div className="max-w-3xl mx-auto">
+        <h2 className="text-3xl font-black text-neutral-900 mb-12">
+          JOIN THE CONVERSATION
+        </h2>
+        <CommentsForm
+          headlineId={headlineId}
+          onComment={handleOptimisticComment}
+        />
+        <CommentsList comments={comments} />
+        {hasMore && (
+          <button
+            onClick={() => loadMore()}
+            className="px-6 py-3 mt-8 w-full bg-white text-[#0055A4] font-medium rounded-xl border border-[#0055A4]/30 hover:bg-[#0055A4]/5 hover:border-[#0055A4]/50 transition-all duration-300"
+          >
+            LOAD MORE COMMENTS
+          </button>
+        )}
+      </div>
     </section>
   );
 }

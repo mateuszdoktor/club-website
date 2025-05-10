@@ -1,25 +1,31 @@
 "use client";
 
+import { CalendarDays } from "lucide-react";
+
 export function HeadlineDetail({ headline }) {
   return (
-    <section className="pt-32 pb-20 px-4 md:px-6 bg-white text-gray-900">
+    <section className="pt-28 pb-20 px-6 bg-white text-neutral-900">
       <div className="max-w-5xl mx-auto">
         <img
           src={headline.img}
           alt={headline.title}
-          className="w-full h-[450px] object-cover rounded-3xl shadow-xl mb-12 transition-transform duration-500 hover:scale-[1.02]"
+          className="w-full h-[420px] object-cover rounded-xl shadow-lg mb-10 transition-transform duration-500 hover:scale-[1.01]"
         />
-        <h1 className="text-4xl sm:text-5xl font-bold mb-4 tracking-tight leading-tight">
+        <h1 className="text-3xl sm:text-4xl font-black mb-4 tracking-tight leading-tight">
           {headline.title}
         </h1>
-        <p className="text-sm text-gray-500 mb-6">
-          By <span className="font-semibold">{headline.author.name}</span> ·{" "}
-          {new Date(headline.createdAt).toLocaleDateString()}
-        </p>
-        <p className="text-xl text-gray-700 font-medium mb-8">
+        <div className="text-sm text-neutral-500 mb-8 flex items-center gap-3">
+          <span className="font-medium">{headline.author.name}</span>
+          <span className="w-1 h-1 bg-neutral-400 rounded-full"></span>
+          <div className="flex items-center gap-2">
+            <CalendarDays className="w-3.5 h-3.5" />
+            {new Date(headline.createdAt).toLocaleDateString()}
+          </div>
+        </div>
+        <p className="text-xl text-neutral-700 font-medium mb-8">
           {headline.description}
         </p>
-        <div className="text-lg leading-8 text-gray-800 whitespace-pre-wrap">
+        <div className="prose max-w-none text-lg leading-8 text-neutral-800 whitespace-pre-wrap">
           {headline.fullText}
         </div>
       </div>

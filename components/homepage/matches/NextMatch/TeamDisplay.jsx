@@ -2,17 +2,22 @@ export default function TeamDisplay({ team, align }) {
   const isLeft = align === "left";
 
   return (
-    <div
-      className={`group flex items-center gap-5 md:gap-8 transition-all duration-300 ${
-        isLeft ? "flex-row-reverse text-right" : "text-left"
-      }`}
-    >
+    <div className={`flex items-center ${isLeft ? "flex-row-reverse" : ""}`}>
       <img
         src={team.crest}
         alt={team.name}
-        className="h-20 w-20 md:h-28 md:w-28 object-contain drop-shadow-lg transition group-hover:scale-105 group-hover:brightness-110"
+        className={`h-26 w-26 object-contain ${
+          isLeft ? "ml-6" : "mr-6"
+        } opacity-90`}
       />
-      <span className="text-white text-2xl md:text-4xl font-semibold tracking-tight w-[10rem] md:w-[14rem] truncate">
+      <span
+        className={`text-3xl font-medium text-white ${
+          isLeft ? "text-right" : "text-left"
+        } tracking-tight`}
+        style={{
+          textShadow: "0 2px 8px rgba(0,0,0,0.5)",
+        }}
+      >
         {team.name}
       </span>
     </div>
