@@ -47,7 +47,7 @@ export default function solidnavbar() {
         initial={{ y: 0 }}
         animate={{ y: showNavbar ? 0 : -80 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="fixed top-0 z-50 w-full bg-white/90 backdrop-blur-md text-gray-900 border-b border-gray-200"
+        className="fixed top-0 z-[999] isolate w-full bg-white/90 backdrop-blur-md text-gray-900 border-b border-gray-200 pointer-events-auto"
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-4 md:px-8">
           <div className="hidden md:flex flex-1 justify-start gap-6">

@@ -8,27 +8,28 @@ import MatchesNav from "./MatchesNav";
 export default function UpcomingMatches({ matches }) {
   const scrollRef = useRef(null);
   const isScrolling = useRef(false);
-  const cardWidth = 380;
+  const cardWidth = 420;
 
   const scroll = (dir) => {
     const container = scrollRef.current;
     if (!container || isScrolling.current) return;
 
     const offset = cardWidth * (dir === "left" ? -1 : 1);
-
     isScrolling.current = true;
     container.scrollBy({ left: offset, behavior: "smooth" });
     setTimeout(() => (isScrolling.current = false), 350);
   };
 
   return (
-    <section className="relative bg-white p-8 space-y-6 w-full overflow-hidden">
-      <div className="mb-10">
-        <h2 className="text-[2rem] sm:text-[2.5rem] font-semibold text-neutral-900 tracking-tight flex items-center gap-3">
-          <CalendarDays className="w-8 h-8 text-indigo-600" />
+    <section className="relative bg-white px-6 py-12 space-y-10 w-full overflow-hidden">
+      <div>
+        <h2 className="text-[2.25rem] sm:text-[2.75rem] font-bold tracking-tight flex items-center gap-3 text-neutral-900">
+          <CalendarDays className="w-8 h-8 text-neutral-800" />
           Upcoming Matches
         </h2>
-        <p className="text-neutral-500 mt-2">See what’s coming up next</p>
+        <p className="text-neutral-500 mt-2 text-lg">
+          See what’s coming up next
+        </p>
       </div>
 
       <div className="relative">

@@ -9,25 +9,47 @@ export default async function NewsPage() {
     headlineService.getAllHeadlines(),
     getGNews(),
   ]);
+
   return (
-    <div className="min-h-screen bg-white px-4 pt-24 pb-48 sm:px-8">
-      <div className="max-w-6xl mx-auto">
-        <FeaturedHeadlines headlines={headlines} />
-        <NewsList
-          articles={gnewsArticles}
-          imageKey="image"
-          titleKey="title"
-          descriptionKey="description"
-          linkKey="url"
-          layout="list"
-        />
-        <section className="mt-16">
-          <h2 className="text-2xl font-semibold mb-6 text-gray-800">
-            Real Madrid News by Country
-          </h2>
+    <main className="min-h-screen  text-gray-900 px-4 pt-28 pb-32 sm:px-8">
+      <div className="max-w-6xl mx-auto space-y-32">
+        <section aria-label="Featured Headlines" className="space-y-12">
+          <div className="border-b border-gray-200 pb-4">
+            <h1 className="text-5xl font-semibold tracking-tight">
+              Featured Headlines
+            </h1>
+          </div>
+          <FeaturedHeadlines headlines={headlines} />
+        </section>
+
+        <section aria-label="Latest News" className="space-y-12">
+          <div className="border-b border-gray-200 pb-4">
+            <h2 className="text-4xl font-semibold tracking-tight">
+              Latest News
+            </h2>
+          </div>
+          <NewsList
+            articles={gnewsArticles}
+            imageKey="image"
+            titleKey="title"
+            descriptionKey="description"
+            linkKey="url"
+            layout="list"
+          />
+        </section>
+
+        <section
+          aria-label="Real Madrid News by Country"
+          className="space-y-12"
+        >
+          <div className="border-b border-gray-200 pb-4">
+            <h2 className="text-4xl font-semibold tracking-tight">
+              Real Madrid News by Country
+            </h2>
+          </div>
           <CountryNews />
         </section>
       </div>
-    </div>
+    </main>
   );
 }

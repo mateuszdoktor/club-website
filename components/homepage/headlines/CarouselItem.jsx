@@ -1,10 +1,15 @@
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const CarouselItem = ({ item, ref: innerRef }) => (
   <Link href={`/news/${item.id}`} className="block">
-    <div
+    <motion.div
       ref={innerRef}
-      className="relative flex-shrink-0 w-[85vw] sm:w-[45vw] md:w-[30vw] lg:w-[25vw] aspect-[4/3] rounded-2xl overflow-hidden shadow-xl group transition-transform duration-300 hover:scale-[1.02]"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="relative flex-shrink-0 w-[80vw] sm:w-[40vw] md:w-[28vw] lg:w-[22vw] xl:w-[20vw] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl group transform-gpu transition-transform duration-300 hover:scale-[1.02]"
     >
       <img
         src={item.img}
@@ -13,11 +18,11 @@ const CarouselItem = ({ item, ref: innerRef }) => (
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10" />
       <div className="absolute bottom-0 left-0 w-full z-20 p-4">
-        <h3 className="text-white text-lg md:text-xl lg:text-2xl font-semibold drop-shadow-lg">
+        <h3 className="text-white text-3xl sm:text-xl lg:text-3xl font-semibold drop-shadow-lg leading-snug">
           {item.title}
         </h3>
       </div>
-    </div>
+    </motion.div>
   </Link>
 );
 

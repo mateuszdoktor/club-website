@@ -41,7 +41,7 @@ export default function Navbar() {
         animate={{ y: showNavbar ? 0 : -80 }}
         transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
         className={clsx(
-          "fixed top-0 left-0 right-0 z-50 transition-colors duration-300 border-b",
+          "fixed top-0 left-0 right-0 z-[999] isolate pointer-events-auto transition-colors duration-300 border-b",
           scrolled
             ? "bg-white backdrop-blur-md text-gray-900 border-gray-200"
             : "bg-transparent text-white border-transparent"
@@ -56,7 +56,7 @@ export default function Navbar() {
             <div className="hidden md:flex gap-6">
               <NavbarLinks links={navLinks.slice(2)} solid={scrolled} />
             </div>
-            <AuthButton scrolled={scrolled} /> 
+            <AuthButton scrolled={scrolled} />
             <button
               className="md:hidden"
               onClick={() => setIsOpen(!isOpen)}

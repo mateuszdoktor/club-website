@@ -35,15 +35,15 @@ export default function HeadlinesCarousel({ content }) {
   };
 
   return (
-    <div className="w-full flex flex-col items-center py-12 px-4 space-y-8">
-      <div className="w-full max-w-[1680px] px-2 sm:px-4 lg:px-6">
+    <div className="w-full flex flex-col items-center py-16 px-4 space-y-10 bg-white">
+      <div className="w-full max-w-[90vw] px-2 sm:px-4">
         <CarouselHeader />
       </div>
 
-      <div className="relative w-full max-w-[1680px]">
+      <div className="relative w-full max-w-[90vw] isolate">
         <div
           ref={scrollRef}
-          className="flex overflow-x-auto scroll-smooth snap-x snap-mandatory gap-6 no-scrollbar px-4"
+          className="flex overflow-x-auto scroll-smooth snap-x snap-mandatory gap-6 no-scrollbar px-2"
         >
           {content.map((item, i) => (
             <div key={item.id} className="snap-start shrink-0">
