@@ -6,6 +6,7 @@ import HeadlinesCarousel from "@/components/homepage/headlines/HeadlinesCarousel
 import Matches from "@/components/homepage/matches/Matches";
 import News from "@/components/homepage/news/News";
 import Header from "@/components/layout/header/Header";
+import Navbar from "@/components/layout/header/navbar/Navbar";
 
 export const dynamic = "force-dynamic";
 
@@ -17,11 +18,14 @@ export default async function Home() {
   ]);
 
   return (
-    <div>
-      <Header />
-      <HeadlinesCarousel content={headlines} />
-      <Matches matches={matches} />
-      <News articles={newsArticles} />
-    </div>
+    <>
+      <Navbar />
+      <div>
+        <Header />
+        <HeadlinesCarousel content={headlines} />
+        <Matches matches={matches} />
+        <News articles={newsArticles} />
+      </div>
+    </>
   );
 }

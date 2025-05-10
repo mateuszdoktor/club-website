@@ -31,7 +31,6 @@ export default function Header() {
         className="absolute inset-0 z-10 flex flex-col"
       >
         <div className="absolute inset-0 z-[-1] bg-gradient-to-b from-black/80 via-black/50 to-black/20" />
-        <Navbar />
         <HeroText />
       </motion.div>
     </div>

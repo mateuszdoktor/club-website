@@ -40,7 +40,7 @@ export default function HeadlinesCarousel({ content }) {
         <CarouselHeader />
       </div>
 
-      <div className="relative w-full max-w-8xl isolate">
+      <div className="relative w-full max-w-7xl isolate">
         <div
           ref={scrollRef}
           className="flex overflow-x-auto scroll-smooth snap-x snap-mandatory gap-8 no-scrollbar px-2"
